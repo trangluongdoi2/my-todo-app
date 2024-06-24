@@ -1,8 +1,9 @@
 import { defineConfig } from 'vite';
-import path from 'path';
+import path, { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import { fileURLToPath, URL } from 'node:url';
+// import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
 
 export default defineConfig({
   resolve: {
@@ -14,6 +15,11 @@ export default defineConfig({
   plugins: [
     vue(),
     svgLoader(),
+    // VueI18nPlugin({
+    //   include: resolve(dirname(fileURLToPath(import.meta.url)), './src/locales/**'),
+    //   fullInstall: false,
+    //   compositionOnly: true,
+    // }),
   ],
   css: {
     preprocessorOptions: {
@@ -45,6 +51,7 @@ export default defineConfig({
   },
   esbuild: {
     drop: process.env.NODE_ENV === 'production' ? ['console', 'debugger'] : undefined,
+    sourcemap: process.env.NODE_ENV === 'development',
     keepNames: true,
   },
 })

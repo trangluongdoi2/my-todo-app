@@ -2,6 +2,7 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
+import tsparser from "@typescript-eslint/parser";
 
 export default [
   {
@@ -14,7 +15,8 @@ export default [
   },
   { 
     languageOptions: {
-      globals: {...globals.browser, ...globals.node},
+      globals: { ...globals.browser, ...globals.node },
+      parser: tsparser,
     }
   },
   pluginJs.configs.recommended,
@@ -35,7 +37,10 @@ export default [
         extendDefaults: true,
       }],
       'max-len': ['warn', { code: 140, ignoreComments: true, ignoreUrls: true }],
-      'indent': ["error", 2],
+      "@typescript-eslint/ban-ts-comment": "off",
+      "indent": ["error", 2, { "SwitchCase": 1 }],
+      "vue/no-v-text-v-html-on-component": "off",
+      "no-undef": "off",
     }
   }
 ];

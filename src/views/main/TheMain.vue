@@ -1,27 +1,55 @@
 <template>
-  <div class="main flex flex-col w-full h-full">
-    <TheHeader />
-    <div class="main-content">
-      <TheSidebar />
-      <router-view />
+  <div class="main">
+    <div class="header">
+      <TheHeader />
+    </div>
+    <div class="sidebar">
+      <TheSidebar v-if="!isDashboardTab"/>
+    </div>
+    <div class="content">
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import TheHeader from './TheHeader.vue';
-import TheMainDashboard from './TheMainDashboard.vue';
 import TheSidebar from './TheSidebar.vue';
+import useTheme from '@/core/composables/useTheme';
+import { useGlobalState } from '@/core/composables/useGlobalState';
 
+const { getTheme } = useTheme();
+const { isDashboardTab } = useGlobalState();
+onMounted(() => {
+  getTheme();
+});
 </script>
 
 <style lang="scss" scoped>
 .main {
-  background-color: $dark-base;
-  &-content {
-    display: flex;
-    flex: 1 1 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-template-rows: 64px 1fr;
+  grid-template-areas:
+    'header header header'
+    'sidebar content content'
+  ;
+  .header {
+    grid-area: header;
   }
+  .sidebar {
+    grid-area: sidebar;
+  }
+  .content {
+    grid-area: content;
+    overflow: hidden;
+  }
+
 }
 </style>
 

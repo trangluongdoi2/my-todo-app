@@ -12,3 +12,7 @@ const router = createRouter({
 // router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: Function) => checkTrackPages(to, from, next));
 
 export default router;
+
+
+// const a: number = 1;
+
