@@ -104,12 +104,10 @@ const tabs = [
 const isHiddenCreateIssueButton = ref<boolean>(false);
 
 const onCreateIssue = () => {
-  // console.log('onCreateIssue...');
   EventBus.emit('CREATE_ISSUE');
 };
 
 const checkHiddenCreateIssueButton = () => {
-  console.log('checkHiddenCreateIssueButton...');
   isHiddenCreateIssueButton.value = window.innerWidth < 768;
 };
 

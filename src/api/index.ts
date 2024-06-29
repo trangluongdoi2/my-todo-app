@@ -14,8 +14,13 @@ export default class Api {
     input?: Record<string, any>,
     configs?: Record<string, any>
   ) {
-    const res = await customAxios.post(url, input, configs);
-    return res.data;
+    try {
+      const res = await customAxios.post(url, input, configs);
+      // console.log('res', res.json());
+      return res.data;
+    } catch (error) {
+      return null;
+    }
   }
 
   protected async patch(
@@ -23,12 +28,12 @@ export default class Api {
     input?: Record<string, unknown>,
     configs?: Record<string, unknown>
   ) {
-    const res = await customAxios.patch(url, input, configs)
+    const res = await customAxios.patch(url, input, configs);
     return res.data;
   }
 
   protected async delete(url: string) {
-    const res = await customAxios.delete(url)
+    const res = await customAxios.delete(url);
     return res.data;
   }
 }

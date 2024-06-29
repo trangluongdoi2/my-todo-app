@@ -13,6 +13,7 @@ export default {
       'dark-lighter': '#242424',
       'light-green': '#42B883',
       'accent-gray': '#9FADBC',
+      'surface-suken': '#161A1D',
     },
     textColor: {
       'light-blue': '#52D3D8',

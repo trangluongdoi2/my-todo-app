@@ -1,38 +1,54 @@
 <template>
-  <div class="dashboard w-full h-full">
-    <!-- <AppCard v-for="item in 7" :key="item" /> -->
+  <div class="dashboard w-full h-full" :class="{'dashboard-list': isListMode}">
+    <h1>Today</h1>
+    <v-divider></v-divider>
+    <TodoDataActions @change-mode="onChangeMode"/>
+    <keep-alive>
+      <template v-if="currentItemsList?.length">
+        <TodoItemsTable v-if="displayMode === 'table'" :items="currentItemsList" :loading="isFetchingListIssue"/>
+        <TodoItemsGrid v-else :items="currentItemsList" :loading="isFetchingListIssue"/>
+      </template>
+    </keep-alive>
   </div>
-  <AppModal
-    v-model:visible="visible"
-    titleOk="Create Issue"
-    title="Create"
-    max-width="80%"
-  >
-    <template v-slot:default>
-      <!-- <v-card
-        prepend-icon="mdi-map-marker"
-        text="Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running."
-        title="Use Google's location service?"
-      >
-      </v-card> -->
-      <div>Hello Modal</div>
-    </template>
-  </AppModal>
+  <TodoCreateModal v-model:visible="visible"/>
 </template>
 
 <script setup lang="ts">
-import EventBus from '@/core/composables/useEventbus';
-import AppModal from '@/core/components/AppModal.vue';
 import { onMounted, onUnmounted, ref } from 'vue';
+import { DisplayMode } from '@/type';
+import EventBus from '@/core/composables/useEventbus';
+import TodoCreateModal from './components/TodoCreateModal.vue';
+import TodoItemsTable from './components/TodoItemsTable.vue';
+import TodoItemsGrid from './components/TodoItemsGrid.vue';
+import TodoDataActions from './components/TodoDataActions.vue';
+import IssueApi from './api/issues';
 
 const visible = ref<boolean>(false);
+const isListMode = ref<boolean>(true);
+const isFetchingListIssue = ref<boolean>(false);
+const currentItemsList = ref<any>([]);
+const displayMode = ref<DisplayMode>('grid');
+
+
+const getListItems = async () => {
+  isFetchingListIssue.value = true;
+  const res = await IssueApi.getListTodos();
+  isFetchingListIssue.value = false;
+  currentItemsList.value = res;
+};
 
 const showCreateIssueModal = () => {
   visible.value = true;
-}
+};
+
+
+const onChangeMode = (mode: DisplayMode) => {
+  displayMode.value = mode;
+};
 
 onMounted(() => {
   EventBus.on('CREATE_ISSUE', showCreateIssueModal);
+  getListItems();
 });
 
 onUnmounted(() => {
@@ -49,6 +65,15 @@ onUnmounted(() => {
   padding: 1rem;
   overflow-y: auto;
   justify-content: start;
+  &-list {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  // .list-container {
+  //   display: flex;
+  //   gap: 10px;
+  // }
 }
 </style>
 

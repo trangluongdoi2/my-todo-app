@@ -1,10 +1,10 @@
 <template>
-  <div class="main">
+  <div class="main" :style="{ gridTemplateAreas: styleMain.gridTemplateAreas}">
     <div class="header">
       <TheHeader />
     </div>
-    <div class="sidebar">
-      <TheSidebar v-if="!isDashboardTab"/>
+    <div class="sidebar" v-if="!isDashboardTab">
+      <TheSidebar/>
     </div>
     <div class="content">
       <router-view v-slot="{ Component }">
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import TheHeader from './TheHeader.vue';
 import TheSidebar from './TheSidebar.vue';
 import useTheme from '@/core/composables/useTheme';
@@ -23,6 +23,21 @@ import { useGlobalState } from '@/core/composables/useGlobalState';
 
 const { getTheme } = useTheme();
 const { isDashboardTab } = useGlobalState();
+
+const styleMain = computed(() => {
+  const styles: { [key: string]: string } = {
+    gridTemplateAreas: `
+      "header header header"
+      "sidebar content content"`,
+  };
+  if (isDashboardTab.value) {
+    styles.gridTemplateAreas = `
+      "header header header"
+      "content content content"`;
+  }
+  return styles;
+});
+
 onMounted(() => {
   getTheme();
 });
