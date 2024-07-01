@@ -1,0 +1,7 @@
+@use './partial/button' as button;
+@use './partial/tooltip' as tooltip;
+
+@use 'vuetify/settings' with (
+  $button-banner-actions-padding: button.$button-banner-actions-padding,
+  $tooltip-text-color: tooltip.$tooltip-text-color,
+)

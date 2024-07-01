@@ -1,5 +1,5 @@
 <template>
-  <div class="issue-data-actions w-full flex justify-end gap-x-2">
+  <div class="todo-data-actions w-full flex justify-end gap-x-2">
     <v-tooltip text="Table View" location="top">
       <template v-slot:activator="{ props }">
         <AppButton

@@ -12,7 +12,7 @@
         <div v-if="title" class="text-lg font-bold">{{ title }}</div>
         <div v-else class="flex flex-1"></div>
         <v-btn variant="text">
-          <v-icon icon="mdi-close" @click="visible = false"/>
+          <v-icon icon="mdi-close" @click="handleCancel"/>
         </v-btn>
       </div>
     </slot>

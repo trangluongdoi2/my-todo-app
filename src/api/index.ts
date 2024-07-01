@@ -16,7 +16,6 @@ export default class Api {
   ) {
     try {
       const res = await customAxios.post(url, input, configs);
-      // console.log('res', res.json());
       return res.data;
     } catch (error) {
       return null;
@@ -29,6 +28,15 @@ export default class Api {
     configs?: Record<string, unknown>
   ) {
     const res = await customAxios.patch(url, input, configs);
+    return res.data;
+  }
+
+  protected async put(
+    url: string,
+    input?: Record<string, unknown>,
+    configs?: Record<string, unknown>
+  ) {
+    const res = await customAxios.put(url, input, configs);
     return res.data;
   }
 

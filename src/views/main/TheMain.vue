@@ -19,10 +19,10 @@ import { computed, onMounted } from 'vue';
 import TheHeader from './TheHeader.vue';
 import TheSidebar from './TheSidebar.vue';
 import useTheme from '@/core/composables/useTheme';
-import { useGlobalState } from '@/core/composables/useGlobalState';
+import { useGlobalStates } from '@/core/composables/useGlobalStates';
 
 const { getTheme } = useTheme();
-const { isDashboardTab } = useGlobalState();
+const { isDashboardTab } = useGlobalStates();
 
 const styleMain = computed(() => {
   const styles: { [key: string]: string } = {

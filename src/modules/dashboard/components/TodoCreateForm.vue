@@ -1,6 +1,7 @@
 <template>
  <v-form validate-on="blur lazy" @submit.prevent="submit">
     <AppInput v-model="todoForm.name" :isImperative="true" label="Name"></AppInput>
+    <AppInput v-model="todoForm.title" label="Title"></AppInput>
     <AppInput v-model="todoForm.label" :isImperative="true" label="Label"></AppInput>
     <AppInput v-model="todoForm.description" :isImperative="true" label="Description"></AppInput>
     <v-select v-model="todoForm.priority" item-title="label" :items="listPriority">
@@ -25,6 +26,7 @@ const emit = defineEmits(['change']);
 const initIssue: TodoItem = {
   project: 'The First Project' + Math.floor(Math.random() * 10),
   name: 'The First Issue' + Math.floor(Math.random() * 10),
+  title: 'The My Title',
   label: 'The First Label' + Math.floor(Math.random() * 10),
   assignee: 'Nguyen Tan Vinh' + Math.floor(Math.random() * 10),
   description: 'This is the first description',

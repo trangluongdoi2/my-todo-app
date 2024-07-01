@@ -6,7 +6,7 @@
   >
     <div class="todo-title flex-1">{{ item.title }}</div>
     <div class="todo-more flex justify-between">
-      <div class="project">Project 1</div>
+      <div class="project">{{ item.project }}</div>
       <div class="avatar">
         <v-avatar size="28" :image="AvatarUrl" />
       </div>
@@ -48,14 +48,12 @@
 import AvatarUrl from '@/assets/avatar.jpeg';
 import AppButton from '@/core/components/AppButton.vue';
 import { TodoItem } from '@/type';
-import { PropType, onMounted, ref } from 'vue';
+import { PropType, ref } from 'vue';
 
 const emit = defineEmits<{
   (e: 'edit-item', item: TodoItem): void
   (e: 'delete-item', item: TodoItem): void
 }>()
-
-// defineEmits(['edit-item', 'delete-item']);
 
 const props = defineProps({
   item: {
@@ -65,10 +63,6 @@ const props = defineProps({
 });
 
 const isHover = ref<boolean>(false);
-
-onMounted(() => {
-  // console.log(props.item, 'props.item...');
-});
 
 </script>
 

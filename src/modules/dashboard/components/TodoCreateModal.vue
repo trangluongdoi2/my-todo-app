@@ -26,23 +26,25 @@
 import { ref } from 'vue';
 import AppModal from '@/core/components/AppModal.vue';
 import TodoCreateForm from './TodoCreateForm.vue';
-import IssuesApi from '../api/issues';
+import TodoApi from '../api/todo';
+import EventBus from '@/core/composables/useEventbus';
 
 const visible = defineModel('visible', { type: Boolean, default: false });
 const loadingSubmit = ref<boolean>(false);
 
-const issueData = ref();
+const todoData = ref();
 
 const onChange = (data: any) => {
-  issueData.value = data;
+  todoData.value = data;
 };
 
 const handleOk = () => {
-  console.log(issueData.value, 'issueData.value..');
+  // console.log(todoData.value, 'todoData.value..');
   loadingSubmit.value = true;
-  IssuesApi.createIssue(issueData.value)
-    .then((res) => {
-      console.log(res, 'res..');
+  TodoApi.createTodo(todoData.value)
+    .then((data) => {
+      // console.log(res, 'new Item...');
+      EventBus.emit('CREATED_TODO', data);
     })
     .finally(() => {
       loadingSubmit.value = false;

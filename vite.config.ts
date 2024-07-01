@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import path, { resolve } from 'path';
 import vue from '@vitejs/plugin-vue';
+import vuetify from 'vite-plugin-vuetify'
 import svgLoader from 'vite-svg-loader';
 import { fileURLToPath, URL } from 'node:url';
 // import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
@@ -15,6 +16,9 @@ export default defineConfig({
   plugins: [
     vue(),
     svgLoader(),
+    vuetify({
+      styles: { configFile: 'src/styles/settings.scss' },
+    })
     // VueI18nPlugin({
     //   include: resolve(dirname(fileURLToPath(import.meta.url)), './src/locales/**'),
     //   fullInstall: false,

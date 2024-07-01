@@ -28,6 +28,7 @@ specifiers:
   vue-eslint-parser: ^9.4.3
   vue-router: ^4.3.2
   vue-tsc: ^2.0.6
+  vuedraggable: ^4.1.0
   vuetify: ^3.6.8
 
 dependencies:
@@ -38,6 +39,7 @@ dependencies:
   pinia: 2.1.7_sgeogpubhlcxknkqcv4zdmvdpy
   vue: 3.4.29_typescript@5.5.2
   vue-router: 4.4.0_vue@3.4.29
+  vuedraggable: 4.1.0_vue@3.4.29
 
 devDependencies:
   '@eslint/js': 9.5.0
@@ -2277,6 +2279,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /sortablejs/1.14.0:
+    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
+    dev: false
+
   /source-map-js/1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
@@ -2651,6 +2657,15 @@ packages:
       '@vue/server-renderer': 3.4.29_vue@3.4.29
       '@vue/shared': 3.4.29
       typescript: 5.5.2
+
+  /vuedraggable/4.1.0_vue@3.4.29:
+    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
+    peerDependencies:
+      vue: ^3.0.1
+    dependencies:
+      sortablejs: 1.14.0
+      vue: 3.4.29_typescript@5.5.2
+    dev: false
 
   /vuetify/3.6.10_6i4ozndwn7yvc5b7qr4ic67rse:
     resolution: {integrity: sha512-Myd9+EFq4Gmu61yKPNVS0QdGQkcZ9cHom27wuvRw7jgDxM+X4MT9BwQRk/Dt1q3G3JlK8oh+ZYyq5Ps/Z73cMg==}

@@ -1,7 +1,7 @@
 <template>
   <v-layout class="overflow-hidden">
     <v-data-table
-      class="issue-table"
+      class="todo-table"
       :headers="headers"
       :items="items"
       :items-per-page="100"
@@ -136,7 +136,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.issue-table {
+.todo-table {
   .item__id {
     font-weight: bold;
     white-space: nowrap;

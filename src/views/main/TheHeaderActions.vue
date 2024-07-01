@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import AppButton from '@/core/components/AppButton.vue';
 import { useRouter } from 'vue-router';
+import AppButton from '@/core/components/AppButton.vue';
 import SettingsAvatar from '@/views/settings/components/SettingsAvatar.vue';
 
 const router = useRouter();
@@ -53,7 +53,6 @@ const onClick = (item: any) => {
     default:
       break;
   }
-  console.log(item, 'item...');
 };
 
 const onClickAvatarMenu = () => {

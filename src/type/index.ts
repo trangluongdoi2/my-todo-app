@@ -1,30 +1,8 @@
-export interface InputCardItem {
-  title: string;
-  description: string;
-  // image: string;
-}
-
-export interface CardItem extends InputCardItem {
-  id: string,
-  url: string,
-  createdAt: string,
-  updatedAt: string,
-}
-
-export enum IssueStatus {
+export enum TodoStatus {
   DONE = 'DONE',
-  INPROGESS = 'INPROGESS',
+  IN_PROGESS = 'IN_PROGESS',
   STUCK = 'STUCK',
   PENDING = 'PENDING',
-}
-export interface TodoItem {
-  project: string,
-  name: string,
-  label: string,
-  description: string,
-  priority: Priority,
-  assignee?: string,
-  status: IssueStatus,
 }
 
 export enum Priority {
@@ -32,6 +10,17 @@ export enum Priority {
   MEDIUM = 'MEDIUM',
   HIGH = 'HIGH',
   HIGHEST = 'HIGHEST',
+}
+export interface TodoItem {
+  id?: string;
+  title?: string,
+  project: string,
+  name: string,
+  label: string,
+  description: string,
+  priority: Priority,
+  assignee?: string,
+  status: TodoStatus,
 }
 
 export type DisplayMode = 'table' | 'grid';

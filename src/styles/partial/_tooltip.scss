@@ -1,3 +1,5 @@
-@use 'vuetify' with (
-  $tooltip-text-color: red
-);
+$tooltip-text-color: white;
+
+// $tool-tips: map-merge(
+//   $tooltip-text-color: yellow,
+// )
