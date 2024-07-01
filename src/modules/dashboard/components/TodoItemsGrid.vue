@@ -90,7 +90,7 @@ const filterItemsByStatus = () => {
     case TodoStatus.DONE:
       itemsDone.value = itemsDone.value.filter((todo: TodoItem) => todo.id !== id);
       break;
-    case TodoStatus.INPROGESS:
+    case TodoStatus.IN_PROGESS:
       itemsInProgress.value = itemsInProgress.value.filter((todo: TodoItem) => todo.id !== id);
     case TodoStatus.PENDING:
     default:
