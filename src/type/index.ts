@@ -14,13 +14,13 @@ export enum Priority {
 export interface TodoItem {
   id?: string;
   title?: string,
-  project: string,
-  name: string,
+  projects: string[],
+  todoName: string,
   label: string,
   description: string,
   priority: Priority,
   assignee?: string,
-  status: TodoStatus,
+  todoStatus: TodoStatus,
 }
 
 export type DisplayMode = 'table' | 'grid';

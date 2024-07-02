@@ -1,12 +1,9 @@
 <template>
   <v-dialog
+    v-bind="$attrs"
     v-model="visible"
     persistent
-    v-bind="$attrs"
   >
-    <template v-slot:activator="{ props: activatorProps }">
-      <slot v-bind="activatorProps" />
-    </template>
     <slot name="header">
       <div class="modal-header flex items-center justify-between p-[24px]">
         <div v-if="title" class="text-lg font-bold">{{ title }}</div>
@@ -17,8 +14,7 @@
       </div>
     </slot>
     <div class="modal-content p-[24px] pt-0">
-      <slot>
-      </slot>
+      <slot />
     </div>
     <slot name="actions">
       <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">

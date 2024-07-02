@@ -21,13 +21,14 @@ export class TodoApi extends Api {
   }
 
   async getTodoById(id: string) {
-    const res = await this.get(`${TODO_URL.GET_TODO_BY_ID}/${id}`);
+    const url = `${TODO_URL.GET_TODO_BY_ID}/${id}`;
+    const res = await this.get(url);
     return res.data;
   }
 
   async updateTodo(input: any) {
-    console.log(input, 'updateTodo....');
-    const res = await this.put(`${TODO_URL.GET_TODO_BY_ID}/${input.id}`, input);
+    const url = `${TODO_URL.UPDATE_TODO}/${input.id}`;
+    const res = await this.put(url, input);
     return res.data;
   }
 

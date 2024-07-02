@@ -11,35 +11,37 @@
         <v-avatar size="28" :image="AvatarUrl" />
       </div>
     </div>
-    <div v-if="isHover" class="absolute top-[0.25rem] right-[0.25rem]">
-      <v-tooltip text="Edit" location="top">
-        <template v-slot:activator="{ props }">
-          <AppButton
-            class="icon-actions"
-            icon
-            size="28"
-            type="text"
-            @click="$emit('edit-item', item)"
-            v-bind="props"
-          >
-            <v-icon color="#42B883" icon="custom:edit" />
-          </AppButton>
-        </template>
-      </v-tooltip>
-      <v-tooltip text="Delete" location="top">
-        <template v-slot:activator="{ props }">
-          <AppButton
-            icon
-            class="icon-actions"
-            size="28"
-            type="text"
-            v-bind="props"
-             @click="$emit('delete-item', item)"
-          >
-            <v-icon color="#FD9891" icon="custom:delete" />
-          </AppButton>
-        </template>
-      </v-tooltip>
+    <div v-if="true" class="absolute top-[0.25rem] right-[0.25rem]">
+      <div class="flex gap-x-1">
+        <v-tooltip text="Edit" location="top">
+          <template v-slot:activator="{ props }">
+            <AppButton
+              class="icon-actions"
+              icon
+              size="28"
+              type="text"
+              @click="$emit('edit-item', item)"
+              v-bind="props"
+            >
+              <v-icon color="#42B883" icon="custom:edit" />
+            </AppButton>
+          </template>
+        </v-tooltip>
+        <v-tooltip text="Delete" location="top">
+          <template v-slot:activator="{ props }">
+            <AppButton
+              icon
+              class="icon-actions"
+              size="28"
+              type="text"
+              v-bind="props"
+               @click="$emit('delete-item', item)"
+            >
+              <v-icon color="#FD9891" icon="custom:delete" />
+            </AppButton>
+          </template>
+        </v-tooltip>
+      </div>
     </div>
   </div>
 </template>

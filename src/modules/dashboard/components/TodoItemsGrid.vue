@@ -11,47 +11,21 @@
         DONE {{ itemsDone.length }}
       </div>
     </div>
-    <v-layout class="issues-grid overflow-y-auto">
-      <div class="todo-pending flex flex-col gap-y-2">
-        <TodoCard
-          v-if="itemsPending.length"
-          v-for="(item, index) in itemsPending"
-          :key="index" 
-          :item="item"
+    <TodoDraggableGrid
+      :items="items"
 
-          @delete-item="onDeleteItem"
-          @edit-item="onEditItem"
-        />
-      </div>
-      <div class="todo-inprogress flex flex-col gap-y-2">
-        <TodoCard
-          v-for="(item, index) in itemsInProgress" 
-          :key="index"
-          :item="item"
-
-          @delete-item="onDeleteItem"
-          @edit-item="onEditItem"
-        />
-      </div>
-      <div class="todo-done flex flex-col gap-y-2">
-        <TodoCard
-          v-for="(item, index) in itemsDone"
-          :key="index"
-          :item="item"
-
-          @delete-item="onDeleteItem"
-          @edit-item="onEditItem"
-        />
-      </div>
-    </v-layout>
+      @delete-item="onDeleteItem"
+      @edit-item="onEditItem"
+      @edit-item-status="onEditItemStatus"
+    />
     <TodoDeleteModal
+      v-if="isVisibleTodoDeleteModal"
       :title="'Delete'"
       v-model="isVisibleTodoDeleteModal"
       :loading="isLoadingDelete"
       @cancle="resetCurrentItem"
       @ok="handleDeleteItem"
     />
-    <!-- <TodoDraggableColumn :items="items"/> -->
   </div>
 </template>
 
@@ -59,7 +33,7 @@
 import { onMounted, ref, PropType, watch } from 'vue';
 import { TodoItem, TodoStatus } from '@/type';
 import TodoCard from './TodoCard.vue';
-import TodoDraggableColumn from './TodoDraggableColumn.vue';
+import TodoDraggableGrid from './TodoDraggableGrid.vue';
 import TodoDeleteModal from './TodoDeleteModal.vue';
 import TodoApi from '@/modules/dashboard/api/todo';
 import router from '@/router';
@@ -83,10 +57,9 @@ const isVisibleTodoDeleteModal = ref<boolean>(false);
 const isVisibleTodoEditModal = ref<boolean>(false);
 const isLoadingDelete = ref<boolean>(false);
 
-const filterItemsByStatus = () => {
-  const { id, status } = selectedTodoItem.value;
-  console.log(status, 'status..');
-  switch (status) {
+const filterItemsByStatus = (item: TodoItem) => {
+  const { id, todoStatus } = item;
+  switch (todoStatus) {
     case TodoStatus.DONE:
       itemsDone.value = itemsDone.value.filter((todo: TodoItem) => todo.id !== id);
       break;
@@ -100,13 +73,11 @@ const filterItemsByStatus = () => {
 }
 
 const onDeleteItem = (item: TodoItem) => {
-  console.log('onDeleteItem...');
   selectedTodoItem.value = item;
   isVisibleTodoDeleteModal.value = true;
 }
 
 const onEditItem = (item: TodoItem) => {
-  console.log('onEditItem...');
   selectedTodoItem.value = item;
   isVisibleTodoEditModal.value = false;
   router.push({
@@ -116,6 +87,14 @@ const onEditItem = (item: TodoItem) => {
   })
 }
 
+const onEditItemStatus = async (item: TodoItem) => {
+  if (!item) {
+    return;
+  }
+  const data = await TodoApi.updateTodo(item);
+  console.log(data, 'data onEditItemStatus...');
+}
+
 const handleDeleteItem = () => {
   if (!selectedTodoItem.value) {
     return;
@@ -123,7 +102,7 @@ const handleDeleteItem = () => {
   isLoadingDelete.value = true;
   TodoApi.deleteTodo(selectedTodoItem.value.id)
     .then(() => {
-      filterItemsByStatus();
+      filterItemsByStatus(selectedTodoItem.value);
     })
     .finally(() => {
       isLoadingDelete.value = false;
@@ -136,9 +115,9 @@ const resetCurrentItem = () => {
 }
 
 watch(() => props.items, () => {
-  itemsInProgress.value = props.items.filter((item: TodoItem) => item.status === TodoStatus.IN_PROGESS);
-  itemsDone.value = props.items.filter((item: TodoItem) => item.status === TodoStatus.DONE);
-  itemsPending.value = props.items.filter((item: TodoItem) => item.status === TodoStatus.PENDING);
+  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PROGESS);
+  itemsDone.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.DONE);
+  itemsPending.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.PENDING);
 }, { immediate: true, deep: true });
 
 </script>

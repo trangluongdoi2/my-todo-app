@@ -25,6 +25,7 @@ specifiers:
   vite-plugin-vuetify: ^2.0.3
   vite-svg-loader: ^5.1.0
   vue: ^3.4.21
+  vue-draggable-next: ^2.2.1
   vue-eslint-parser: ^9.4.3
   vue-router: ^4.3.2
   vue-tsc: ^2.0.6
@@ -38,6 +39,7 @@ dependencies:
   mitt: 3.0.1
   pinia: 2.1.7_sgeogpubhlcxknkqcv4zdmvdpy
   vue: 3.4.29_typescript@5.5.2
+  vue-draggable-next: 2.2.1_vue@3.4.29
   vue-router: 4.4.0_vue@3.4.29
   vuedraggable: 4.1.0_vue@3.4.29
 
@@ -2593,6 +2595,15 @@ packages:
     peerDependenciesMeta:
       '@vue/composition-api':
         optional: true
+    dependencies:
+      vue: 3.4.29_typescript@5.5.2
+    dev: false
+
+  /vue-draggable-next/2.2.1_vue@3.4.29:
+    resolution: {integrity: sha512-EAMS1IRHF0kZO0o5PMOinsQsXIqsrKT1hKmbICxG3UEtn7zLFkLxlAtajcCcUTisNvQ6TtCB5COjD9a1raNADw==}
+    peerDependencies:
+      sortablejs: ^1.14.0
+      vue: ^3.2.2
     dependencies:
       vue: 3.4.29_typescript@5.5.2
     dev: false

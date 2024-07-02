@@ -1,5 +1,8 @@
 <template>
    <AppModal v-model:visible="visible" width="50%">
+    <!-- <template v-slot:default>
+      
+    </template> -->
     <div>Are you sure delete this item?</div>
     <template v-slot:actions>
        <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">

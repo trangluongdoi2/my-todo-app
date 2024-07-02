@@ -5,8 +5,16 @@
     <TodoDataActions @change-mode="onChangeMode"/>
     <keep-alive>
       <div>
-        <TodoItemsTable v-if="displayMode === 'table'" :items="currentItemsList" :loading="isFetchingTodosList"/>
-        <TodoItemsGrid v-else :items="currentItemsList" :loading="isFetchingTodosList"/>
+        <TodoItemsTable
+          v-if="displayMode === 'table'" 
+          :items="currentItemsList" 
+          :loading="isFetchingTodosList"
+        />
+        <TodoItemsGrid 
+          v-else
+          :items="currentItemsList"
+          :loading="isFetchingTodosList"
+        />
       </div>
     </keep-alive>
   </div>
