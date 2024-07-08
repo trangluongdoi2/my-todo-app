@@ -23,8 +23,13 @@
           </template>
         </v-tooltip>
       </template>
-      <template v-slot:item.status="{ item }">
-        <div :style="{ color: getColor(item.status), fontWeight: 'bold' }">{{ item.status }}</div>
+      <template v-slot:item.todoStatus="{ item }">
+        <div :style="{ color: getColor(item.todoStatus), fontWeight: 'bold' }">{{ item.todoStatus }}</div>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <!-- <div :style="{ color: getColor(item.todoStatus), fontWeight: 'bold' }">{{ item.todoStatus }}</div> -->
+        <!-- <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">See Details</p> -->
+        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">{{ item }}</p>
       </template>
     </v-data-table>
     
@@ -59,6 +64,8 @@
 import { formatDateToDDMMYYY } from '@/common/date';
 import { Priority } from '@/type';
 import { onMounted, defineProps, PropType, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 const props = defineProps({
   items: {
     type: Array as PropType<any>,
@@ -102,7 +109,10 @@ const headers = [
     value: item => formatDateToDDMMYYY(item.updatedAt),
   },
   {
-    title: 'Status', value: 'status'
+    title: 'Status', value: 'todoStatus'
+  },
+  {
+    title: 'Actions', value: 'actions',
   }
 ];
 const iconPriorityMap = {
@@ -114,7 +124,7 @@ const iconPriorityMap = {
 const itemsPerPage = ref<number>(10);
 const search = ref<string>('');
 
-
+const router = useRouter();
 
 const getColor = (status: string) => {
   return colorMap[status] || 'error';
@@ -124,9 +134,14 @@ const getPriority = (priority: Priority) => {
   return iconPriorityMap[priority] || 'highest';
 }
 
-
-const loadItems = (data: any) => {
-  console.log(data, 'data...');
+const navigateToDetails = (todoId: string) => {
+  console.log(todoId, 'todoId...');
+  router.push({
+    name: 'todoDetails',
+    params: {
+      id: todoId,
+    }
+  })
 }
 
 onMounted(() => {

@@ -1,7 +1,7 @@
 <template>
   <div class="input-wrapper">
     <label v-if="label" class="input__label">
-      <span v-if="isImperative" class="text-red-500">*</span>
+      <span v-if="isImperative" class="text-[#FD9891]">*</span>
       {{ label }}
     </label>
     <v-text-field
@@ -40,5 +40,10 @@ const onChange = (e: FocusEvent) => {
 </script>
 
 <style lang="scss" scoped>
+.input-wrapper {
+  .input__label {
+    font-size: 0.75rem;
+  }
+}
 
 </style>

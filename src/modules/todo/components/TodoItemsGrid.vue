@@ -35,7 +35,7 @@ import { TodoItem, TodoStatus } from '@/type';
 import TodoCard from './TodoCard.vue';
 import TodoDraggableGrid from './TodoDraggableGrid.vue';
 import TodoDeleteModal from './TodoDeleteModal.vue';
-import TodoApi from '@/modules/dashboard/api/todo';
+import TodoApi from '@/modules/todo/api/todo';
 import router from '@/router';
 
 const props = defineProps({

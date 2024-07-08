@@ -16,6 +16,7 @@ export class TodoApi extends Api {
   }
 
   async getTodosList() {
+    console.log(TODO_URL.GET_TODOS, 'TODO_URL.GET_TODOS...');
     const res = await this.get(TODO_URL.GET_TODOS);
     return res.data;
   }

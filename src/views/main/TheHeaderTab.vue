@@ -48,11 +48,18 @@ defineProps({
 
 const router = useRouter();
 const tabs = [
+  // {
+  //   name: 'Dashboard',
+  //   id: 1,
+  //   event: () => {
+  //     router.push('/dashboard');
+  //   }
+  // },
   {
     name: 'Dashboard',
     id: 1,
     event: () => {
-      router.push('/dashboard');
+      router.push('/todo');
     }
   },
   {

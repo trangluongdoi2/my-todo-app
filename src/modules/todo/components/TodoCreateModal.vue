@@ -9,7 +9,6 @@
       <TodoCreateForm @change="onChange"/>
     </template>
     <template v-slot:actions>
-      <!-- <div></div> -->
        <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">
         <v-btn variant="text" @click="handleCancel">
           Cancel
@@ -39,11 +38,9 @@ const onChange = (data: any) => {
 };
 
 const handleOk = () => {
-  // console.log(todoData.value, 'todoData.value..');
   loadingSubmit.value = true;
   TodoApi.createTodo(todoData.value)
     .then((data) => {
-      // console.log(res, 'new Item...');
       EventBus.emit('CREATED_TODO', data);
     })
     .finally(() => {

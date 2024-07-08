@@ -3,12 +3,12 @@ import { useRoute } from "vue-router";
 
 export const useGlobalStates = () => {
   const route = useRoute();
-  const isDashboardTab = computed(() => {
+  const isTodoLayoutTab = computed(() => {
     const { meta } = route;
-    return meta.mode === 'Dashboard';
+    return meta.mode === 'TodoLayout';
   });
   
   return {
-    isDashboardTab,
+    isTodoLayoutTab,
   };
 };

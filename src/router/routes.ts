@@ -1,4 +1,5 @@
-import Dashboard from "@/modules/dashboard/Dashboard.vue";
+import TodoLayout from "@/modules/todo/TodoLayout.vue";
+import TodoItemLayout from "@/modules/todo/TodoItemLayout.vue";
 import Demo from "@/modules/demo/Demo.vue";
 import Courses from "@/modules/courses/Courses.vue";
 import EmptyRouterView from "./EmptyRouterView.vue";
@@ -9,14 +10,20 @@ export const routes = [
     path: '/',
     component: EmptyRouterView,
     redirect: () => {
-      return { name: 'dashboard' };
+      return { name: 'todo' };
     },
     children: [
       {
-        name: 'dashboard',
-        path: '/dashboard',
-        component: Dashboard,
-        meta: { mode: 'Dashboard' }
+        name: 'todo',
+        path: '/todo',
+        component: TodoLayout,
+        meta: { mode: 'TodoLayout' },
+      },
+      {
+        name: 'todoDetails',
+        path: '/todo/:id',
+        component: TodoItemLayout,
+        meta: { mode: 'TodoLayout' },
       },
       {
         name: 'settings',

@@ -3,3 +3,13 @@
     background-color: #2c2e34;
   }
 }
+.v-list {
+  .v-list-item {
+    min-height: 36px;
+    &__content {
+      .v-list-item-title {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}

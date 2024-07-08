@@ -38,8 +38,10 @@ const currentItemsList = ref<any>([]);
 const displayMode = ref<DisplayMode>('grid');
 
 const getListItems = async () => {
+  console.log('getListItems...');
   isFetchingTodosList.value = true;
   const res = await TodoApi.getTodosList();
+  console.log(res, 'res...');
   isFetchingTodosList.value = false;
   currentItemsList.value = res;
 };
