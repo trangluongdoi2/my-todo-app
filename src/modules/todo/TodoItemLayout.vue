@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col w-full h-full">
-    <div>Breadcrumbs...</div>
+    <!-- <div>Breadcrumbs...</div> -->
+    <!-- <TodoBreadcrumbs class="breadcrumbs"/> -->
     <div class="flex h-full w-full overflow-hidden">
       <!-- <div class="flex-1">Div1</div> -->
       <TodoItemDetails class="flex-1" v-if="item" :item="item" />
@@ -15,7 +16,7 @@ import { useRoute } from 'vue-router';
 import TodoApi from './api/todo';
 import TodoItemSideBarRight from '@/modules/todo/TodoItemSideBarRight.vue';
 import TodoItemDetails from '@/modules/todo/TodoItemDetails.vue';
-// import { TodoItem, TodoItemDetails } from '@/type';
+import TodoBreadcrumbs from '@/modules/todo/components/TodoBreadcrumbs.vue';
 
 const route = useRoute();
 const item = ref<any>();
@@ -34,6 +35,10 @@ onBeforeMount(() => {
 })
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.breadcrumbs {
+  position: sticky;
+  top: 0;
+  left: 0;
+}
 </style>

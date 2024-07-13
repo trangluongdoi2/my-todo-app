@@ -22,3 +22,37 @@
   overflow: hidden;
   background-color: $dark-base;
 }
+
+h1, h2, h3, h4, p, span {
+  color: $text;
+}
+
+h1 {
+  // font-size: 1.5rem;
+  font-size: 1.5em;
+  font-weight: 500;
+  letter-spacing: -0.01rem;
+  line-height: 1.75rem;
+}
+h2 {
+  // font-size: 1rem;
+  font-size: 1em;
+  letter-spacing: -0.003rem;
+  font-weight: 600;
+  line-height: 24px;
+}
+p {
+  // font-size: 0.875rem;
+  font-size: 1em;
+  line-height: 1.714;
+  font-weight: normal;
+  margin-bottom: 0px;
+  letter-spacing: -0.005em;
+}
+span {
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: 0px;
+  line-height: 20px;
+  text-transform: none;
+}

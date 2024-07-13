@@ -18,20 +18,17 @@
       </div>
     </keep-alive>
   </div>
-  <TodoCreateModal v-model:visible="visible"/>
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { DisplayMode, TodoItem } from '@/type';
 import EventBus from '@/core/composables/useEventbus';
-import TodoCreateModal from './components/TodoCreateModal.vue';
 import TodoItemsTable from './components/TodoItemsTable.vue';
 import TodoItemsGrid from './components/TodoItemsGrid.vue';
 import TodoDataActions from './components/TodoDataActions.vue';
 import TodoApi from './api/todo';
 
-const visible = ref<boolean>(false);
 const isListMode = ref<boolean>(true);
 const isFetchingTodosList = ref<boolean>(false);
 const currentItemsList = ref<any>([]);
@@ -46,10 +43,6 @@ const getListItems = async () => {
   currentItemsList.value = res;
 };
 
-const showTodoCreateModal = () => {
-  visible.value = true;
-};
-
 const onChangeMode = (mode: DisplayMode) => {
   displayMode.value = mode;
 };
@@ -59,13 +52,11 @@ const updateTodo =  (todo: TodoItem) => {
 }
 
 onMounted(() => {
-  EventBus.on('CREATE_TODO', showTodoCreateModal);
   EventBus.on('CREATED_TODO', updateTodo);
   getListItems();
 });
 
 onUnmounted(() => {
-  EventBus.off('CREATE_TODO', showTodoCreateModal);
   EventBus.off('CREATED_TODO', updateTodo);
 });
 </script>

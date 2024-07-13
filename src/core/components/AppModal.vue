@@ -2,7 +2,6 @@
   <v-dialog
     v-bind="$attrs"
     v-model="visible"
-    persistent
   >
     <slot name="header">
       <div class="modal-header flex items-center justify-between p-[24px]">

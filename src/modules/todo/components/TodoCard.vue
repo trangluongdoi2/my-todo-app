@@ -3,6 +3,7 @@
     class="todo-card relative flex flex-col p-4"
     @mouseover="isHover = true"
     @mouseleave="isHover = false"
+    @click="navigateToDetails(item.id)"
   >
     <div class="todo-title flex-1">{{ item.title }}</div>
     <div class="todo-more flex justify-between">
@@ -51,6 +52,7 @@ import AvatarUrl from '@/assets/avatar.jpeg';
 import AppButton from '@/core/components/AppButton.vue';
 import { TodoItem } from '@/type';
 import { PropType, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const emit = defineEmits<{
   (e: 'edit-item', item: TodoItem): void
@@ -65,6 +67,15 @@ const props = defineProps({
 });
 
 const isHover = ref<boolean>(false);
+const router = useRouter();
+const navigateToDetails = (todoId: string) => {
+  router.push({
+    name: 'todoDetails',
+    params: {
+      id: todoId,
+    }
+  });
+};
 
 </script>
 

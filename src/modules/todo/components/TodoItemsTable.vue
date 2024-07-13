@@ -27,9 +27,7 @@
         <div :style="{ color: getColor(item.todoStatus), fontWeight: 'bold' }">{{ item.todoStatus }}</div>
       </template>
       <template v-slot:item.actions="{ item }">
-        <!-- <div :style="{ color: getColor(item.todoStatus), fontWeight: 'bold' }">{{ item.todoStatus }}</div> -->
-        <!-- <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">See Details</p> -->
-        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">{{ item }}</p>
+        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">See Details</p>
       </template>
     </v-data-table>
     
@@ -135,13 +133,12 @@ const getPriority = (priority: Priority) => {
 }
 
 const navigateToDetails = (todoId: string) => {
-  console.log(todoId, 'todoId...');
   router.push({
     name: 'todoDetails',
     params: {
       id: todoId,
     }
-  })
+  });
 }
 
 onMounted(() => {

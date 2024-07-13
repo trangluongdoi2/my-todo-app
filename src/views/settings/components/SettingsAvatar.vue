@@ -51,9 +51,9 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import AvatarUrl from '@/assets/avatar.jpeg';
 import AppButton from '@/core/components/AppButton.vue';
-import { useRouter } from 'vue-router';
 import DarkTheme from '@/assets/dark_theme.png';
 import LightTheme from '@/assets/light_theme.png';
 import BrowerTheme from '@/assets/browser_theme.png';

@@ -1,7 +1,8 @@
 $button-banner-actions-padding: 4px;
 $button-height: 50px;
 
-// $buttons: map-merge(
-//   $button-banner-actions-padding: 4px,
-//   $button-height: 50px,
-// )
+.v-btn.v-btn--variant-text {
+  &:hover {
+    background-color: transparent;
+  }
+}
