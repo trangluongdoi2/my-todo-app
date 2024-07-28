@@ -7,7 +7,7 @@
   >
     <div class="todo-title flex-1">{{ item.title }}</div>
     <div class="todo-more flex justify-between">
-      <div class="project">{{ item.project }}</div>
+      <div class="project">{{ item.projects }}</div>
       <div class="avatar">
         <v-avatar size="28" :image="AvatarUrl" />
       </div>
