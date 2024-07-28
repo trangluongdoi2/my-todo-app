@@ -27,6 +27,7 @@ export interface TodoItemDetails extends Omit<TodoItem, 'id'> {
   id: string,
   createdAt: string,
   updateAt: string,
+  attachments: string[],
 }
 
 export type DisplayMode = 'table' | 'grid';

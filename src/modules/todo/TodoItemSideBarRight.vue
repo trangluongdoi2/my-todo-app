@@ -72,13 +72,9 @@ const rules = {
       const inValid =  ruleFormat;
       return inValid;
     }
-    return !!value;
+    return Boolean(value);
   },
 }
-
-onMounted(() => {
-  console.log(props.item, 'props.item...');
-});
 </script>
 
 <style lang="scss" scoped>

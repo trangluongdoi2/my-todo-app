@@ -11,7 +11,7 @@ export default class Api {
 
   protected async post(
     url: string,
-    input?: Record<string, any>,
+    input: Record<string, any>,
     configs?: Record<string, any>
   ) {
     try {

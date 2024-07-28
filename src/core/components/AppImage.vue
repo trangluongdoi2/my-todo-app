@@ -1,5 +1,10 @@
 <template>
-  <v-img class="app-image" v-bind="$attrs" :src="src" :aspect-ratio="aspectRatio"/>
+  <v-img
+    class="app-image"
+    v-bind="$attrs"
+    :src="src"
+    :aspect-ratio="aspectRatio"
+  />
 </template>
 
 <script lang="ts" setup>

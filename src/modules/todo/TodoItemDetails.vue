@@ -10,10 +10,18 @@
         <p>{{ item.description }}</p>
       </div>
       <div class="flex flex-col gap-y-1">
-        <h2>Attachments <v-chip size="x-small">2</v-chip></h2>
-        <!-- Grid Attachments -->
-        <AppImage :src="AvatarUrl" width="200" height="200"/>
-        <AppImage :src="AvatarUrl" width="200" height="200"/>
+        <div class="flex w-full justify-between items-center">
+          <div class="flex-1">
+            <h2>Attachments <span><v-chip size="x-small">2</v-chip></span></h2>
+          </div>
+          <AppUpload @change="onAddFilesUpload" @update-files="uploadFiles"/>
+        </div>
+        <div v-if="attachments?.length" class="w-full flex flex-wrap gap-1">
+          <div class="w-[200px] h-[200px]" v-for="(file, index) in attachments" :key="index">
+            <AppImage :src="file.filePath || ''" />
+          </div>
+        </div>
+        <div v-else class="w-full max-h-[100px]">No Attachments</div>
       </div>
       <div>
         <h2>Activities</h2>
@@ -24,22 +32,32 @@
 </template>
 
 <script setup lang="ts">
+import { computed, PropType, ref, watch } from 'vue';
 import AppImage from '@/core/components/AppImage.vue';
 import TodoBreadcrumbs from '@/modules/todo/components/TodoBreadcrumbs.vue';
 import AvatarUrl from '@/assets/avatar.jpeg';
 import TodoActivities from '@/modules/todo/TodoActivities.vue';
+import AppUpload, { TempItemUpload } from '@/core/components/AppUpload.vue';
+import TodoApi from './api/todo';
+import { TodoItemDetails } from '@/type';
 
-import { onMounted } from 'vue';
 const props = defineProps({
   item: {
-    type: Object,
+    type: Object as PropType<TodoItemDetails>,
     required: true,
   }
 });
 
-onMounted(() => {
-  console.log(props.item, 'props.item...');
-});
+const tempAttachUploads = ref<any>();
+const attachments = computed(() => [...props.item?.attachments || [], ...tempAttachUploads.value || []]);
+
+const onAddFilesUpload = (items: TempItemUpload[]) => {
+  tempAttachUploads.value = items;
+}
+
+const uploadFiles = (items: File[]) => {
+  TodoApi.uploadAttachs(props.item.id, items);
+}
 </script>
 
 <style lang="scss" scoped>

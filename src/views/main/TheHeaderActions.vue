@@ -42,10 +42,8 @@ const headerActionIcons = [
 const onClick = (item: any) => {
   switch (item.name) {
   case 'notifications':
-    // console.log('notifications...');
     break;
   case 'setting':
-    // console.log('setting...');
     router.push({
       name: 'settings',
     });
