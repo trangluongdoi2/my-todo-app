@@ -30,15 +30,14 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { CardItem } from '@/type';
-// import AppImage from './AppImage.vue';
+import { TodoItem } from '@/type';
 import AppCustomImage from './AppCustomImage.vue';
 
 const emits = defineEmits(['delete-item', 'edit-item']);
 
 defineProps({
   item: {
-    type: Object as PropType<CardItem>,
+    type: Object as PropType<TodoItem>,
     // required: true,
     default: () => ({
       title: 'Title 1',

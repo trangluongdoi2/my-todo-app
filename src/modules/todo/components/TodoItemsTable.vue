@@ -23,11 +23,11 @@
           </template>
         </v-tooltip>
       </template>
-      <template v-slot:item.todoStatus="{ item }">
-        <div :style="{ color: getColor(item.todoStatus), fontWeight: 'bold' }">{{ item.todoStatus }}</div>
+      <template v-slot:item.todoStatus="{ value }">
+        <div :style="{ color: getColor(value), fontWeight: 'bold' }">{{ value }}</div>
       </template>
       <template v-slot:item.actions="{ item }">
-        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">See Details</p>
+        <p class="underline cursor-pointer" @click.stop="navigateToDetails((item as any).id)">See Details</p>
       </template>
     </v-data-table>
     
@@ -133,6 +133,7 @@ const getPriority = (priority: Priority) => {
 }
 
 const navigateToDetails = (todoId: string) => {
+  console.log(todoId, 'todoId..');
   router.push({
     name: 'todoDetails',
     params: {
