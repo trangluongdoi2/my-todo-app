@@ -1,6 +1,6 @@
 export enum TodoStatus {
   DONE = 'DONE',
-  IN_PROGESS = 'IN_PROGESS',
+  IN_PROGESS = 'IN PROGESS',
   STUCK = 'STUCK',
   PENDING = 'PENDING',
 }

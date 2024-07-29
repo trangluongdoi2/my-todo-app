@@ -6,9 +6,6 @@
           <slot :item="item.raw" />
         </v-list-item-title>
       </v-list-item>
-      <!-- <v-list-item v-bind="props">
-        <slot :item="item.raw" />
-      </v-list-item> -->
     </template>
   </v-select>
 </template>
@@ -27,10 +24,10 @@ defineProps({
   }
 });
 
-const emits = defineEmits(['change']);
+const emit = defineEmits(['change']);
 
 const onChange = (e: any) => {
-  console.log('onChange..');
+  emit('change');
 }
 
 onMounted(() => {
