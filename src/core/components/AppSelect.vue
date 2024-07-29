@@ -48,6 +48,8 @@ const currentSelect = defineModel('currentSelect');
 <style lang="scss" scoped>
 .select__label {
   font-size: 0.75rem;
+  font-weight: 700;;
+  color: $text;
 }
 :deep(.v-input__control) {
   .v-field {

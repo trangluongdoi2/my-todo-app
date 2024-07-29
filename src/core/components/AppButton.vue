@@ -9,10 +9,21 @@
     </template>
   </v-btn>
 </template>
+<script lang="ts" setup>
+defineProps({
+  textColor: {
+    type: String, 
+    default: '#ffffff',
+  }
+})
+</script>
 <style scoped lang="scss">
 .app-button {
   &:hover {
     cursor: pointer;
+  }
+  :deep(.v-btn__content) {
+    color: v-bind(textColor)
   }
 }
 </style>

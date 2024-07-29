@@ -1,38 +1,24 @@
 <template>
  <v-form validate-on="blur lazy" @submit.prevent="submit">
-  <!-- <v-divider></v-divider> -->
-    <!-- <AppInput v-model="todoForm.projects" :isImperative="true" label="Name"></AppInput> -->
-     <div class="flex flex-col gap-y-2">
+    <div class="flex flex-col gap-y-2">
+    <AppSelect
+      label="Project"
+      v-model:currentSelect="todoForm.projects[0]"
+      :items="listProjects"
+    />
+      <AppInput v-model="todoForm.todoName" :isImperative="true" label="Name" />
+      <AppInput v-model="todoForm.title" label="Title"></AppInput>
+      <AppInput v-model="todoForm.label" :isImperative="true" label="Label" />
+      <AppInput v-model="todoForm.description" :isImperative="true" label="Description" />
       <AppSelect
-        label="Project"
-        v-model:currentSelect="listProjects[0]"
-        :items="listProjects" />
-       <AppInput v-model="todoForm.todoName" :isImperative="true" label="Name"></AppInput>
-       <AppInput v-model="todoForm.title" label="Title"></AppInput>
-       <AppInput v-model="todoForm.label" :isImperative="true" label="Label"></AppInput>
-       <AppInput v-model="todoForm.description" :isImperative="true" label="Description"></AppInput>
-       <AppSelect
-          label="Piority"
-          v-model:currentSelect="todoForm.priority"
-          :items="listPriority">
-         <template v-slot:default="{ item }">
-           {{ item.label }}
-         </template>
-       </AppSelect>
-     </div>
-    <!-- <v-select v-model="todoForm.priority" item-title="label" :items="listPriority">
-      <template v-slot:item="{ props, item }">
-        <v-list-item v-bind="props">
-          <div class="flex pl-2 gap-x-1">
-            <v-icon :icon="`custom:${item.raw.icon}`" size="20" />
-            <div class="text-[0.75rem]">{{ item.raw.label }}</div>
-          </div>
-        </v-list-item>
-      </template>
-    </v-select>
-    <v-select v-model="todoForm.todoStatus" item-title="label" :items="listStatus">
-      <div>{{ todoForm.todoStatus }}</div>
-    </v-select> -->
+        label="Piority"
+        v-model:currentSelect="todoForm.priority"
+        :items="listPriority">
+        <template v-slot:default="{ item }">
+          {{ item.label }}
+        </template>
+      </AppSelect>
+    </div>
   </v-form>
 </template>
 

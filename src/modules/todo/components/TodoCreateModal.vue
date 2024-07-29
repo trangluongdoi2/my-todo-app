@@ -10,12 +10,12 @@
     </template>
     <template v-slot:actions>
        <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">
-        <v-btn variant="text" @click="handleCancel">
+        <app-button variant="text" @click="handleCancel">
           Cancel
-        </v-btn>
-        <v-btn color="#42B883" :loading="loadingSubmit" @click="handleOk">
+        </app-button>
+        <app-button class="button-create" color="#42B883" :loading="loadingSubmit" @click="handleOk">
           Create Todo
-        </v-btn>
+        </app-button>
       </div>
     </template>
   </AppModal>
@@ -52,9 +52,4 @@ const handleOk = () => {
 const handleCancel = () => {
   visible.value = false;
 };
-
 </script>
-
-<style lang="scss" scoped>
-
-</style>

@@ -7,7 +7,7 @@
       <div class="modal-header flex items-center justify-between p-[24px]">
         <div v-if="title" class="text-lg font-bold">{{ title }}</div>
         <div v-else class="flex flex-1"></div>
-        <v-btn variant="text">
+        <v-btn variant="text" icon size="10">
           <v-icon icon="mdi-close" @click="handleCancel"/>
         </v-btn>
       </div>
@@ -17,12 +17,12 @@
     </div>
     <slot name="actions">
       <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">
-        <v-btn variant="text" @click="handleCancel">
+        <app-button variant="text" @click="handleCancel">
           {{ titleCancel }}
-        </v-btn>
-        <v-btn color="#42B883" @click="handleOk">
+        </app-button>
+        <app-button color="white" @click="handleOk" >
           {{ titleOk }}
-        </v-btn>
+        </app-button>
       </div>
     </slot>
   </v-dialog>
