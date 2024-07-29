@@ -1,18 +1,25 @@
 <template>
  <v-form validate-on="blur lazy" @submit.prevent="submit">
-  <div>Project</div>
   <!-- <v-divider></v-divider> -->
     <!-- <AppInput v-model="todoForm.projects" :isImperative="true" label="Name"></AppInput> -->
-    <AppSelect v-model:currentSelect="listProjects[0]" :items="listProjects" />
-    <AppInput v-model="todoForm.todoName" :isImperative="true" label="Name"></AppInput>
-    <AppInput v-model="todoForm.title" label="Title"></AppInput>
-    <AppInput v-model="todoForm.label" :isImperative="true" label="Label"></AppInput>
-    <AppInput v-model="todoForm.description" :isImperative="true" label="Description"></AppInput>
-    <AppSelect v-model:currentSelect="todoForm.priority" :items="listPriority">
-      <template v-slot:default="{ item }">
-        {{ item.label }}
-      </template>
-    </AppSelect>
+     <div class="flex flex-col gap-y-2">
+      <AppSelect
+        label="Project"
+        v-model:currentSelect="listProjects[0]"
+        :items="listProjects" />
+       <AppInput v-model="todoForm.todoName" :isImperative="true" label="Name"></AppInput>
+       <AppInput v-model="todoForm.title" label="Title"></AppInput>
+       <AppInput v-model="todoForm.label" :isImperative="true" label="Label"></AppInput>
+       <AppInput v-model="todoForm.description" :isImperative="true" label="Description"></AppInput>
+       <AppSelect
+          label="Piority"
+          v-model:currentSelect="todoForm.priority"
+          :items="listPriority">
+         <template v-slot:default="{ item }">
+           {{ item.label }}
+         </template>
+       </AppSelect>
+     </div>
     <!-- <v-select v-model="todoForm.priority" item-title="label" :items="listPriority">
       <template v-slot:item="{ props, item }">
         <v-list-item v-bind="props">

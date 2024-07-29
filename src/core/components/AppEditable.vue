@@ -86,8 +86,7 @@ span {
     &__input {
       height: 30px;
       min-height: 30px;
-      padding: 0;
-      padding: 0 0.25rem;
+      padding: 0 0.5rem;
       font-size: 0.75rem;
     }
     .v-input__control {

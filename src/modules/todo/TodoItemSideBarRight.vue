@@ -2,7 +2,7 @@
   <v-divider vertical></v-divider>
   <div class="details-container flex flex-col gap-y-4 h-full min-w-[500px] max-w-[500px] p-2 overflow-y-auto">
     <div class="details-status bg-[#42B883] rounded-[0.25rem] w-fit h-[32px] flex items-center justify-center p-1">
-      <span class="bold text-[#1D2125]">{{ todoDetails.todoStatus }}</span>
+      <span class="bold text-[#1D2125]">{{ item.todoStatus }}</span>
     </div>
     <div class="flex flex-row justify-between items-center gap-y-4">
       <h2 class="title max-w-[170px]">Assignee</h2>

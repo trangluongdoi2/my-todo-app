@@ -1,12 +1,13 @@
 <template>
   <div class="input-wrapper">
-    <label v-if="label" class="input__label">
+    <div v-if="label" class="input__label">
       <span v-if="isImperative" class="text-[#FD9891]">*</span>
       {{ label }}
-    </label>
+    </div>
     <v-text-field
       class="input__content"
       v-model="inputValue"
+      variant="solo"
       v-bind="$attrs"
       @blur="onChange"
     ></v-text-field>
@@ -43,7 +44,39 @@ const onChange = (e: FocusEvent) => {
 .input-wrapper {
   .input__label {
     font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+    color: $text;
   }
 }
-
+:deep(.v-input) {
+  height: 36px;
+  .v-field {
+    padding: 0;
+    font-size: 0.75rem;
+    height: inherit;
+    outline: 1px solid $border-input;
+    &--focused {
+      outline: 1px solid $green-base;
+    }
+    &__input {
+      height: 36px;
+      min-height: 36px;
+      padding: 0 0.5rem;
+      font-size: 0.75rem;
+    }
+    .v-input__control {
+      height: 36px;
+    }
+    .v-text-field .v-input__details {
+      padding-inline: 0;
+    }
+    .v-input__details {
+      min-height: 0;
+    }
+  }
+  .v-field.v-field--variant-solo {
+    background: $background-input-pressed;
+  }
+}
 </style>

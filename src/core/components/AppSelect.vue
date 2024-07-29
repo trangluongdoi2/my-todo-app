@@ -1,5 +1,12 @@
 <template>
-  <v-select v-model="currentSelect" item-title="label" :items="items">
+  <label class="select__label" v-if="label">{{ label }}</label>
+  <v-select 
+    v-model="currentSelect"
+    item-title="label" 
+    :items="items"
+    variant="solo"
+    :hide-details="true"
+  >
     <template v-slot:item="{ props, item }">
       <v-list-item v-bind="props" @click="onChange">
         <v-list-item-title>
@@ -11,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineModel, onMounted, PropType } from 'vue';
+import { defineProps, defineModel, PropType } from 'vue';
 
 type Items = {
   value?: any,
@@ -21,6 +28,10 @@ defineProps({
   items: {
     type: Array as PropType<Items[]>,
     required: true,
+  },
+  label: {
+    type: String,
+    default: '',
   }
 });
 
@@ -28,16 +39,40 @@ const emit = defineEmits(['change']);
 
 const onChange = (e: any) => {
   emit('change');
-}
+};
 
-onMounted(() => {
-  console.log('onMounted AppSelect...')
-})
-
-const currentSelect = defineModel('currentSelect')
+const currentSelect = defineModel('currentSelect');
 
 </script>
 
 <style lang="scss" scoped>
-
+.select__label {
+  font-size: 0.75rem;
+}
+:deep(.v-input__control) {
+  .v-field {
+    height: 36px;
+    &__input {
+      height: 36px;
+      min-height: 36px;
+      padding: 0 0.5rem;
+      .v-select__selection {
+        &-text {
+          font-size: 0.75rem;
+          color: white;
+        }
+      }
+      &__details {
+        padding-inline: 0;
+      }
+    }
+  }
+  .v-field.v-field--variant-solo {
+    background: $background-input-pressed;
+  }
+}
+:deep(.v-input-details) {
+  padding-inline: 0;
+  min-height: 0;
+}
 </style>

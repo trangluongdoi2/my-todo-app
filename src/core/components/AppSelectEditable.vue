@@ -1,17 +1,18 @@
 <template>
   <AppSelect
+    class="app-select--editable"
     v-if="isEditable && !disabled"
     v-model:currentSelect="modelValue"
     variant="solo"
-    hidden-details
+    :hide-details="true"
     :items="options"
     @change="onChange"
   />
   <span
     v-else
     class="w-full"
-    @click.stop="onClick"
-    @dblclick.stop="dblClick"
+    @click="onClick"
+    @dblclick="dblClick"
   >
     {{ modelValue || 'None' }}
   </span>
@@ -69,21 +70,20 @@ const dblClick = () => {
 span {
   font-size: 0.75rem;
 }
-:deep(.v-input) {
-  .v-input__controls {
-    height: 30px;
+.app-select--editable {
+  :deep(.v-input__control) {
     .v-field {
       height: 30px;
+      &__input {
+        height: 30px;
+        min-height: 30px;
+        padding: 0 0.5rem;
+      }
     }
-    .v-text-field .v-input__details {
-      padding-inline: 0;
+    .v-field.v-field--variant-solo {
+      background: $background-input-pressed;
+      outline: 1px solid $green-base;
     }
-  }
-  .v-text-field .v-input__details {
-    min-height: 0;
-  }
-  .v-input__details {
-    min-height: 0;
   }
 }
 </style>
