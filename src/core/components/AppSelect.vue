@@ -1,20 +1,22 @@
 <template>
-  <label class="select__label" v-if="label">{{ label }}</label>
-  <v-select 
-    v-model="currentSelect"
-    item-title="label" 
-    :items="items"
-    variant="solo"
-    :hide-details="true"
-  >
-    <template v-slot:item="{ props, item }">
-      <v-list-item v-bind="props" @click="onChange">
-        <v-list-item-title>
-          <slot :item="item.raw" />
-        </v-list-item-title>
-      </v-list-item>
-    </template>
-  </v-select>
+  <div class="select-wrapper">
+    <div class="select__label" v-if="label">{{ label }}</div>
+    <v-select 
+      v-model="currentSelect"
+      item-title="label" 
+      :items="items"
+      variant="solo"
+      :hide-details="true"
+    >
+      <template v-slot:item="{ props, item }">
+        <v-list-item v-bind="props" @click="onChange">
+          <v-list-item-title>
+            <slot :item="item.raw" />
+          </v-list-item-title>
+        </v-list-item>
+      </template>
+    </v-select>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -50,10 +52,12 @@ const currentSelect = defineModel('currentSelect');
   font-size: 0.75rem;
   font-weight: 700;;
   color: $text;
+  margin-bottom: 0.5rem;
 }
 :deep(.v-input__control) {
   .v-field {
     height: 36px;
+    outline: 1px solid $border-input;
     &__input {
       height: 36px;
       min-height: 36px;
