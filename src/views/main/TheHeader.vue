@@ -37,7 +37,7 @@ const isShowCreateTodoModal = ref<boolean>(false);
 const router = useRouter();
 
 const backToDashboard = () => {
-  router.push({ name: 'dashboard' });
+  router.push({ name: 'todo' });
 };
 
 const onCreateIssue = () => {
