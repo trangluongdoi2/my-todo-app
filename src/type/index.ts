@@ -11,6 +11,12 @@ export enum Priority {
   HIGH = 'HIGH',
   HIGHEST = 'HIGHEST',
 }
+
+export type TodoAttachment = {
+  id: string,
+  filePath: string,
+  filename: string,
+}
 export interface TodoItem {
   id?: string;
   title?: string,
@@ -27,7 +33,7 @@ export interface TodoItemDetails extends Omit<TodoItem, 'id'> {
   id: string,
   createdAt: string,
   updateAt: string,
-  attachments: string[],
+  attachments: TodoAttachment[],
 }
 
 export type DisplayMode = 'table' | 'grid';

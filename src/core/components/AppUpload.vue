@@ -15,10 +15,11 @@
 </template>
 
 <script setup lang="ts">
-export type TempItemUpload = {
-  fileName: string,
-  name?: string,
-  filePath?: string,
+import { uuid } from '@/common/helper/utility';
+import { TodoAttachment } from '@/type';
+
+export interface TempItemUpload extends TodoAttachment {
+  name: string,
 }
 
 const accepts: Record<string, string> = {
@@ -44,10 +45,11 @@ const onAddFiles = (e: Event) => {
     return;
   }
   const inputFiles = Array.from(target.files);
-  const items = inputFiles.map((file: File) => {
-    console.log(file, 'file..');
+  const items: TempItemUpload[] = inputFiles.map((file: File) => {
+    const [nameWithoutExtension] = file.name.split(/(?=\.[^.]+$)/);
     const newTempUploadItem = {
-      name: file.name,
+      id: uuid(),
+      name: nameWithoutExtension,
       fileName: file.name,
       filePath: URL.createObjectURL(file),
     }

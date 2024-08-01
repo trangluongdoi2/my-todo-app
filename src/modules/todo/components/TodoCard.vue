@@ -36,7 +36,7 @@
               size="28"
               type="text"
               v-bind="props"
-               @click="$emit('delete-item', item)"
+              @click="$emit('delete-item', item)"
             >
               <v-icon color="#FD9891" icon="custom:delete" />
             </AppButton>
