@@ -25,7 +25,7 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue';
-import { TodoItem, Priority, TodoStatus } from '@/type';
+import { TodoItem, Priority, TodoStatus } from '@/types';
 import AppInput from '@/core/components/AppInput.vue';
 import AppSelect from '@/core/components/AppSelect.vue';
 import AppDragDropUpload from '@/core/components/AppDragDropUpload.vue';

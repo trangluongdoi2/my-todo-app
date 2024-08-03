@@ -37,7 +37,7 @@ defineProps({
   loading: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 
 defineEmits(['download']);

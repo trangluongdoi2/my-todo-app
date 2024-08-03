@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
-import { DisplayMode, TodoItem } from '@/type';
+import { DisplayMode, TodoItem } from '@/types';
 import EventBus from '@/core/composables/useEventbus';
 import TodoItemsTable from './components/TodoItemsTable.vue';
 import TodoItemsGrid from './components/TodoItemsGrid.vue';

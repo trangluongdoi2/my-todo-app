@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { computed, PropType, reactive, ref } from 'vue';
-import { Priority } from '@/type';
+import { Priority } from '@/types';
 import AvatarUrl from '@/assets/avatar.jpeg';
 import { capitalize } from '@/common/string-utils';
 import AppEditable from '@/core/components/AppEditable.vue';

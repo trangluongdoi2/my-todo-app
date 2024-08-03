@@ -18,7 +18,7 @@
         </div>
         <div v-if="attachments?.length" class="w-full flex flex-wrap gap-2">
           <div class="w-[100px] h-[100px]" v-for="(file, index) in attachments" :key="index">
-            <TodoAttachmentImage :src="file.filePath" @download="onDownloadAttach(file)"/>
+            <TodoAttachmentImage :src="file.filePath" :item="file" @download="onDownloadAttach(file)"/>
           </div>
         </div>
         <div v-else class="w-full max-h-[100px]">No Attachments</div>
@@ -33,13 +33,14 @@
 
 <script setup lang="ts">
 import { computed, PropType, ref, watch } from 'vue';
-import { TodoAttachment, TodoItemDetails } from '@/type';
+import { TodoAttachment, TodoItemDetails } from '@/types';
 import TodoBreadcrumbs from '@/modules/todo/components/TodoBreadcrumbs.vue';
 import TodoAttachmentImage from '@/modules/todo/components/TodoAttachmentImage.vue';
 import TodoActivities from '@/modules/todo/TodoActivities.vue';
 import AppUpload, { TempItemUpload } from '@/core/components/AppUpload.vue';
 import TodoApi from './api/todo';
 import { useS3Storage } from '@/core/composables/useS3Storage';
+import { base64ToArrayBuffer, saveArrayToFile } from '@/common/file';
 
 const props = defineProps({
   item: {
@@ -48,18 +49,12 @@ const props = defineProps({
   }
 });
 
-const s3Storage = useS3Storage();
-
 const tempAttachUploads = ref<any[]>([]);
-const attachments = computed(() => (props.item?.attachments).concat(tempAttachUploads.value));
+const attachments = computed(() => (props.item?.attachments || []).concat(tempAttachUploads.value));
 
-const onDownloadAttach = (file: any) => {
-  // console.log(file, 'onDownloadAttach..');
-  console.log(file.filePath, 'file.filePath...');
-  s3Storage.download(file.fileName || '');
-  const aElement = document.createElement('a') as HTMLElement;
-  console.log(aElement, 'aElement...');
-  // aElement.a
+const onDownloadAttach = async (file: any) => {
+  const base64 = await TodoApi.downloadAttachment(file.fileName);
+  saveArrayToFile(base64, file.fileName);
 }
 
 const onAddFilesUpload = (items: TempItemUpload[]) => {
@@ -70,11 +65,11 @@ const uploadFiles = (items: File[]) => {
   TodoApi.uploadAttachs(props.item.id, items);
 }
 
-watch(attachments, () => {
-  console.log(attachments.value, 'attachments.value...');
-}, { immediate: true });
-</script>
+// watch(attachments, () => {
+//   console.log(attachments.value, 'attachments.value...');
+// }, { immediate: true });
 
+</script>
 <style lang="scss" scoped>
 .breadcrumbs {
   position: sticky;

@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { uuid } from '@/common/helper/utility';
-import { TodoAttachment } from '@/type';
+import { uuid } from '@/common/string-utils';
+import { TodoAttachment } from '@/types';
 
 export interface TempItemUpload extends TodoAttachment {
   name: string,

@@ -30,11 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, PropType, watch } from 'vue';
-import { TodoItem, TodoStatus } from '@/type';
-import TodoCard from './TodoCard.vue';
-import TodoDraggableGrid from './TodoDraggableGrid.vue';
+import { PropType, ref, watch } from 'vue';
+import { TodoItem, TodoStatus } from '@/types';
 import TodoDeleteModal from './TodoDeleteModal.vue';
+import TodoDraggableGrid from './TodoDraggableGrid.vue';
 import TodoApi from '@/modules/todo/api/todo';
 import router from '@/router';
 

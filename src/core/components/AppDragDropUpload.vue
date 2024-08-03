@@ -37,10 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, ref } from 'vue';
+import { ref } from 'vue';
 import AppImage from './AppImage.vue';
-import { kebaCase, uuid } from '@/common/helper/utility';
 import AppEditable from './AppEditable.vue';
+import { kebaCase, uuid } from '@/common/string-utils';
 
 export type TempItemUpload = {
   fileName: string,
