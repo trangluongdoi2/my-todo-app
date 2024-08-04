@@ -1,8 +1,8 @@
 <template>
   <v-divider vertical></v-divider>
   <div class="details-container flex flex-col gap-y-4 h-full min-w-[500px] max-w-[500px] p-2 overflow-y-auto">
-    <div class="details-status bg-[#42B883] rounded-[0.25rem] w-fit h-[32px] flex items-center justify-center p-1">
-      <span class="bold text-[#1D2125]">{{ item.todoStatus }}</span>
+    <div class="details-status bg-[#42B883] rounded-[0.25rem] w-fit h-[32px] flex items-center justify-center p-2">
+      <span class="font-bold text-[#1D2125]">{{ capitalize(item.todoStatus, false) }}</span>
     </div>
     <div class="flex flex-row justify-between items-center gap-y-4">
       <h2 class="title max-w-[170px]">Assignee</h2>
@@ -17,12 +17,6 @@
         <AppSelectEditable v-model="currentSelect" :options="listPriority"></AppSelectEditable>
       </div>
     </div>
-    <!-- <div class="flex flex-row justify-between items-center gap-x-4">
-      <h2 class="title max-w-[170px]">Test</h2>
-      <div class="content w-[60%] h-full">
-        <AppEditable v-model="todoDetails.priority"/>
-      </div>
-    </div> -->
     <div class="flex flex-row justify-between items-center gap-x-4">
       <h2 class="title max-w-[170px]">Orignal Estimate</h2>
       <div class="content w-[60%] h-full">
@@ -40,12 +34,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, PropType, reactive, ref, watch } from 'vue';
+import { computed, PropType, reactive, ref } from 'vue';
+import { Priority } from '@/types';
 import AvatarUrl from '@/assets/avatar.jpeg';
+import { capitalize } from '@/common/string-utils';
 import AppEditable from '@/core/components/AppEditable.vue';
 import AppSelectEditable from '@/core/components/AppSelectEditable.vue';
 import AppTimeTracking from '@/core/components/AppTimeTracking.vue';
-import { Priority } from '@/type';
 
 const props = defineProps({
   item: {
@@ -53,7 +48,6 @@ const props = defineProps({
     required: true,
   }
 });
-
 
 const todoExpandnfos = reactive({
   priority: 'Medium',

@@ -10,7 +10,7 @@
       :is="svgComponent"
       aria-hidden="true"
       focusable="false"
-      :class="{'svg': color || 'currentColor'}"
+      :class="{ 'svg': color || 'currentColor' }"
       :style="svgStyles"
     >
     </component>
@@ -95,7 +95,6 @@ const spanClass = computed(() => {
     height: v-bind(h);
   }
 }
-
 .disable {
   cursor: not-allowed;
 }

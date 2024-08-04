@@ -36,7 +36,7 @@
               size="28"
               type="text"
               v-bind="props"
-               @click="$emit('delete-item', item)"
+              @click="$emit('delete-item', item)"
             >
               <v-icon color="#FD9891" icon="custom:delete" />
             </AppButton>
@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import AvatarUrl from '@/assets/avatar.jpeg';
 import AppButton from '@/core/components/AppButton.vue';
-import { TodoItem } from '@/type';
+import { TodoItem } from '@/types';
 import { PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 

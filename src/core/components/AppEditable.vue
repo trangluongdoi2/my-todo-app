@@ -14,6 +14,7 @@
     <span
       class="w-full"
       v-else
+      :title="displayValue || modelValue"
       @click.stop="onClick"
       @dblclick.stop="dblClick"
     >
@@ -43,6 +44,10 @@ const props = defineProps({
   },
   rules: {
     type: Object as PropType<TRules>,
+  },
+  displayValue: {
+    type: String,
+    default: '',
   }
 });
 

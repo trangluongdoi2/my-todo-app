@@ -1,15 +1,16 @@
 <template>
  <v-form validate-on="blur lazy" @submit.prevent="submit">
-    <div class="flex flex-col gap-y-2">
+    <div class="flex flex-col gap-y-4">
     <AppSelect
       label="Project"
       v-model:currentSelect="todoForm.projects[0]"
       :items="listProjects"
     />
       <AppInput v-model="todoForm.todoName" :isImperative="true" label="Name" />
-      <AppInput v-model="todoForm.title" label="Title"></AppInput>
+      <AppInput v-model="todoForm.title" label="Title" />
       <AppInput v-model="todoForm.label" :isImperative="true" label="Label" />
       <AppInput v-model="todoForm.description" :isImperative="true" label="Description" />
+      <AppDragDropUpload label="Attachments" v-model="currentFiles"/>
       <AppSelect
         label="Piority"
         v-model:currentSelect="todoForm.priority"
@@ -23,10 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
+import { TodoItem, Priority, TodoStatus } from '@/types';
 import AppInput from '@/core/components/AppInput.vue';
 import AppSelect from '@/core/components/AppSelect.vue';
-import { TodoItem, Priority, TodoStatus } from '@/type';
+import AppDragDropUpload from '@/core/components/AppDragDropUpload.vue';
 
 const emit = defineEmits(['change']);
 
@@ -41,10 +43,9 @@ const initIssue: TodoItem = {
   todoStatus: TodoStatus.PENDING,
 }
 
-const projects = ['Project 1', 'Project 2', 'Project 3'];
-// const currentProjects = 
-
 const todoForm = reactive(initIssue);
+
+const currentFiles = ref<File[]>();
 
 const listPriority = [
   { label: Priority.HIGHEST, icon: 'highest' },
@@ -53,30 +54,26 @@ const listPriority = [
   { label: Priority.LOW, icon: 'low' },
 ];
 
+// need get api to get projects...
 const listProjects = [
-{ label: 'Project 1' },
-{ label: 'Project 2' },
-{ label: 'Project 3' },
-{ label: 'Project 4' },
-]
-
-const listStatus = [
-  { label: 'Pending', value: TodoStatus.PENDING },
-  { label: 'In Progress', value: TodoStatus.IN_PROGESS },
-  { label: 'Done', value: TodoStatus.DONE },
+  { label: 'Project 1' },
+  { label: 'Project 2' },
+  { label: 'Project 3' },
+  { label: 'Project 4' },
 ];
 
 const submit = () => {
   console.log(todoForm, 'todoForm...');
-}
+};
 
 onMounted(() => {
   console.log('onMounted..');
-})
+});
 
 watch(() => todoForm, () => {
   emit('change', todoForm);  
 }, { immediate: true, deep: true });
+
 </script>
 
 <style lang="scss" scoped>

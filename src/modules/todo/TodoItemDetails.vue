@@ -16,9 +16,9 @@
           </div>
           <AppUpload @change="onAddFilesUpload" @update-files="uploadFiles"/>
         </div>
-        <div v-if="attachments?.length" class="w-full flex flex-wrap gap-1">
-          <div class="w-[200px] h-[200px]" v-for="(file, index) in attachments" :key="index">
-            <AppImage :src="file.filePath || ''" />
+        <div v-if="attachments?.length" class="w-full flex flex-wrap gap-2">
+          <div class="w-[100px] h-[100px]" v-for="(file, index) in attachments" :key="index">
+            <TodoAttachmentImage :src="file.filePath" :item="file" @download="onDownloadAttach(file)"/>
           </div>
         </div>
         <div v-else class="w-full max-h-[100px]">No Attachments</div>
@@ -33,13 +33,14 @@
 
 <script setup lang="ts">
 import { computed, PropType, ref, watch } from 'vue';
-import AppImage from '@/core/components/AppImage.vue';
+import { TodoAttachment, TodoItemDetails } from '@/types';
 import TodoBreadcrumbs from '@/modules/todo/components/TodoBreadcrumbs.vue';
-import AvatarUrl from '@/assets/avatar.jpeg';
+import TodoAttachmentImage from '@/modules/todo/components/TodoAttachmentImage.vue';
 import TodoActivities from '@/modules/todo/TodoActivities.vue';
 import AppUpload, { TempItemUpload } from '@/core/components/AppUpload.vue';
 import TodoApi from './api/todo';
-import { TodoItemDetails } from '@/type';
+import { useS3Storage } from '@/core/composables/useS3Storage';
+import { base64ToArrayBuffer, saveArrayToFile } from '@/common/file';
 
 const props = defineProps({
   item: {
@@ -48,8 +49,13 @@ const props = defineProps({
   }
 });
 
-const tempAttachUploads = ref<any>();
-const attachments = computed(() => [...props.item?.attachments || [], ...tempAttachUploads.value || []]);
+const tempAttachUploads = ref<any[]>([]);
+const attachments = computed(() => (props.item?.attachments || []).concat(tempAttachUploads.value));
+
+const onDownloadAttach = async (file: any) => {
+  const base64 = await TodoApi.downloadAttachment(file.fileName);
+  saveArrayToFile(base64, file.fileName);
+}
 
 const onAddFilesUpload = (items: TempItemUpload[]) => {
   tempAttachUploads.value = items;
@@ -58,8 +64,12 @@ const onAddFilesUpload = (items: TempItemUpload[]) => {
 const uploadFiles = (items: File[]) => {
   TodoApi.uploadAttachs(props.item.id, items);
 }
-</script>
 
+// watch(attachments, () => {
+//   console.log(attachments.value, 'attachments.value...');
+// }, { immediate: true });
+
+</script>
 <style lang="scss" scoped>
 .breadcrumbs {
   position: sticky;

@@ -59,10 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import { formatDateToDDMMYYY } from '@/common/date';
-import { Priority } from '@/type';
 import { onMounted, defineProps, PropType, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
+import { Priority } from '@/types';
+import { formatDateToDDMMYYY } from '@/common/date';
 
 const props = defineProps({
   items: {

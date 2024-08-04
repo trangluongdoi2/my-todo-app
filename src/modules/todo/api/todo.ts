@@ -8,6 +8,7 @@ const TODO_URL = {
   UPDATE_TODO: `${API_URL}/api/todo/update`,
   DELETE_TODO: `${API_URL}/api/todo/delete`,
   UPLOAD_ATTACH: `${API_URL}/api/todo/upload`,
+  DOWNLOAD_ATTACH: `${API_URL}/api/todo/download`,
 };
 
 export class TodoApi extends Api {
@@ -52,6 +53,11 @@ export class TodoApi extends Api {
 
   async deleteTodo(id: string) {
     const res = await this.delete(`${TODO_URL.DELETE_TODO}/${id}`);
+    return res.data;
+  }
+
+  async downloadAttachment(key: string) {
+    const res = await this.get(`${TODO_URL.DOWNLOAD_ATTACH}/${key}`);
     return res.data;
   }
 }

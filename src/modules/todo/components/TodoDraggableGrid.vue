@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps, PropType, watch, computed } from "vue";
-import { TodoItem, TodoStatus } from "@/type";
+import { TodoItem, TodoStatus } from "@/types";
 import draggable from "vuedraggable";
 import TodoCard from "./TodoCard.vue";
 
