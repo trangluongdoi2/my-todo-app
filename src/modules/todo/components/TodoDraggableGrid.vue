@@ -1,6 +1,6 @@
 <template>
-  <div class="test flex gap-x-4">
-    <div class="flex-1">
+  <div class="flex-1 flex gap-x-4 overflow-hidden">
+    <div class="flex-1 overflow-auto">
       <draggable
         class="flex flex-col h-full gap-y-2"
         group="todo"

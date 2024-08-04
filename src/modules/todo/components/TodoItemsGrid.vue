@@ -1,5 +1,8 @@
 <template>
-  <div class="issues-container h-full overflow-hidden">
+  <template v-if="loading">
+    <SkeletonTodoGrid />
+  </template>
+  <div v-else class="h-full flex flex-col overflow-hidden">
     <div class="flex w-full mb-2 gap-x-[10px] h-[3rem]">
       <div class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
         PENDING {{ itemsPending.length }}
@@ -31,11 +34,12 @@
 
 <script setup lang="ts">
 import { PropType, ref, watch } from 'vue';
+import router from '@/router';
 import { TodoItem, TodoStatus } from '@/types';
 import TodoDeleteModal from './TodoDeleteModal.vue';
 import TodoDraggableGrid from './TodoDraggableGrid.vue';
 import TodoApi from '@/modules/todo/api/todo';
-import router from '@/router';
+import SkeletonTodoGrid from '../skeleton/SkeletonTodoGrid.vue';
 
 const props = defineProps({
   items: {
@@ -120,28 +124,3 @@ watch(() => props.items, () => {
 }, { immediate: true, deep: true });
 
 </script>
-
-<style lang="scss" scoped>
-.issues-container {
-  height: 100%;
-  .issues-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(10rem, 1fr));
-    gap: 10px;
-    height: 100%;
-    .todo-done, .todo-inprogress, .todo-pending {
-      border-radius: 0.5rem;
-      padding: 0.5rem;
-    }
-    .todo-pending {
-      background-color: $surface-suken;
-    }
-    .todo-inprogress {
-      background-color: $surface-suken;
-    }
-    .todo-done {
-      background-color: $surface-suken;
-    }
-  }
-}
-</style>

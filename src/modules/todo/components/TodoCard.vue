@@ -83,7 +83,8 @@ const navigateToDetails = (todoId: string) => {
 .todo-card {
   border-radius: 0.25rem;
   background-color: $background-input;
-  height: clamp(20rem, 1vw + 20rem, 25rem);
+  max-height: 200px;
+  height: clamp(20rem, 1vw + 10rem, 10rem);
   &:hover {
     background-color: $background-selected
   }

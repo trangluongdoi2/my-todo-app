@@ -1,5 +1,8 @@
 <template>
-  <v-layout class="overflow-hidden">
+  <div v-if="loading">
+    <app-skeleton-table />
+  </div>
+  <v-layout v-else class="overflow-hidden">
     <v-data-table
       class="todo-table"
       :headers="headers"
@@ -30,8 +33,7 @@
         <p class="underline cursor-pointer" @click.stop="navigateToDetails((item as any).id)">See Details</p>
       </template>
     </v-data-table>
-    
-<!-- <v-data-table-server
+  <!-- <v-data-table-server
       v-model:items-per-page="itemsPerPage"
       :headers="headers"
       :items="items"

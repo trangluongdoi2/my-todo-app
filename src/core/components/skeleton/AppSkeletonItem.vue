@@ -5,7 +5,7 @@
 import { computed, defineProps } from 'vue';
 const props = defineProps({
   height: {
-    type: Number,
+    type: [Number, String],
   }
 });
 

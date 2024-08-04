@@ -4,7 +4,7 @@
     <v-divider></v-divider>
     <TodoDataActions @change-mode="onChangeMode"/>
     <keep-alive>
-      <div>
+      <div class="h-full overflow-hidden">
         <TodoItemsTable
           v-if="displayMode === 'table'" 
           :items="currentItemsList" 
@@ -35,11 +35,12 @@ const currentItemsList = ref<any>([]);
 const displayMode = ref<DisplayMode>('grid');
 
 const getListItems = async () => {
-  console.log('getListItems...');
   isFetchingTodosList.value = true;
-  const res = await TodoApi.getTodosList();
-  console.log(res, 'res...');
-  isFetchingTodosList.value = false;
+  const res = await TodoApi.getTodosList().finally(() => {
+    setTimeout(() => {
+      isFetchingTodosList.value = false;
+    });
+  });
   currentItemsList.value = res;
 };
 
