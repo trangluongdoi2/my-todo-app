@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full min-h-[full]">
+  <div class="h-full w-full min-h-[full] editable-container">
     <v-text-field
       v-if="isEditable && !disabled"
       ref="inputElement"
@@ -79,6 +79,11 @@ const dblClick = () => {
 </script>
 
 <style lang="scss" scoped>
+.editable-container {
+  &:hover {
+    background-color: $background-input-pressed;
+  }
+}
 span {
   font-size: 0.75rem;
 }

@@ -1,5 +1,8 @@
 <template>
-  <div class="overflow-y-auto p-[1.25rem] text-[16px]">
+  <div v-if="loading" class="overflow-y-auto">
+    <SkeletonTodoDetails />
+  </div>
+  <div v-else class="overflow-y-auto p-[1.25rem] text-[16px]">
     <TodoBreadcrumbs class="breadcrumbs"/>
     <div class="flex flex-col gap-y-2 mt-4 text-[14px]">
       <div>
@@ -32,20 +35,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType, ref, watch } from 'vue';
-import { TodoAttachment, TodoItemDetails } from '@/types';
-import TodoBreadcrumbs from '@/modules/todo/components/TodoBreadcrumbs.vue';
-import TodoAttachmentImage from '@/modules/todo/components/TodoAttachmentImage.vue';
-import TodoActivities from '@/modules/todo/TodoActivities.vue';
-import AppUpload, { TempItemUpload } from '@/core/components/AppUpload.vue';
+import { computed, PropType, ref } from 'vue';
+import { TodoItemDetails } from '@/types';
 import TodoApi from './api/todo';
-import { useS3Storage } from '@/core/composables/useS3Storage';
-import { base64ToArrayBuffer, saveArrayToFile } from '@/common/file';
+import { saveArrayToFile } from '@/common/file';
+import AppUpload, { TempItemUpload } from '@/core/components/AppUpload.vue';
+import TodoAttachmentImage from '@/modules/todo/components/TodoAttachmentImage.vue';
+import TodoBreadcrumbs from '@/modules/todo/components/TodoBreadcrumbs.vue';
+import TodoActivities from '@/modules/todo/TodoActivities.vue';
+import SkeletonTodoDetails from './skeleton/SkeletonTodoDetails.vue';
 
 const props = defineProps({
   item: {
     type: Object as PropType<TodoItemDetails>,
     required: true,
+  },
+  loading: {
+    type: Boolean,
+    default: false,
   }
 });
 
@@ -64,10 +71,6 @@ const onAddFilesUpload = (items: TempItemUpload[]) => {
 const uploadFiles = (items: File[]) => {
   TodoApi.uploadAttachs(props.item.id, items);
 }
-
-// watch(attachments, () => {
-//   console.log(attachments.value, 'attachments.value...');
-// }, { immediate: true });
 
 </script>
 <style lang="scss" scoped>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full w-full overflow-hidden">
-    <TodoItemDetails class="flex-1" v-if="item" :item="item" />
-    <TodoItemSideBarRight v-if="item" :item="item" />
+    <TodoItemDetails class="flex-1" v-if="item" :item="item" :loading="isLoadingTodoItem" />
+    <TodoItemSideBarRight v-if="item" :item="item" :loading="isLoadingTodoItem" />
   </div>
 </template>
 
@@ -14,13 +14,17 @@ import TodoItemDetails from '@/modules/todo/TodoItemDetails.vue';
 
 const route = useRoute();
 const item = ref<any>();
+const isLoadingTodoItem = ref<boolean>(false);
 
 const getDetails = async () => {
   const { id } = route.params;
   if (id) {
-    item.value = await TodoApi.getTodoById(id as string);
-    const { createdAt } = item.value;
-    console.log(createdAt, 'createdAt..');
+    isLoadingTodoItem.value = true;
+    item.value = await TodoApi.getTodoById(id as string).finally(() => {
+      setTimeout(() => {
+        isLoadingTodoItem.value = false;
+      }, 500);
+    });
   }
 }
 
