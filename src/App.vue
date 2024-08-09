@@ -1,6 +1,3 @@
 <template>
-  <TheMain />
+  <router-view></router-view>
 </template>
-<script setup lang="ts">
-import TheMain from '@/views/main/TheMain.vue';
-</script>
