@@ -1,10 +1,11 @@
+import EmptyRouterView from "./EmptyRouterView.vue";
 import PageNotFound from "@/router/PageNotFound.vue";
 import TodoLayout from "@/modules/todo/TodoLayout.vue";
 import TodoItemLayout from "@/modules/todo/TodoItemLayout.vue";
 import Demo from "@/modules/demo/Demo.vue";
 import Courses from "@/modules/courses/Courses.vue";
-import EmptyRouterView from "./EmptyRouterView.vue";
 import TheMain from "@/views/main/TheMain.vue";
+import Dashboard from "@/views/dashboard/Dashboard.vue";
 
 export const routes = [
   {
@@ -16,10 +17,19 @@ export const routes = [
     },
     children: [
       {
-        name: 'dashboard',
+        name: '',
         path: '/',
         component: TheMain,
+        redirect: () => {
+          return { name: 'todo' };
+        },
         children: [
+          {
+            name: 'dashboard',
+            path: '/dashboard',
+            component: Dashboard,
+            meta: { mode: 'Dashboard' }
+          },
           {
             name: 'todo',
             path: '/todo',

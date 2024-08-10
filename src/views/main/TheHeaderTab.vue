@@ -5,7 +5,7 @@
         v-for="(item, i) in tabs"
         :key="i"
         :value="item.name"
-        @click="item.event()"
+        @click="item.event && item.event()"
         :append-icon="item?.children ? 'mdi-chevron-down' : ''"
       >
         <div v-if="item?.children">
@@ -48,18 +48,11 @@ defineProps({
 
 const router = useRouter();
 const tabs = [
-  // {
-  //   name: 'Dashboard',
-  //   id: 1,
-  //   event: () => {
-  //     router.push('/dashboard');
-  //   }
-  // },
   {
     name: 'Dashboard',
     id: 1,
     event: () => {
-      router.push('/todo');
+      router.push('/dashboard');
     }
   },
   {
@@ -92,9 +85,6 @@ const tabs = [
         }
       }
     ],
-    event: () => {
-      router.push('/demo');
-    }
   },
 ];
 

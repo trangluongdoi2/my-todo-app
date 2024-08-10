@@ -37,3 +37,10 @@ export interface TodoItemDetails extends Omit<TodoItem, 'id'> {
 }
 
 export type DisplayMode = 'table' | 'grid';
+
+export type Tab = {
+  id?: number,
+  name: string,
+  event?: any,
+  children?: Tab[],
+}

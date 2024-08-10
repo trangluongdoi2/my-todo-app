@@ -3,7 +3,7 @@
     <div class="header">
       <TheHeader />
     </div>
-    <div class="sidebar" v-if="!isTodoLayoutTab">
+    <div class="sidebar" v-if="!isHiddenSideLeft">
       <TheSidebar/>
     </div>
     <div class="content">
@@ -22,7 +22,7 @@ import useTheme from '@/core/composables/useTheme';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
 
 const { getTheme } = useTheme();
-const { isTodoLayoutTab } = useGlobalStates();
+const { isHiddenSideLeft } = useGlobalStates();
 
 const styleMain = computed(() => {
   const styles: { [key: string]: string } = {
@@ -30,7 +30,7 @@ const styleMain = computed(() => {
       "header header header"
       "sidebar content content"`,
   };
-  if (isTodoLayoutTab.value) {
+  if (isHiddenSideLeft.value) {
     styles.gridTemplateAreas = `
       "header header header"
       "content content content"`;

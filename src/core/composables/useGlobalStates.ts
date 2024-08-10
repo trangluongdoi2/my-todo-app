@@ -7,8 +7,14 @@ export const useGlobalStates = () => {
     const { meta } = route;
     return meta.mode === 'TodoLayout';
   });
+
+  const isHiddenSideLeft = computed(() => {
+    const { meta } = route;
+    return ['Dashboard', 'TodoLayout'].includes(meta.mode as string);
+  });
   
   return {
     isTodoLayoutTab,
+    isHiddenSideLeft,
   };
 };

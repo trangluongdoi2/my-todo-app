@@ -4,3 +4,9 @@
     outline: 1px solid #39424a;
   }
 }
+
+.v-list-item {
+  .v-list-item__append {
+    max-width: 10px;
+  }
+}
