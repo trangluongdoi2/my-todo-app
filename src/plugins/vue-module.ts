@@ -3,7 +3,7 @@ import { createPinia } from 'pinia';
 import router from '@/router';
 import defineVuetifyPlugin from '@/plugins/vuetify';
 import loadCustomComponent from '@/plugins/custom-component';
-import { lazyLoading } from '@/directives/lazyLoading';
+import { lazyLoading } from '@/directives';
 
 export default function registerVueModule(
   defineComponent: any,

@@ -1,5 +1,10 @@
 <template>
-  <div class="h-full w-full min-h-[full] editable-container">
+  <div
+    class="h-full w-full min-h-[full] editable-container"
+    @click="onClick"
+    @dblclick="dblClick"
+    v-click-outside="onClickOutSide"
+  >
     <v-text-field
       v-if="isEditable && !disabled"
       ref="inputElement"
@@ -11,15 +16,14 @@
       @keyup.enter.stop="$event.target.blur()"
       @keydown.delete.stop
     ></v-text-field>
-    <span
-      class="w-full"
+    <p
       v-else
+      class="w-full h-full"
       :title="displayValue || modelValue"
-      @click.stop="onClick"
-      @dblclick.stop="dblClick"
+      @focusout="handleFocusOut"
     >
       {{ modelValue || 'None' }}
-    </span>
+    </p>
   </div>
 </template>
 
@@ -54,7 +58,9 @@ const props = defineProps({
 const emit = defineEmits(['change']);
 
 const showEditable = () => {
-  isEditable.value = true;
+  if (!isEditable.value) {
+    isEditable.value = true;
+  }
 }
 
 const onChange = () => {
@@ -76,16 +82,33 @@ const dblClick = () => {
   showEditable();
 }
 
+const handleFocusOut = () => {
+  console.log('handleFocusOut..');
+}
+
+const onClickOutSide = () => {
+  isEditable.value = false;
+  emit('change');
+  console.log('onClickOutSide...');
+}
+
 </script>
 
 <style lang="scss" scoped>
 .editable-container {
+  // padding: 0.125rem;
+  border-radius: 0.25rem;
+  height: 30px;
   &:hover {
     background-color: $background-input-pressed;
   }
-}
-span {
-  font-size: 0.75rem;
+  p {
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    font-size: 0.75rem;
+    line-height: 0;
+  }
 }
 :deep(.v-input) {
   height: 30px;
@@ -96,7 +119,9 @@ span {
     &__input {
       height: 30px;
       min-height: 30px;
+      padding-inline: 0;
       padding: 0 0.5rem;
+      margin-top: -1px;
       font-size: 0.75rem;
     }
     .v-input__control {

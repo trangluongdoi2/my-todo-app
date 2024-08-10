@@ -20,6 +20,5 @@ export const amplifyConfigure = () => {
       },
     },
   }; 
-  console.log(configureAmplify, libraryOptions, 'configureAmplify, libraryOptions...');
   Amplify.configure(configureAmplify, libraryOptions);
 };

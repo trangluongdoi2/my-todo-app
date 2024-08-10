@@ -1,21 +1,25 @@
 <template>
-  <AppSelect
-    class="app-select--editable"
-    v-if="isEditable && !disabled"
-    v-model:currentSelect="modelValue"
-    variant="solo"
-    :hide-details="true"
-    :items="options"
-    @change="onChange"
-  />
-  <span
-    v-else
-    class="w-full"
+  <div
+    class="w-full h-full editable-container"
     @click="onClick"
     @dblclick="dblClick"
   >
-    {{ modelValue || 'None' }}
-  </span>
+    <AppSelect
+      class="app-select--editable"
+      v-if="isEditable && !disabled"
+      v-model:currentSelect="modelValue"
+      variant="solo"
+      :hide-details="true"
+      :items="options"
+      @change="onChange"
+    />
+    <span
+      v-else
+      class="w-full"
+    >
+      {{ modelValue || 'None' }}
+    </span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -42,7 +46,9 @@ const emit = defineEmits(['change']);
 const isEditable = ref<boolean>(false);
 const modelValue = defineModel();
 const showEditable = () => {
-  isEditable.value = true;
+  if (!isEditable.value) {
+    isEditable.value = true;
+  }
 }
 
 const onChange = () => {
@@ -64,11 +70,25 @@ const dblClick = () => {
   }
   showEditable();
 }
+
+const onClickOutSide = () => {
+  console.log('onClickOutSide..');
+}
 </script>
 
 <style lang="scss" scoped>
-span {
-  font-size: 0.75rem;
+.editable-container {
+  height: 30px;
+  &:hover {
+    background-color: $background-input-pressed;
+  }
+  span {
+    font-size: 0.75rem;
+    // padding: 0 0.5rem;
+    height: 30px;
+    margin-left: 0.25rem;
+  }
+
 }
 .app-select--editable {
   :deep(.v-input__control) {

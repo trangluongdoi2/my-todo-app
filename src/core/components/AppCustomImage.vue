@@ -16,7 +16,6 @@ type ObjectFit = 'fit' | 'cover' | 'fill' | 'contain' | 'scale-down' | 'none' | 
 defineProps({
   source: {
     type: String,
-    // default: '',
     required: true,
   },
   ratio: {
