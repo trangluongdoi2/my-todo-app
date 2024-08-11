@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="app-button" v-bind="{...$attrs}" >
+  <v-btn class="app-button" v-bind="$attrs" >
     <slot />
     <template v-slot:prepend>
       <slot name="prepend" />
@@ -15,7 +15,7 @@ defineProps({
     type: String, 
     default: '#ffffff',
   }
-})
+});
 </script>
 <style scoped lang="scss">
 .app-button {
@@ -25,5 +25,8 @@ defineProps({
   :deep(.v-btn__content) {
     color: v-bind(textColor)
   }
+}
+.app-button.v-btn--variant-outline {
+  outline: 0.03125rem solid $border-input;
 }
 </style>

@@ -5,7 +5,6 @@
         <AppButton
           icon
           size="28"
-          @click="onClickAvatarMenu()"
           v-bind="props"
         >
           <v-avatar size="28" :image="AvatarUrl" />
@@ -43,9 +42,6 @@
           </v-list-item>
         </v-list>
       </div>
-      <div class="logout pl-4 pb-4 pr-1">
-        Logout
-      </div>
     </v-menu>
   </div>
 </template>
@@ -57,14 +53,13 @@ import AppButton from '@/core/components/AppButton.vue';
 import DarkTheme from '@/assets/dark_theme.png';
 import LightTheme from '@/assets/light_theme.png';
 import BrowerTheme from '@/assets/browser_theme.png';
+import { signOut } from 'aws-amplify/auth';
+import { useAuth } from '@/core/composables/useAuth';
 
 const router = useRouter();
+const { signOutHandler } = useAuth();
 const name = 'Nguyen Tan Vinh';
 const email = 'vinhnguyentan99@gmail.com';
-
-const onClickAvatarMenu = () => {
-  console.log('onClickAvatarMenu...');
-};
 
 const changeTheme = (theme: string) => {
   console.log(theme, 'changeTheme...');
@@ -103,12 +98,12 @@ const settingOptions = [
         
       }
     ]
+  },
+  {
+    name: 'Logout',
+    event: () => signOutHandler(),
   }
 ];
-
-const navigateSettingTabs = (tab: string) => {
-  console.log(tab, 'tab...');
-}
 </script>
 <style lang="scss" scoped>
 .account {

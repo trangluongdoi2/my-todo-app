@@ -6,10 +6,10 @@
       v-model:currentSelect="todoForm.projects[0]"
       :items="listProjects"
     />
-      <AppInput v-model="todoForm.todoName" :isImperative="true" label="Name" />
+      <AppInput v-model="todoForm.todoName" :required="true" label="Name" />
       <AppInput v-model="todoForm.title" label="Title" />
-      <AppInput v-model="todoForm.label" :isImperative="true" label="Label" />
-      <AppInput v-model="todoForm.description" :isImperative="true" label="Description" />
+      <AppInput v-model="todoForm.label" :required="true" label="Label" />
+      <AppInput v-model="todoForm.description" :required="true" label="Description" />
       <AppDragDropUpload label="Attachments" v-model="currentFiles"/>
       <AppSelect
         label="Piority"
