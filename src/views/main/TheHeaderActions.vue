@@ -52,10 +52,6 @@ const onClick = (item: any) => {
       break;
   }
 };
-
-const onClickAvatarMenu = () => {
-  console.log('onClickAvatarMenu...');
-}
 </script>
 <style lang="scss" scoped>
 .icon-actions {

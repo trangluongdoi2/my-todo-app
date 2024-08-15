@@ -1,10 +1,10 @@
+import { getCurrentUser } from 'aws-amplify/auth';
 import { RouteLocationNormalized } from 'vue-router';
-// import { getCurrentUser } from 'aws-amplify/auth';
 
 export default async function checkAuth(to: RouteLocationNormalized, next: Function) {
   if (!to.name) {
     return next({
-      name: 'not-found',
+      name: 'error',
     });
   }
   if (to.meta && Array.isArray(to.meta.middleware) && to.meta.middleware.includes('guest')) {
@@ -12,12 +12,13 @@ export default async function checkAuth(to: RouteLocationNormalized, next: Funct
   }
   let user;
   try {
-    // user = await getCurrentUser();
+    user = await getCurrentUser();
     if (user) {
       return next();
     }
   } catch (err: any) {
+    // console.log(err, 'err...');
     console.error(err);
-  }
-  // window.location.href='/auth/login';
+  };
+  window.location.href='/auth';
 }

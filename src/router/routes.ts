@@ -6,6 +6,7 @@ import Demo from "@/modules/demo/Demo.vue";
 import Courses from "@/modules/courses/Courses.vue";
 import TheMain from "@/views/main/TheMain.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
+import Auth from "@/views/auth/Auth.vue";
 
 export const routes = [
   {
@@ -17,11 +18,19 @@ export const routes = [
     },
     children: [
       {
+        name: 'auth',
+        path: '/auth',
+        component: Auth,
+        meta: {
+          middleware: ['guest'],
+        }
+      },
+      {
         name: '',
         path: '/',
         component: TheMain,
         redirect: () => {
-          return { name: 'todo' };
+          return { name: 'dashboard' };
         },
         children: [
           {
@@ -63,12 +72,12 @@ export const routes = [
             component: Demo,
           }
         ]
-      }
+      },
     ]
   },
   {
     name: 'error',
     path: "/:catchAll(.*)",
     component: PageNotFound,
-  }
+  },
 ];

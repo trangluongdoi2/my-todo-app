@@ -16,11 +16,14 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import TheHeader from './TheHeader.vue';
 import TheSidebar from './TheSidebar.vue';
 import useTheme from '@/core/composables/useTheme';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
+import { getCurrentUser } from 'aws-amplify/auth';
 
+const router = useRouter();
 const { getTheme } = useTheme();
 const { isHiddenSideLeft } = useGlobalStates();
 
@@ -38,8 +41,19 @@ const styleMain = computed(() => {
   return styles;
 });
 
-onMounted(() => {
+onMounted(async () => {
   getTheme();
+  console.log('onMounted...');
+  try {
+    const user = await getCurrentUser();
+    if (user) {
+      router.push({ name: 'dashboard' });
+    } else {
+      router.push({ name: 'auth' });
+    }
+  } catch (error) {
+    router.push({ name: 'auth' });
+  }
 });
 </script>
 
