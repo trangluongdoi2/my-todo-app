@@ -32,7 +32,7 @@ const emit = defineEmits<{
   (e: 'update-files', items: File[])
 }>();
 
-const props = defineProps({
+defineProps({
   multiple: {
     type: Boolean,
     default: true,

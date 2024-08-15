@@ -19,8 +19,7 @@
     <p
       v-else
       class="w-full h-full"
-      :title="displayValue || modelValue"
-      @focusout="handleFocusOut"
+      :title="(displayValue || modelValue) as string"
     >
       {{ modelValue || 'None' }}
     </p>
@@ -28,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { nextTick, PropType, ref } from 'vue';
+import {PropType, ref } from 'vue';
 import type { VTextField } from 'vuetify/components';
 type UnwrapReadonlyArray<A> = A extends Readonly<Array<infer I>> ? I : A;
 type ValidationRule = UnwrapReadonlyArray<VTextField['rules']>
@@ -82,14 +81,9 @@ const dblClick = () => {
   showEditable();
 }
 
-const handleFocusOut = () => {
-  console.log('handleFocusOut..');
-}
-
 const onClickOutSide = () => {
   isEditable.value = false;
   emit('change');
-  console.log('onClickOutSide...');
 }
 
 </script>
