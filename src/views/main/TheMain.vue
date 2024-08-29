@@ -45,9 +45,7 @@ onMounted(async () => {
   getTheme();
   try {
     const user = await getCurrentUser();
-    if (user) {
-      router.push({ name: 'dashboard' });
-    } else {
+    if (!user) {
       router.push({ name: 'auth' });
     }
   } catch (error) {

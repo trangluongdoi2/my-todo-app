@@ -2,7 +2,7 @@
   <div class="flex-1 flex gap-x-4 overflow-hidden">
     <div class="flex-1 overflow-auto">
       <draggable
-        class="flex flex-col h-full gap-y-2"
+        class="flex flex-col h-full gap-y-4"
         group="todo"
         itemKey="id"
         v-bind="dragOptions"
@@ -21,7 +21,7 @@
     </div>
     <div class="flex-1">
       <draggable
-        class="flex flex-col h-full gap-y-2"
+        class="flex flex-col h-full gap-y-4"
         group="todo"
         itemKey="id"
         v-model="itemsInProgress"
@@ -40,7 +40,7 @@
     </div>
     <div class="flex-1">
       <draggable
-        class="flex flex-col h-full gap-y-2"
+        class="flex flex-col h-full gap-y-4"
         group="todo"
         itemKey="id"
         v-model="itemsDone"
@@ -76,7 +76,7 @@ const props = defineProps({
 const emits = defineEmits<{
   (event: 'edit-item', item: TodoItem): void;
   (event: 'delete-item', item: TodoItem): void;
-  (event: 'edit-item-status', item: TodoItem): void;
+  (event: 'update-item-status', item: TodoItem): void;
 }>();
 
 const draggedItem = ref<TodoItem>();
@@ -100,7 +100,7 @@ const handleDragged = (event: any, status: TodoStatus) => {
       ...draggedItem.value,
       todoStatus: newStatus.value
     } as TodoItem;
-    emits('edit-item-status', newItem);
+    emits('update-item-status', newItem);
   }
 }
 
