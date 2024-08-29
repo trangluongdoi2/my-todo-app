@@ -8,7 +8,8 @@
       <div class="flex flex-1 items-center justify-between">
         <h2>Recent Projects</h2>
         <h2 class="link">
-          <router-link :to="{ name: 'todo'}" >View all projects</router-link>
+          <!-- <router-link :to="{ name: 'todo' }" >View all projects</router-link> -->
+          <p class="text-[#42B883] font-bold">View all projects</p>
         </h2>
       </div>
       <div class="dashboard__projects w-full h-full">

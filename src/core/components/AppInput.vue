@@ -8,7 +8,6 @@
       class="input__content"
       v-model="inputValue"
       variant="solo"
-      :rules="rules"
       v-bind="$attrs"
       @blur="onChange"
     ></v-text-field>
@@ -25,10 +24,6 @@ defineProps({
   required: {
     type: Boolean,
     default: false,
-  },
-  rules: {
-    type: Array,
-    default: undefined
   },
 });
 

@@ -18,7 +18,6 @@ export class TodoApi extends Api {
   }
 
   async getTodosList() {
-    console.log(TODO_URL.GET_TODOS, 'TODO_URL.GET_TODOS...');
     const res = await this.get(TODO_URL.GET_TODOS);
     return res.data;
   }
@@ -30,7 +29,6 @@ export class TodoApi extends Api {
   }
 
   async updateTodo(input: any) {
-    console.log(input, 'input...');
     const url = `${TODO_URL.UPDATE_TODO}/${input.id}`;
     const res = await this.put(url, input);
     return res.data;

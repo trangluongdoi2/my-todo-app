@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import {PropType, ref } from 'vue';
+import { PropType, ref } from 'vue';
 import type { VTextField } from 'vuetify/components';
 type UnwrapReadonlyArray<A> = A extends Readonly<Array<infer I>> ? I : A;
 type ValidationRule = UnwrapReadonlyArray<VTextField['rules']>
@@ -38,7 +38,9 @@ type TRules = {
 
 const inputElement = ref<HTMLInputElement>();
 const isEditable = ref<boolean>(false);
-const modelValue = defineModel();
+const modelValue = defineModel({
+  type: String,
+});
 
 const props = defineProps({
   disabled: {
