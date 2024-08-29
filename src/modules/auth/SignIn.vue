@@ -60,6 +60,7 @@ const {
   isLoadingSignIn,
 
   signInHandler,
+  signInWithGoogle,
 } = useAuth();
 
 const valid = ref<boolean>(false);
@@ -87,27 +88,21 @@ const oAuthOptions = [
   {
     title: 'Google',
     icon: 'custom:google',
-    event: () => {
-      console.log('Goto Google');
-    }
+    event: () => signInWithGoogle,
   },
-  {
-    title: 'Facebook',
-    icon: 'custom:facebook',
-    event: () => {
-      console.log('Goto Facebook');
-    }
-  },
-  {
-    title: 'Github',
-    icon: 'custom:github',
-    event: () => {
-      console.log('Goto Github');
-    }
-  },
+  // {
+  //   title: 'Facebook',
+  //   icon: 'custom:facebook',
+  //   event: () => {
+  //     console.log('Goto Facebook');
+  //   }
+  // },
+  // {
+  //   title: 'Github',
+  //   icon: 'custom:github',
+  //   event: () => {
+  //     console.log('Goto Github');
+  //   }
+  // },
 ];
 </script>
-
-<style scoped lang="scss">
-
-</style>

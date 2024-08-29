@@ -43,7 +43,6 @@ const styleMain = computed(() => {
 
 onMounted(async () => {
   getTheme();
-  console.log('onMounted...');
   try {
     const user = await getCurrentUser();
     if (user) {
@@ -78,7 +77,6 @@ onMounted(async () => {
     grid-area: content;
     overflow: hidden;
   }
-
 }
 </style>
 

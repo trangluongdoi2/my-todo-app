@@ -124,6 +124,10 @@ export const useAuth = () => {
       console.error(error);
     }
   };
+  
+  const signInWithGoogle = async () => {
+    console.log('signInWithGoogle...');
+  };
 
   return {
     currentAuthMode,
@@ -141,5 +145,6 @@ export const useAuth = () => {
     signUpHandler,
     signOutHandler,
     confirmOTPHandler,
+    signInWithGoogle,
   };
 };

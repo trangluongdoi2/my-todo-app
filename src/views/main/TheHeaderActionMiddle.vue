@@ -88,6 +88,7 @@ const tabs: Tab[] = [
         name: 'View all projects',
         event: () => {
           router.push('/dashboard');
+          // console.log('Comming soon..');
         },
       },
       {
