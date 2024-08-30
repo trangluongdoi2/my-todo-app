@@ -65,7 +65,7 @@ const updateTodoStatus = (newTodo: TodoItem) => {
   if (index > -1) {
     currentItemsList.value[index] = { ...newTodo };
   }
-  TodoApi.updateTodo(newTodo);
+  TodoApi.updateTodoByField({ id: newTodo.id, field: 'todoStatus', value: newTodo.todoStatus });
 }
 
 onMounted(() => {

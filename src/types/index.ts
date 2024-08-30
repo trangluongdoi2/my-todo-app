@@ -1,6 +1,6 @@
 export enum TodoStatus {
   DONE = 'DONE',
-  IN_PROGRESS = 'IN PROGRESS',
+  IN_PRORGESS = 'IN PROGRESS',
   STUCK = 'STUCK',
   PENDING = 'PENDING',
 }
@@ -25,7 +25,7 @@ export interface TodoItem {
   label: string,
   description: string,
   priority: Priority,
-  assignee?: string,
+  assignee?: string[],
   todoStatus: TodoStatus,
 }
 

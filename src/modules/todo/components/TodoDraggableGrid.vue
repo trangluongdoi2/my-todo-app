@@ -1,8 +1,8 @@
 <template>
   <div class="flex-1 flex gap-x-4 overflow-hidden">
-    <div class="flex-1 overflow-auto">
+    <div class="flex-1">
       <draggable
-        class="flex flex-col h-full gap-y-4"
+        class="flex flex-col overflow-auto h-full gap-y-4"
         group="todo"
         itemKey="id"
         v-bind="dragOptions"
@@ -21,12 +21,12 @@
     </div>
     <div class="flex-1">
       <draggable
-        class="flex flex-col h-full gap-y-4"
+        class="flex flex-col overflow-auto h-full gap-y-4"
         group="todo"
         itemKey="id"
         v-model="itemsInProgress"
         v-bind="dragOptions"
-        @change="handleDragged($event, TodoStatus.IN_PROGRESS)"
+        @change="handleDragged($event, TodoStatus.IN_PRORGESS)"
       >
         <template v-slot:item="{ element }">
           <TodoCard
@@ -40,7 +40,7 @@
     </div>
     <div class="flex-1">
       <draggable
-        class="flex flex-col h-full gap-y-4"
+        class="flex flex-col overflow-auto h-full gap-y-4"
         group="todo"
         itemKey="id"
         v-model="itemsDone"
@@ -118,11 +118,9 @@ const dragOptions = computed(() => {
 })
 
 watch(() => props.items, () => {
-  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PROGRESS);
+  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PRORGESS);
   itemsDone.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.DONE);
   itemsPending.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.PENDING);
 }, { immediate: true, deep: true });
 
 </script>
-<style lang="scss" scoped>
-</style>

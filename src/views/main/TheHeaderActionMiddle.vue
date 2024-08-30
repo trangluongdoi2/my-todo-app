@@ -37,13 +37,13 @@
       v-if="!isMobileScreen"
       @click="onCreateIssue"
     >
-      Create
+      CREATE
     </app-button>
     <app-button
       v-else
       class="button-create"
       :color="'#42B883'"
-      @click="$emit('on-create-todo')"
+      @click="$emit('create-todo')"
     >
       <v-icon :icon="'mdi-plus'"/>
     </app-button>
@@ -61,10 +61,10 @@ import TheHeaderTab from './TheHeaderTab.vue';
 const router = useRouter();
 const { isMobileScreen } = useResizeScreen();
 
-const emit = defineEmits(['on-create-todo']);
+const emit = defineEmits(['create-todo', 'create-project']);
 
 const onCreateIssue = () => {
-  emit('on-create-todo');
+  emit('create-todo');
 };
 
 const tabs: Tab[] = [
@@ -94,7 +94,8 @@ const tabs: Tab[] = [
       {
         name: 'Create new project',
         event: () => {
-          router.push('/dashboard');
+          emit('create-project');
+          // router.push('/dashboard');
         },
       }
     ],

@@ -13,17 +13,19 @@
         <TheHeaderActions />
       </div>
     </div>
-    <v-divider color="white" />
-    <TodoCreateModal v-model:visible="isShowCreateTodoModal"/>
-  </template>
-  <template v-else>
-    <div class="container-header w-full flex items-center" >
-      <div class="flex-1"></div>
-      <div class="header-right justify-end">
-        <TheHeaderActions />
-      </div>
+    <div class="header-middle flex-1">
+      <TheHeaderActionMiddle
+        @create-todo="isShowCreateTodoModal = true"
+        @create-project="isShowCreateProjectModal = true"
+      />
     </div>
-  </template>
+    <div class="header-right">
+      <TheHeaderActions />
+    </div>
+  </div>
+  <v-divider color="white" />
+  <TodoCreateModal v-model:visible="isShowCreateTodoModal" />
+  <ProjectCreateModal v-model:visible="isShowCreateProjectModal" />
 </template>
 
 <script setup lang="ts">
@@ -31,6 +33,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import TodoCreateModal from '@/modules/todo/components/TodoCreateModal.vue';
 import AppButton from '@/core/components/AppButton.vue';
+import ProjectCreateModal from '@/modules/project/components/ProjectCreateModal.vue';
 import TheHeaderActionMiddle from './TheHeaderActionMiddle.vue';
 import TheHeaderActions from './TheHeaderActions.vue';
 import { useAuthStore } from '@/store/auth';
@@ -38,13 +41,13 @@ import { storeToRefs } from 'pinia';
 
 const isShowCreateTodoModal = ref<boolean>(false);
 const { isAdmin } = storeToRefs(useAuthStore());
+const isShowCreateProjectModal = ref<boolean>(false);
 
 const router = useRouter();
 
 const backToDashboard = () => {
   router.push({ name: 'dashboard' });
 };
-
 
 </script>
 <style lang="scss" scoped>
@@ -58,9 +61,6 @@ const backToDashboard = () => {
   gap: 10px;
   .button-dashboard {
     width: fit-content;
-    // &:hover {
-    //   background-color: transparent;
-    // }
     :deep(.v-btn__content) {
       text-transform: uppercase;
       font-weight: bold;

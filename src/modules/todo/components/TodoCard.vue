@@ -7,7 +7,7 @@
   >
     <div class="todo-title flex-1">{{ item.title }}</div>
     <div class="todo-more flex justify-between">
-      <div class="project">{{ item.projects[0] }}</div>
+      <div v-if="item.projects?.length" class="project">{{ item.projects[0] }}</div>
       <div class="avatar">
         <v-avatar size="28" :image="AvatarUrl" />
       </div>
@@ -55,7 +55,7 @@ import { PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const emit = defineEmits<{
-  (e: 'edit-item', item: TodoItem): void
+  (e: 'edit-item', item: TodoItem): void,
   (e: 'delete-item', item: TodoItem): void
 }>()
 
@@ -83,8 +83,8 @@ const navigateToDetails = (todoId: string) => {
 .todo-card {
   border-radius: 0.25rem;
   background-color: $background-input;
-  max-height: 200px;
-  height: clamp(20rem, 1vw + 10rem, 10rem);
+  min-height: 200px;
+  // height: clamp(20rem, 1vw + 200px, 200px);
   &:hover {
     background-color: $background-selected
   }

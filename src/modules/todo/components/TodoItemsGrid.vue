@@ -38,7 +38,6 @@ import router from '@/router';
 import { TodoItem, TodoStatus } from '@/types';
 import TodoDeleteModal from './TodoDeleteModal.vue';
 import TodoDraggableGrid from './TodoDraggableGrid.vue';
-import TodoApi from '@/modules/todo/api/todo';
 import SkeletonTodoGrid from '../skeleton/SkeletonTodoGrid.vue';
 
 const props = defineProps({
@@ -53,33 +52,17 @@ const props = defineProps({
 });
 
 const emit = defineEmits<{
-  (e: 'edit-item', item: TodoItem): void
-  (e: 'delete-item', id: string): void
+  (e: 'edit-item', item: TodoItem): void,
+  (e: 'delete-item', id: string): void,
   (e: 'update-item-status', item: TodoItem): void
-}>()
+}>();
 
 const itemsInProgress = ref<TodoItem[]>([]);
 const itemsPending = ref<TodoItem[]>([]);
 const itemsDone = ref<TodoItem[]>([]);
 const selectedTodoItem = ref<TodoItem>();
 const isVisibleTodoDeleteModal = ref<boolean>(false);
-const isVisibleTodoEditModal = ref<boolean>(false);
 const isLoadingDelete = ref<boolean>(false);
-
-const filterItemsByStatus = (item: TodoItem) => {
-  const { id, todoStatus } = item;
-  switch (todoStatus) {
-    case TodoStatus.DONE:
-      itemsDone.value = itemsDone.value.filter((todo: TodoItem) => todo.id !== id);
-      break;
-    case TodoStatus.IN_PROGRESS:
-      itemsInProgress.value = itemsInProgress.value.filter((todo: TodoItem) => todo.id !== id);
-    case TodoStatus.PENDING:
-    default:
-      itemsPending.value = itemsPending.value.filter((todo: TodoItem) => todo.id !== id);
-      break;
-  }
-}
 
 const onDeleteItem = (item: TodoItem) => {
   selectedTodoItem.value = item;
@@ -88,8 +71,8 @@ const onDeleteItem = (item: TodoItem) => {
 
 const onEditItem = (item: TodoItem) => {
   selectedTodoItem.value = item;
-  isVisibleTodoEditModal.value = false;
   router.push({
+    name: 'todoDetails',
     params: {
       id: selectedTodoItem.value.id,
     }
@@ -118,7 +101,7 @@ const resetCurrentItem = () => {
 }
 
 watch(() => props.items, () => {
-  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PROGRESS);
+  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PRORGESS);
   itemsDone.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.DONE);
   itemsPending.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.PENDING);
 }, { immediate: true, deep: true });

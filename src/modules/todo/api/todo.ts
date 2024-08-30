@@ -1,11 +1,13 @@
 import Api from "@/api";
 import { API_URL } from "@/api/url";
+import TodoItemDetails from "@/modules/todo/TodoItemDetails.vue";
 
 const TODO_URL = {
   GET_TODOS: `${API_URL}/api/todo`,
   GET_TODO_BY_ID: `${API_URL}/api/todo`,
   CREATE_TODO: `${API_URL}/api/todo/create`,
   UPDATE_TODO: `${API_URL}/api/todo/update`,
+  UPDATE_TODO_BY_FIELD: `${API_URL}/api/todo/update-field`,
   DELETE_TODO: `${API_URL}/api/todo/delete`,
   UPLOAD_ATTACH: `${API_URL}/api/todo/upload`,
   DOWNLOAD_ATTACH: `${API_URL}/api/todo/download`,
@@ -32,6 +34,14 @@ export class TodoApi extends Api {
     const url = `${TODO_URL.UPDATE_TODO}/${input.id}`;
     const res = await this.put(url, input);
     return res.data;
+  }
+
+  async updateTodoByField(input: { id: string, field: keyof typeof TodoItemDetails, value: any }) {
+    const url = `${TODO_URL.UPDATE_TODO_BY_FIELD}/${input.id}`;
+    const { field, value } = input;
+    const res = await this.put(url, { field, value });
+    return res.data;
+
   }
 
   async uploadAttachs(id: string, files: File[]) {
