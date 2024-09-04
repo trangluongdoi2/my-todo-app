@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full h-full pl-4 pr-4 pt-8 pb-8 flex flex-col justify-between">
+  <div class="w-full h-full p-8 flex flex-col justify-between">
     <div class="flex flex-1 items-center">
-      <v-form class="w-full" v-model="valid">
+      <v-form class="w-full" fast-fail @submit.prevent="handleLogin">
         <template class="flex flex-col gap-y-4">
           <AppInput
             v-model="signInForm.username"
@@ -23,7 +23,7 @@
             class="mt-2"
             color="#42B883"
             :loading="isLoadingSignIn"
-            @click="signInHandler"
+            type="submit"
           >
             <span class="text-[#1D2125] font-bold">Continue</span>
           </AppButton>
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useAuth } from '@/core/composables/useAuth';
 import AppButton from '@/core/components/AppButton.vue';
 import AppInput from '@/core/components/AppInput.vue';
@@ -58,12 +58,13 @@ import AppInput from '@/core/components/AppInput.vue';
 const {
   signInForm,
   isLoadingSignIn,
-
-  signInHandler,
-  signInWithGoogle,
+  errorMessage,
+  handleLogin,
 } = useAuth();
 
 const valid = ref<boolean>(false);
+
+// const rulesTest = 
 
 const rules = {
   name(value: string) {
@@ -88,21 +89,11 @@ const oAuthOptions = [
   {
     title: 'Google',
     icon: 'custom:google',
-    event: () => signInWithGoogle,
+    event: () => console.log('Google...'),
   },
-  // {
-  //   title: 'Facebook',
-  //   icon: 'custom:facebook',
-  //   event: () => {
-  //     console.log('Goto Facebook');
-  //   }
-  // },
-  // {
-  //   title: 'Github',
-  //   icon: 'custom:github',
-  //   event: () => {
-  //     console.log('Goto Github');
-  //   }
-  // },
 ];
+
+onMounted(() => {
+  console.log(signInForm.value, 'signInForm...');
+})
 </script>

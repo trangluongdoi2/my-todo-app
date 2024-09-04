@@ -1,5 +1,5 @@
 <template>
- <div class="w-full h-full pl-4 pr-4 pt-8 pb-8 flex flex-col justify-between">
+ <div class="w-full h-full p-8 flex flex-col justify-between">
     <div class="flex w-full h-full items-center">
       <v-form v-if="currentStep === 1" class="w-full" v-model="valid">
         <template class="flex flex-col gap-y-4">
@@ -71,7 +71,7 @@
 import { ref, watch } from 'vue';
 import AppButton from '@/core/components/AppButton.vue';
 import AppInput from '@/core/components/AppInput.vue';
-import { useAuth } from '@/core/composables/useAuth';
+import { useAuth } from '@/core/composables/useAuthCognito';
 
 const {
   signUpForm,

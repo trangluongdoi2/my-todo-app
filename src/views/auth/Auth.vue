@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper-container w-full h-full flex flex-col items-center justify-center">
-    <h1 class="mb-4 greeting title title--none-border">Todo App</h1>
+    <h1 class="mb-4 greeting title title--none-border">TODO APP</h1>
     <div ref="authContainerRef" class="container flex items-center justify-center">
 			<div class="form-container sign-up-container">
 				<SignUp @back-sign-in="switchAuthMode('sign-in')"/>
@@ -46,16 +46,8 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue';
 import AppButton from '@/core/components/AppButton.vue';
-import { useAuth } from '@/core/composables/useAuth';
 import SignIn from '@/modules/auth/SignIn.vue';
 import SignUp from '@/modules/auth/SignUp.vue';
-import { getCurrentUser } from 'aws-amplify/auth';
-
-const {
-	currentAuthMode,
-
-  signInHandler,
-} = useAuth();
 
 const authContainerRef = ref<HTMLElement>();
 
@@ -76,9 +68,7 @@ const onFinishFailed = () => {
 };
 
 onMounted(async () => {
-	const user = await getCurrentUser();
-	console.log(user, 'user Auth...');
-	// console.log('onMounted...');
+	// const user = await getCurrentUser();
 });
 </script>
 <style lang="scss" scoped>

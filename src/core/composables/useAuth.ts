@@ -1,16 +1,9 @@
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
-import {
-  autoSignIn,
-  confirmSignUp,
-  fetchAuthSession,
-  getCurrentUser,
-  resendSignUpCode,
-  signIn,
-  signOut,
-  signUp,
-} from "aws-amplify/auth";
+import AuthApi from "@/modules/auth/api/authApi";
+// import
 
+type AuthMode = 'sign-in' | 'sign-out';
 interface SignInForm {
   username: string;
   password: string;
@@ -25,15 +18,20 @@ interface SignUpForm {
 const defaultSignInForm: SignInForm = {
   username: '',
   password: '',
-}
+};
 
 const defaultSignUpForm: SignUpForm = {
   username: '',
   password: '',
   email: '',
-}
+};
 
-type AuthMode = 'sign-in' | 'sing-out';
+const errorMessagesMap = {
+  401: 'Error',
+  402: 'Error',
+  403: 'Error',
+  404: 'Error',
+};
 
 export const useAuth = () => {
   const router = useRouter();
@@ -43,6 +41,7 @@ export const useAuth = () => {
   const isLoadingConfirmSignUp = ref<boolean>(false);
   const currentUserName = ref<string>();
   const confirmOTP = ref<any>();
+  const errorMessage = ref<string>();
   const currentAuthMode = ref<AuthMode>('sign-in');
   const signInForm = ref<SignInForm>(defaultSignInForm);
   const signUpForm = ref<SignUpForm>(defaultSignUpForm);
@@ -56,78 +55,25 @@ export const useAuth = () => {
     signUpForm.value = { ...defaultSignUpForm };
   };
 
-  
-  const signInHandler = async () => {
-    const currentInput = { ...signInForm.value };
-    isLoadingSignIn.value = true;
-    try {
-      await signIn(currentInput);
-      // const user = await getCurrentUser();
-      // const authState = await fetchAuthSession({ forceRefresh: true });
-      router.push({ name: 'dashboard' });
-    } catch (error) {
-      console.log(error?.message, 'error?.message..');
-      signInForm.value.password = 'Incorrect username or password';
-      signInForm.value.username = 'Incorrect username or password';
-    } finally {
-      isLoadingSignIn.value = false;
+  const handleLogin = async () => {
+    console.log('handleLogin...');
+    isLoadingSignIn.value = false;
+    const { data, status, message = '' } = await AuthApi.login(signInForm.value);
+    if (status.toString().startsWith('4') || status.toString().startsWith('5')) {
+      errorMessage.value = message;
+    } else {
+      errorMessage.value = '';
     }
+    console.log(data, status, errorMessage.value, 'data, status, errorMessage.value...');
   };
 
-  const confirmOTPHandler = async () => {
-    isLoadingConfirmSignUp.value = true;
-    try {
-      await confirmSignUp({
-        username: currentUserName.value || '',
-        confirmationCode: confirmOTP.value || '',
-      });
-    } catch (error) {
-      console.log(error, 'error..');
-      errorConfirmOTP.value = error.message;
-      // resendSignUpCode({
-      //   username: currentUserName.value || '',
-      // }).then(() => {
-      //   console.log('Code resent successfully!');
-      // }).finally(() => {
-      //   isLoadingConfirmSignUp.value = false;
-      // });
-    }
-  };
-  
-  const signUpHandler = async () => {
-    const currentInput = { ...signUpForm.value };
-    isLoadingSignUp.value = true;
-    try {
-      await signUp({
-        username: currentInput.username,
-        password: currentInput.password,
-        options: {
-          userAttributes: {
-            email: currentInput.email
-          }
-        }
-      });
-      currentUserName.value = currentInput.username;
-    } catch (error) {
-      throw Error(error);
-    } finally {
-      isLoadingSignUp.value = false;
-    }
+  const handleRegister = () => {
+    console.log('register...');
   };
 
-  const signOutHandler = async () => {
-    try {
-      signOut().then(() => {
-        window.location.href='/auth';
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-  const signInWithGoogle = async () => {
-    console.log('signInWithGoogle...');
-  };
+  const handleLogout = () => {
+    console.log('handleLogout...');
+  }
 
   return {
     currentAuthMode,
@@ -138,13 +84,12 @@ export const useAuth = () => {
     isLoadingConfirmSignUp,
     confirmOTP,
     errorConfirmOTP,
+    errorMessage,
     
     resetSignInForm,
     resetSignUpForm,
-    signInHandler,
-    signUpHandler,
-    signOutHandler,
-    confirmOTPHandler,
-    signInWithGoogle,
+    handleLogin,
+    handleRegister,
+    handleLogout,
   };
 };

@@ -1,3 +1,4 @@
+import type { AxiosError } from 'axios';
 import customAxios from './axios';
 export default class Api {
   protected async get(url: string, configs?: Record<string, any>) {
@@ -15,10 +16,19 @@ export default class Api {
     configs?: Record<string, any>
   ) {
     try {
-      const res = await customAxios.post(url, input, configs);
-      return res.data;
-    } catch (error) {
-      return null;
+      const { data, status } = await customAxios.post(url, input, configs);
+      if (data) {
+        return {
+          data: data.data,
+          status
+        };
+      }
+    } catch ({ response }) {
+      return { 
+        data: null,
+        status: response.status,
+        message: response.data.message,
+      };
     }
   }
 

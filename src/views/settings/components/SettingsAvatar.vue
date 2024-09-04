@@ -54,7 +54,7 @@ import DarkTheme from '@/assets/dark_theme.png';
 import LightTheme from '@/assets/light_theme.png';
 import BrowerTheme from '@/assets/browser_theme.png';
 import { signOut } from 'aws-amplify/auth';
-import { useAuth } from '@/core/composables/useAuth';
+import { useAuth } from '@/core/composables/useAuthCognito';
 
 const router = useRouter();
 const { signOutHandler } = useAuth();

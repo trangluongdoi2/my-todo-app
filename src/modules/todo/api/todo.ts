@@ -14,6 +14,7 @@ const TODO_URL = {
 export class TodoApi extends Api {
   async createTodo(input: any) {
     const res = await this.post(TODO_URL.CREATE_TODO, input);
+    console.log(res, 'res...');
     return res.data;
   }
 
