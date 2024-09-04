@@ -14,6 +14,9 @@
           v-else
           :items="currentItemsList"
           :loading="isFetchingTodosList"
+
+          @delete-item="deleteTodo"
+          @update-item-status="updateTodoStatus"
         />
       </div>
     </keep-alive>
@@ -39,26 +42,40 @@ const getListItems = async () => {
   const res = await TodoApi.getTodosList().finally(() => {
     setTimeout(() => {
       isFetchingTodosList.value = false;
-    });
+    }, 100);
   });
   currentItemsList.value = res;
+  console.log(currentItemsList.value, 'currentItemsList.value..');
 };
 
 const onChangeMode = (mode: DisplayMode) => {
   displayMode.value = mode;
 };
 
-const updateTodo =  (todo: TodoItem) => {
+const addNewTodoItem =  (todo: TodoItem) => {
   currentItemsList.value.splice(0, 0, todo);
 }
 
+const deleteTodo = (todoId: string) => {
+  currentItemsList.value = currentItemsList.value.filter((item: TodoItem) => item.id !== todoId);
+  TodoApi.deleteTodo(todoId);
+}
+
+const updateTodoStatus = (newTodo: TodoItem) => {
+  const index = currentItemsList.value.findIndex((item: TodoItem) => item.id === newTodo.id);
+  if (index > -1) {
+    currentItemsList.value[index] = { ...newTodo };
+  }
+  TodoApi.updateTodo(newTodo);
+}
+
 onMounted(() => {
-  EventBus.on('CREATED_TODO', updateTodo);
+  EventBus.on('CREATED_TODO', addNewTodoItem);
   getListItems();
 });
 
 onUnmounted(() => {
-  EventBus.off('CREATED_TODO', updateTodo);
+  EventBus.off('CREATED_TODO', addNewTodoItem);
 });
 </script>
 

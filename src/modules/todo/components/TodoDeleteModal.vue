@@ -1,17 +1,14 @@
 <template>
    <AppModal v-model:visible="visible" width="50%">
-    <!-- <template v-slot:default>
-      
-    </template> -->
     <div>Are you sure delete this item?</div>
     <template v-slot:actions>
        <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">
         <v-btn variant="text" @click="visible = false">
           Cancel
         </v-btn>
-        <v-btn :loading="loading" color="#42B883" @click="$emit('ok')">
+        <app-button :loading="loading" color="#42B883" @click="$emit('ok')">
           Delete
-        </v-btn>
+        </app-button>
       </div>
     </template>
    </AppModal>
@@ -28,7 +25,3 @@ defineProps({
 });
 defineEmits(['ok']);
 </script>
-
-<style lang="scss" scoped>
-
-</style>

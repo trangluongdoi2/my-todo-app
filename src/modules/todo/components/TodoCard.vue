@@ -7,7 +7,7 @@
   >
     <div class="todo-title flex-1">{{ item.title }}</div>
     <div class="todo-more flex justify-between">
-      <div class="project">{{ item.projects }}</div>
+      <div class="project">{{ item.projects[0] }}</div>
       <div class="avatar">
         <v-avatar size="28" :image="AvatarUrl" />
       </div>
@@ -21,7 +21,7 @@
               icon
               size="28"
               type="text"
-              @click="$emit('edit-item', item)"
+              @click.stop="$emit('edit-item', item)"
               v-bind="props"
             >
               <v-icon color="#42B883" icon="custom:edit" />
@@ -36,7 +36,7 @@
               size="28"
               type="text"
               v-bind="props"
-              @click="$emit('delete-item', item)"
+              @click.stop="$emit('delete-item', item)"
             >
               <v-icon color="#FD9891" icon="custom:delete" />
             </AppButton>

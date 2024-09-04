@@ -13,8 +13,8 @@
         </h2>
       </div>
       <div class="dashboard__projects w-full h-full">
-        <ProjectCard />
-        <ProjectCard />
+        <ProjectCard @click="selectProject()" />
+        <ProjectCard @click="selectProject()" />
       </div>
     </div>
     <div class="w-full mt-[0.75rem]">
@@ -31,14 +31,10 @@
       <div class="tab-content mt-[0.5rem] w-full">
         <v-tabs-window v-model="tab">
           <v-tabs-window-item value="Worked on">
-            <p>
-              Comming soon...
-            </p>
+            <p>Comming soon...</p>
           </v-tabs-window-item>
           <v-tabs-window-item value="Viewed">
-            <p>
-              Comming soon...
-            </p>
+            <p>Comming soon...</p>
           </v-tabs-window-item>
         </v-tabs-window>
       </div>
@@ -47,14 +43,20 @@
 </template>
 
 <script setup lang="ts">
-import ProjectCard from '@/modules/dashboard/components/ProjectCard.vue';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import ProjectCard from '@/modules/dashboard/components/ProjectCard.vue';
 
+const router = useRouter();
 const tab = ref<any>('Worked on');
 const items = [
   'Worked on',
   'Viewed',
-]
+];
+
+const selectProject = () => {
+  router.push({ name: 'todo' });
+};
 </script>
 
 <style scoped lang="scss">

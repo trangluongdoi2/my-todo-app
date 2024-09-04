@@ -3,7 +3,7 @@
     <SkeletonTodoGrid />
   </template>
   <div v-else class="h-full flex flex-col overflow-hidden">
-    <div class="flex w-full mb-2 gap-x-[10px] h-[3rem]">
+    <div class="flex w-full mb-4 gap-x-4 h-[3rem]">
       <div class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
         PENDING {{ itemsPending.length }}
       </div>
@@ -19,14 +19,14 @@
 
       @delete-item="onDeleteItem"
       @edit-item="onEditItem"
-      @edit-item-status="onEditItemStatus"
+      @update-item-status="onEditItemStatus"
     />
     <TodoDeleteModal
       v-if="isVisibleTodoDeleteModal"
       :title="'Delete'"
       v-model="isVisibleTodoDeleteModal"
       :loading="isLoadingDelete"
-      @cancle="resetCurrentItem"
+      @cancel="resetCurrentItem"
       @ok="handleDeleteItem"
     />
   </div>
@@ -51,6 +51,12 @@ const props = defineProps({
     default: false,
   }
 });
+
+const emit = defineEmits<{
+  (e: 'edit-item', item: TodoItem): void
+  (e: 'delete-item', id: string): void
+  (e: 'update-item-status', item: TodoItem): void
+}>()
 
 const itemsInProgress = ref<TodoItem[]>([]);
 const itemsPending = ref<TodoItem[]>([]);
@@ -94,8 +100,7 @@ const onEditItemStatus = async (item: TodoItem) => {
   if (!item) {
     return;
   }
-  const data = await TodoApi.updateTodo(item);
-  console.log(data, 'data onEditItemStatus...');
+  emit('update-item-status', item);
 }
 
 const handleDeleteItem = () => {
@@ -103,14 +108,9 @@ const handleDeleteItem = () => {
     return;
   }
   isLoadingDelete.value = true;
-  TodoApi.deleteTodo(selectedTodoItem.value.id)
-    .then(() => {
-      filterItemsByStatus(selectedTodoItem.value);
-    })
-    .finally(() => {
-      isLoadingDelete.value = false;
-      isVisibleTodoDeleteModal.value = false;
-    })
+  emit('delete-item', selectedTodoItem.value.id);
+  isLoadingDelete.value = false;
+  isVisibleTodoDeleteModal.value = false;
 }
 
 const resetCurrentItem = () => {

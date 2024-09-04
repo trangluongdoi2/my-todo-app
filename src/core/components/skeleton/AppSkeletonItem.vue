@@ -14,7 +14,7 @@ const MARGIN_SEKELETON_BOUND_DEFAULT = 16;
 
 const marginVal = computed(() => {
   if (props.height) {
-    const newMargin = (props.height - HEIGHT_SKELETON_TEXT) / 2;
+    const newMargin = (Number(props.height) - HEIGHT_SKELETON_TEXT) / 2;
     return newMargin > 0 ? `${newMargin}px` : `${MARGIN_SEKELETON_BOUND_DEFAULT}px`;
   }
   return `${MARGIN_SEKELETON_BOUND_DEFAULT}px`;

@@ -19,8 +19,7 @@
     <p
       v-else
       class="w-full h-full"
-      :title="displayValue || modelValue"
-      @focusout="handleFocusOut"
+      :title="(displayValue || modelValue) as string"
     >
       {{ modelValue || 'None' }}
     </p>
@@ -84,14 +83,9 @@ const dblClick = () => {
   showEditable();
 }
 
-const handleFocusOut = () => {
-  console.log('handleFocusOut..');
-}
-
 const onClickOutSide = () => {
   isEditable.value = false;
   emit('change');
-  console.log('onClickOutSide...');
 }
 
 </script>

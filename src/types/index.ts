@@ -15,7 +15,7 @@ export enum Priority {
 export type TodoAttachment = {
   id: string,
   filePath: string,
-  filename: string,
+  fileName: string,
 }
 export interface TodoItem {
   id?: string;

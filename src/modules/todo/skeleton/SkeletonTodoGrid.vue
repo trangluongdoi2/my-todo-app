@@ -1,17 +1,17 @@
 <template>
   <div class="h-full overflow-hidden flex flex-col">
-    <div class="flex bg-[#212121]  gap-x-[10px]">
+    <div class="flex gap-x-4">
       <div class="flex-1 flex gap-x-2">
         <app-skeleton-item width="60%"/>
-        <app-skeleton-item width="40" height="28"/>
+        <app-skeleton-item class="flex-1" height="28"/>
       </div>
       <div class="flex flex-1 gap-x-2">
         <app-skeleton-item width="60%"/>
-        <app-skeleton-item width="40" height="28"/>
+        <app-skeleton-item class="flex-1" height="28"/>
       </div>
       <div class="flex flex-1 gap-x-2">
         <app-skeleton-item width="60%"/>
-        <app-skeleton-item width="40" height="28"/>
+        <app-skeleton-item class="flex-1" height="28"/>
       </div>
     </div>
     <div class="grid-container bg-[#212121] flex-1 mt-2">
