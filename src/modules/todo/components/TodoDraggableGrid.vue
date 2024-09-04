@@ -26,7 +26,7 @@
         itemKey="id"
         v-model="itemsInProgress"
         v-bind="dragOptions"
-        @change="handleDragged($event, TodoStatus.IN_PROGESS)"
+        @change="handleDragged($event, TodoStatus.IN_PROGRESS)"
       >
         <template v-slot:item="{ element }">
           <TodoCard
@@ -118,7 +118,7 @@ const dragOptions = computed(() => {
 })
 
 watch(() => props.items, () => {
-  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PROGESS);
+  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PROGRESS);
   itemsDone.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.DONE);
   itemsPending.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.PENDING);
 }, { immediate: true, deep: true });

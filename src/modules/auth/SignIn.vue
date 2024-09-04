@@ -50,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue';
 import { useAuth } from '@/core/composables/useAuth';
 import AppButton from '@/core/components/AppButton.vue';
 import AppInput from '@/core/components/AppInput.vue';
@@ -61,10 +60,6 @@ const {
   errorMessage,
   handleLogin,
 } = useAuth();
-
-const valid = ref<boolean>(false);
-
-// const rulesTest = 
 
 const rules = {
   name(value: string) {
@@ -92,8 +87,4 @@ const oAuthOptions = [
     event: () => console.log('Google...'),
   },
 ];
-
-onMounted(() => {
-  console.log(signInForm.value, 'signInForm...');
-})
 </script>

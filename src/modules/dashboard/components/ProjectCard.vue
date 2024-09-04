@@ -48,7 +48,6 @@ import AvatarUrl from '@/assets/avatar.jpeg';
   }
   .v-chip {
     height: fit-content;
-    // height: 8px;
     border-radius: 0.75rem;
   }
 }

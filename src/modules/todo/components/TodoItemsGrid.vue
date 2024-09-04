@@ -72,7 +72,7 @@ const filterItemsByStatus = (item: TodoItem) => {
     case TodoStatus.DONE:
       itemsDone.value = itemsDone.value.filter((todo: TodoItem) => todo.id !== id);
       break;
-    case TodoStatus.IN_PROGESS:
+    case TodoStatus.IN_PROGRESS:
       itemsInProgress.value = itemsInProgress.value.filter((todo: TodoItem) => todo.id !== id);
     case TodoStatus.PENDING:
     default:
@@ -118,7 +118,7 @@ const resetCurrentItem = () => {
 }
 
 watch(() => props.items, () => {
-  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PROGESS);
+  itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PROGRESS);
   itemsDone.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.DONE);
   itemsPending.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.PENDING);
 }, { immediate: true, deep: true });

@@ -21,10 +21,11 @@ import TheHeader from './TheHeader.vue';
 import TheSidebar from './TheSidebar.vue';
 import useTheme from '@/core/composables/useTheme';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { useAuthStorage } from '@/core/composables/useAuthStorage';
 
 const router = useRouter();
 const { getTheme } = useTheme();
+const { getCurrentUser } = useAuthStorage();
 const { isHiddenSideLeft } = useGlobalStates();
 
 const styleMain = computed(() => {
@@ -49,7 +50,7 @@ onMounted(async () => {
       router.push({ name: 'auth' });
     }
   } catch (error) {
-    router.push({ name: 'auth' });
+    console.error(error);
   }
 });
 </script>

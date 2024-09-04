@@ -1,4 +1,3 @@
-import type { AxiosError } from 'axios';
 import customAxios from './axios';
 export default class Api {
   protected async get(url: string, configs?: Record<string, any>) {
@@ -24,10 +23,11 @@ export default class Api {
         };
       }
     } catch ({ response }) {
+      console.log(response, 'response post api..');
       return { 
         data: null,
-        status: response.status,
-        message: response.data.message,
+        status: 404,
+        message: response?.data?.message,
       };
     }
   }

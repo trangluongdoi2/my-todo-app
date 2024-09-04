@@ -54,10 +54,11 @@ import DarkTheme from '@/assets/dark_theme.png';
 import LightTheme from '@/assets/light_theme.png';
 import BrowerTheme from '@/assets/browser_theme.png';
 import { signOut } from 'aws-amplify/auth';
-import { useAuth } from '@/core/composables/useAuthCognito';
+// import { useAuth } from '@/core/composables/useAuthCognito';
+import { useAuth } from '@/core/composables/useAuth';
 
 const router = useRouter();
-const { signOutHandler } = useAuth();
+const { handleLogout } = useAuth();
 const name = 'Nguyen Tan Vinh';
 const email = 'vinhnguyentan99@gmail.com';
 
@@ -101,7 +102,7 @@ const settingOptions = [
   },
   {
     name: 'Logout',
-    event: () => signOutHandler(),
+    event: () => handleLogout(),
   }
 ];
 </script>

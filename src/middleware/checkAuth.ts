@@ -1,5 +1,7 @@
-import { getCurrentUser } from 'aws-amplify/auth';
+import { useAuthStorage } from '@/core/composables/useAuthStorage';
 import { RouteLocationNormalized } from 'vue-router';
+
+const { getCurrentUser } = useAuthStorage();
 
 export default async function checkAuth(to: RouteLocationNormalized, next: Function) {
   if (!to.name) {
@@ -17,7 +19,6 @@ export default async function checkAuth(to: RouteLocationNormalized, next: Funct
       return next();
     }
   } catch (err: any) {
-    // console.log(err, 'err...');
     console.error(err);
   };
   window.location.href='/auth';

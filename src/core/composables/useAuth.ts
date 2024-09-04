@@ -1,7 +1,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import AuthApi from "@/modules/auth/api/authApi";
-// import
+import { useGlobalStates } from "@/core/composables/useGlobalStates";
+import { useLocalStorage } from "@/core/composables/useLocalStorage";
 
 type AuthMode = 'sign-in' | 'sign-out';
 interface SignInForm {
@@ -35,6 +36,7 @@ const errorMessagesMap = {
 
 export const useAuth = () => {
   const router = useRouter();
+  const { storage: authLocalStorage } = useLocalStorage();
   const isLoadingSignUp = ref<boolean>(false);
   const isLoadingSignIn = ref<boolean>(false);
   const isLoadingSignInAsGuest = ref<boolean>(false);
@@ -55,16 +57,39 @@ export const useAuth = () => {
     signUpForm.value = { ...defaultSignUpForm };
   };
 
-  const handleLogin = async () => {
-    console.log('handleLogin...');
+  const setCacheUser = (data: any) => {
+    const { accessToken = '', refreshToken = '' } = data;
+    delete data?.accessToken;
+    delete data?.refreshToken;
+    authLocalStorage.setItem('auth', 'user', data);
+    authLocalStorage.setItem('auth', 'accessToken', accessToken);
+    authLocalStorage.setItem('auth', 'refreshToken', refreshToken);
     isLoadingSignIn.value = false;
+  };
+
+  const removeCacheUser = async () => {
+    await Promise.all([
+      authLocalStorage.removeItem('auth', 'user'),
+      authLocalStorage.removeItem('auth', 'accessToken'),
+      authLocalStorage.removeItem('auth', 'refreshToken'),
+    ]);
+  };
+
+  const handleLogin = async () => {
+    isLoadingSignIn.value = true;
     const { data, status, message = '' } = await AuthApi.login(signInForm.value);
     if (status.toString().startsWith('4') || status.toString().startsWith('5')) {
       errorMessage.value = message;
     } else {
       errorMessage.value = '';
     }
-    console.log(data, status, errorMessage.value, 'data, status, errorMessage.value...');
+    if (!data) {
+      isLoadingSignIn.value = false;
+      return;
+    }
+    setCacheUser(data);
+    isLoadingSignIn.value = false;
+    router.push({ name: 'dashboard' });
   };
 
   const handleRegister = () => {
@@ -72,8 +97,10 @@ export const useAuth = () => {
   };
 
   const handleLogout = () => {
-    console.log('handleLogout...');
-  }
+    // console.log('handleLogout...');
+    removeCacheUser();
+    window.location.href='/auth';
+  };
 
   return {
     currentAuthMode,
@@ -91,5 +118,6 @@ export const useAuth = () => {
     handleLogin,
     handleRegister,
     handleLogout,
+    removeCacheUser,
   };
 };

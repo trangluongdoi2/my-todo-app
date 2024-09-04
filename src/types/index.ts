@@ -1,6 +1,6 @@
 export enum TodoStatus {
   DONE = 'DONE',
-  IN_PROGESS = 'IN PROGESS',
+  IN_PROGRESS = 'IN PROGRESS',
   STUCK = 'STUCK',
   PENDING = 'PENDING',
 }
@@ -44,3 +44,5 @@ export type Tab = {
   event?: any,
   children?: Tab[],
 }
+
+export type TableStorage = 'auth';

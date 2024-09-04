@@ -45,7 +45,6 @@ const getListItems = async () => {
     }, 100);
   });
   currentItemsList.value = res;
-  console.log(currentItemsList.value, 'currentItemsList.value..');
 };
 
 const onChangeMode = (mode: DisplayMode) => {
