@@ -14,7 +14,6 @@ const TODO_URL = {
 export class TodoApi extends Api {
   async createTodo(input: any) {
     const res = await this.post(TODO_URL.CREATE_TODO, input);
-    // console.log(res, 'res...');
     return res.data;
   }
 
@@ -45,8 +44,8 @@ export class TodoApi extends Api {
     const configs = {
       headers: { 'Content-Type': 'multipart/form-data' }
     };
-    const res = await this.post(url, formData, configs);
-    console.log(res, 'res...');
+    // const res = await this.post(url, formData, configs);
+    await this.post(url, formData, configs);
     return [];
   }
 

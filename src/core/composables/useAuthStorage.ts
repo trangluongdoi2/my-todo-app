@@ -14,6 +14,10 @@ export const useAuthStorage = () => {
     ]);
   };
 
+  const clearAccessToken = async () => {
+    await storage.removeItem('auth', 'accessToken');
+  };
+
   const setAccessToken = (token: string) => {
     storage.setItem('auth', 'accessToken', token);
   };
@@ -37,6 +41,7 @@ export const useAuthStorage = () => {
 
   return {
     clearToken,
+    clearAccessToken,
     setAccessToken,
     setRefreshToken,
     getRefreshToken,

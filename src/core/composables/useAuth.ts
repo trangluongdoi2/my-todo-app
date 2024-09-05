@@ -97,7 +97,6 @@ export const useAuth = () => {
   };
 
   const handleLogout = () => {
-    // console.log('handleLogout...');
     removeCacheUser();
     window.location.href='/auth';
   };

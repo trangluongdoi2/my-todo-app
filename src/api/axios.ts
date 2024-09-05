@@ -1,12 +1,12 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 import { API_URL } from '@/api/url';
 import { useAuthStorage } from '@/core/composables/useAuthStorage';
 
 const {
   clearToken,
+  clearAccessToken,
   getAccessToken,
   getRefreshToken,
-  setRefreshToken,
   setAccessToken,
 } = useAuthStorage();
 
@@ -18,25 +18,16 @@ const customAxios = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
-  }
-  // withCredentials: true,
-  // headers: {'X-Requested-With': 'XMLHttpRequest'},
+  },
 });
 
-customAxios.interceptors.request.use(async (config) => {
+customAxios.interceptors.request.use(async (request) => {
   const accessToken = await getAccessToken();
   if (accessToken) {
-    config.headers['Authorization'] = `Bearer ${accessToken}`;
+    request.headers['Authorization'] = `Bearer ${accessToken}`;
   }
-  console.log(config.headers, 'config.headers...');
-  // if (!config.headers['Authorization']) {
-  // }
-  return config;
-},
-(error: any) => {
-  return Promise.reject(error);
-}
-);
+  return request;
+});
 
 customAxios.interceptors.response.use(
   (response) => {
@@ -47,14 +38,11 @@ customAxios.interceptors.response.use(
     if (error?.response?.status === 401 && !prevRequest?.sent) {
       prevRequest.sent = true;
       const refreshToken = await getRefreshToken();
-      console.log(refreshToken, 'refreshToken...');
       customAxios
         .post(`${API_URL}/api/auth/refresh-token`, { refreshToken })
-        .then(({ data }: any) => {
-          console.log(data?.data, 'data..');
+        .then(async ({ data }: any) => {
           prevRequest.headers['Authorization'] = `Bearer ${data.data.accessToken}`;
-          clearToken();
-          setRefreshToken(data.data.refreshToken);
+          await clearAccessToken();
           setAccessToken(data.data.accessToken);
           window.location.reload();
           return customAxios(prevRequest);
