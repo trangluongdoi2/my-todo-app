@@ -1,8 +1,8 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import AuthApi from "@/modules/auth/api/authApi";
-import { useGlobalStates } from "@/core/composables/useGlobalStates";
 import { useLocalStorage } from "@/core/composables/useLocalStorage";
+import { UserRole } from "@/store/auth";
 
 type AuthMode = 'sign-in' | 'sign-out';
 interface SignInForm {
@@ -27,12 +27,12 @@ const defaultSignUpForm: SignUpForm = {
   email: '',
 };
 
-const errorMessagesMap = {
-  401: 'Error',
-  402: 'Error',
-  403: 'Error',
-  404: 'Error',
-};
+// const errorMessagesMap = {
+//   401: 'Error',
+//   402: 'Error',
+//   403: 'Error',
+//   404: 'Error',
+// };
 
 export const useAuth = () => {
   const router = useRouter();
@@ -41,7 +41,7 @@ export const useAuth = () => {
   const isLoadingSignIn = ref<boolean>(false);
   const isLoadingSignInAsGuest = ref<boolean>(false);
   const isLoadingConfirmSignUp = ref<boolean>(false);
-  const currentUserName = ref<string>();
+  const isRegistered = ref<boolean>(false);
   const confirmOTP = ref<any>();
   const errorMessage = ref<string>();
   const currentAuthMode = ref<AuthMode>('sign-in');
@@ -92,8 +92,28 @@ export const useAuth = () => {
     router.push({ name: 'dashboard' });
   };
 
-  const handleRegister = () => {
-    console.log('register...');
+  const handleLoginAsGuest = () => {
+    const guestUser = {
+      username: 'guest',
+      gmail: 'guest@gmail.com',
+      role: UserRole.GUEST,
+    };
+    setCacheUser(guestUser);
+    router.push({ name: 'dashboard' });
+  };
+
+  const handleRegister = async () => {
+    isLoadingSignUp.value = true;
+    isRegistered.value = false;
+    try {
+      const { data } = await AuthApi.register(signUpForm.value);
+      console.log(data, 'data...');
+      isRegistered.value = true;
+    } catch (error) {
+      isRegistered.value = false;
+    } finally {
+      isLoadingSignUp.value = false;
+    }
   };
 
   const handleLogout = () => {
@@ -111,8 +131,10 @@ export const useAuth = () => {
     confirmOTP,
     errorConfirmOTP,
     errorMessage,
+    isRegistered,
     
     resetSignInForm,
+    handleLoginAsGuest,
     resetSignUpForm,
     handleLogin,
     handleRegister,

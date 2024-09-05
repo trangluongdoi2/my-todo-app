@@ -1,17 +1,12 @@
 <template>
-  <DashboardAdmin v-if="isAdmin" />
-  <DashboardGuest v-else />
+  <div class="dashboard__container">
+    <div class="w-full flex flex-col items-center gap-y-[0.75rem]">
+      <h1>Guest</h1>
+      <h2>Comming soon...</h2>
+    </div>
+  </div>
 </template>
-
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
-import { useAuthStore } from '@/store/auth';
-import DashboardAdmin from './DashboardAdmin.vue';
-import DashboardGuest from './DashboardGuest.vue';
-
-const authStore = useAuthStore();
-const { isAdmin } = storeToRefs(authStore);
-
 </script>
 <style scoped lang="scss">
 .dashboard__container {

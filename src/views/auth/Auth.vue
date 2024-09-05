@@ -13,42 +13,45 @@
           <div class="overlay-panel overlay-left">
             <h2>Welcome Back!</h2>
             <p>To keep connected with us please login with your personal info</p>
-            <AppButton
+            <app-button
               color="#42B883"
               @click="switchAuthMode('sign-in')">
               <span class="chevron mr-4 text-[#1D2125] font-bold"><-&nbsp</span>
               <span class="text-[#1D2125] font-bold">Sign In</span>
-            </AppButton>
+            </app-button>
           </div>
           <div class="overlay-panel overlay-right">
             <h2>Hello, Friend!</h2>
             <p>Enter your personal details and start journey with us</p>
-            <AppButton
+            <app-button
               color="#42B883"
               @click="switchAuthMode('sign-up')"
             >
               <span class="text-[#1D2125] font-bold">Sign Up</span>
               <span class="chevron text-[#1D2125] font-bold">&nbsp-></span>
-            </AppButton>
+            </app-button>
           </div>
         </div>
       </div>
     </div>
 		<p class="text-white m-4">Or</p>
-		<AppButton color="#42B883" class="h-10" @click="() => {}">
+		<app-button color="#42B883" class="h-10" @click="handleLoginAsGuest">
 			<span class="text-dark-blue font-bold">
 				Continue as Guest
 			</span>
-		</AppButton>
+		</app-button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from 'vue';
-import AppButton from '@/core/components/AppButton.vue';
+import { ref } from 'vue';
 import SignIn from '@/modules/auth/SignIn.vue';
 import SignUp from '@/modules/auth/SignUp.vue';
+import { useAuthStore } from '@/store/auth';
+import { useAuth } from '@/core/composables/useAuth';
 
+const authStore = useAuthStore();
+const { handleLoginAsGuest } = useAuth();
 const authContainerRef = ref<HTMLElement>();
 
 const switchAuthMode = (mode: string) => {
@@ -58,18 +61,6 @@ const switchAuthMode = (mode: string) => {
     authContainerRef.value?.classList.remove('right-panel-active');
   }
 };
-
-const onConfirmCodeSignIn = () => {
-  console.log('onConfirmCodeSignIn...');
-};
-
-const onFinishFailed = () => {
-  console.log('onFinishFailed');
-};
-
-onMounted(async () => {
-	// const user = await getCurrentUser();
-});
 </script>
 <style lang="scss" scoped>
 h2, p {

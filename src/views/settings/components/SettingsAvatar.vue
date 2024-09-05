@@ -13,8 +13,8 @@
       <div class="account flex p-4">
         <v-avatar class="account-image" size="32" :image="AvatarUrl" />
         <div class="account-info">
-          <div class="account-name">{{ name }}</div>
-          <div class="account-email">{{ email }}</div>
+          <div class="account-name">{{ currentUser.username }}</div>
+          <div class="account-email">{{ currentUser.email }}</div>
         </div>
       </div>
       <div>
@@ -53,12 +53,14 @@ import AppButton from '@/core/components/AppButton.vue';
 import DarkTheme from '@/assets/dark_theme.png';
 import LightTheme from '@/assets/light_theme.png';
 import BrowerTheme from '@/assets/browser_theme.png';
-import { signOut } from 'aws-amplify/auth';
-// import { useAuth } from '@/core/composables/useAuthCognito';
 import { useAuth } from '@/core/composables/useAuth';
+import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
 
 const router = useRouter();
 const { handleLogout } = useAuth();
+const authStore = useAuthStore();
+const { currentUser } = storeToRefs(authStore);
 const name = 'Nguyen Tan Vinh';
 const email = 'vinhnguyentan99@gmail.com';
 

@@ -22,10 +22,12 @@ import TheSidebar from './TheSidebar.vue';
 import useTheme from '@/core/composables/useTheme';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
 import { useAuthStorage } from '@/core/composables/useAuthStorage';
+import { useAuthStore } from '@/store/auth';
 
 const router = useRouter();
 const { getTheme } = useTheme();
 const { getCurrentUser } = useAuthStorage();
+const authStore = useAuthStore();
 const { isHiddenSideLeft } = useGlobalStates();
 
 const styleMain = computed(() => {
@@ -46,6 +48,7 @@ onMounted(async () => {
   getTheme();
   try {
     const user = await getCurrentUser();
+    authStore.mounted({ ...user });
     if (!user) {
       router.push({ name: 'auth' });
     }
