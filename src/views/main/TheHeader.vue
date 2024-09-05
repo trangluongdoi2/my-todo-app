@@ -13,6 +13,11 @@
         <TheHeaderActions />
       </div>
     </div>
+    <v-divider color="white" />
+    <TodoCreateModal v-model:visible="isShowCreateTodoModal" />
+    <ProjectCreateModal v-model:visible="isShowCreateProjectModal" />
+  </template>
+  <template v-else>
     <div class="header-middle flex-1">
       <TheHeaderActionMiddle
         @create-todo="isShowCreateTodoModal = true"
@@ -22,10 +27,7 @@
     <div class="header-right">
       <TheHeaderActions />
     </div>
-  </div>
-  <v-divider color="white" />
-  <TodoCreateModal v-model:visible="isShowCreateTodoModal" />
-  <ProjectCreateModal v-model:visible="isShowCreateProjectModal" />
+  </template>
 </template>
 
 <script setup lang="ts">
