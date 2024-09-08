@@ -7,7 +7,10 @@
         </AppButton>
       </div>
       <div class="header-middle flex-1">
-        <TheHeaderActionMiddle  @on-create-todo="isShowCreateTodoModal = true"/>
+        <TheHeaderActionMiddle
+          @create-todo="isShowCreateTodoModal = true"
+          @create-project="isShowCreateProjectModal = true"
+        />
       </div>
       <div class="header-right">
         <TheHeaderActions />
@@ -18,11 +21,7 @@
     <ProjectCreateModal v-model:visible="isShowCreateProjectModal" />
   </template>
   <template v-else>
-    <div class="header-middle flex-1">
-      <TheHeaderActionMiddle
-        @create-todo="isShowCreateTodoModal = true"
-        @create-project="isShowCreateProjectModal = true"
-      />
+    <div class="flex-1">
     </div>
     <div class="header-right">
       <TheHeaderActions />

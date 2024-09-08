@@ -4,7 +4,7 @@
     <div class="flex flex-1 flex-col">
       <div class="flex flex-1 flex-col pt-[1rem] pl-[16px] pr-[12px]">
         <p>Corjl</p>
-        <p class="sub-title">From Project 1</p>
+        <p class="sub-title">{{ project.projectName }}</p>
         <div class="flex justify-between">
           <p class="sub-title p-[4px] pl-0">My open issues</p>
           <v-chip label class="w-fit">7</v-chip>
@@ -22,6 +22,12 @@
 
 <script setup lang="ts">
 import AvatarUrl from '@/assets/avatar.jpeg';
+defineProps({
+  project: {
+    type: Object,
+    required: true,
+  },
+});
 </script>
 
 <style scoped lang="scss">

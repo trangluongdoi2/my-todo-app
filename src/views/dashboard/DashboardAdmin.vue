@@ -11,9 +11,12 @@
           <p class="text-[#42B883] font-bold">View all projects</p>
         </h2>
       </div>
-      <div class="dashboard__projects w-full h-full">
-        <ProjectCard @click="selectProject()" />
-        <ProjectCard @click="selectProject()" />
+      <div class="dashboard__projects w-full">
+        <ProjectCard
+          v-for="(project, index) in projects" :key="index" 
+          @click="selectProject(project.id)"
+          :project="project"
+        />
       </div>
     </div>
     <div class="w-full mt-[0.75rem]">
@@ -24,7 +27,7 @@
           :text="item"
           :value="item"
         >
-      </v-tab>
+        </v-tab>
       </v-tabs>
       <v-divider />
       <div class="tab-content mt-[0.5rem] w-full">
@@ -42,24 +45,56 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import ProjectCard from '@/modules/dashboard/components/ProjectCard.vue';
+import EventBus from '@/core/composables/useEventbus';
+import { useAuthStore } from '@/store/auth';
+import ProjectApi from '@/modules/project/api/projectApi';
 
 const router = useRouter();
+const authStore = useAuthStore();
+const { userIdSelected } = storeToRefs(authStore);
 const tab = ref<any>('Worked on');
 const items = [
   'Worked on',
   'Viewed',
 ];
 
-const selectProject = () => {
-  router.push({ name: 'todo' });
+const projects = ref<any>([]);
+
+const selectProject = (id: number) => {
+  router.push({
+    name: 'todo',
+    params: {
+      projectId: id,
+    },
+  });
 };
 
-onMounted(() => {
-  console.log('get all project...');
+const addProjects = (newProject: any) => {
+  projects.value = projects.value.concat(newProject);
+}
+
+const getProjects = async () => {
+  projects.value = await ProjectApi.getProjectsByUserId(userIdSelected.value) || [];
+}
+
+onMounted(async () => {
+  EventBus.on('CREATED_PROJECT', addProjects);
+  // await getProjects();
 });
+
+onUnmounted(() => {
+  EventBus.off('CREATED_PROJECT', addProjects);
+});
+
+watch(userIdSelected, async (newValue, oldValue) => {
+  if (newValue !== oldValue) {
+    await getProjects();
+  }
+}, { immediate: true });
 </script>
 
 <style scoped lang="scss">
@@ -68,6 +103,9 @@ onMounted(() => {
   height: 100%;
   padding: 0 40px;
   .dashboard__projects {
+    max-height: 500px;
+    padding: 1px;
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 12px;

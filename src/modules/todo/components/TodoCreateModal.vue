@@ -13,7 +13,12 @@
         <app-button variant="text" @click="handleCancel">
           Cancel
         </app-button>
-        <app-button class="button-create" color="#42B883" :loading="loadingSubmit" @click="handleOk">
+        <app-button
+          class="button-create"
+          color="#42B883"
+          :loading="loadingSubmit"
+          @click="handleOk"
+        >
           Create Todo
         </app-button>
       </div>
@@ -25,7 +30,7 @@
 import { ref } from 'vue';
 import AppModal from '@/core/components/AppModal.vue';
 import TodoCreateForm from './TodoCreateForm.vue';
-import TodoApi from '../api/todo';
+import TodoApi from '../api/todoApi';
 import EventBus from '@/core/composables/useEventbus';
 
 const visible = defineModel('visible', { type: Boolean, default: false });

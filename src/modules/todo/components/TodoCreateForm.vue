@@ -1,9 +1,10 @@
 <template>
- <v-form validate-on="blur lazy" @submit.prevent="submit">
+ <v-form validate-on="blur lazy" @submit.prevent>
     <div class="flex flex-col gap-y-4">
       <AppSelect
+        :loading="isFetchingProjects"
         label="Project"
-        v-model:currentSelect="todoForm.projects[0]"
+        v-model:currentSelect="todoForm.projectId"
         :items="listProjects"
       />
       <AppInput v-model="todoForm.todoName" :required="true" label="Name" />
@@ -24,16 +25,23 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import { TodoItem, Priority, TodoStatus } from '@/types';
 import AppInput from '@/core/components/AppInput.vue';
 import AppSelect from '@/core/components/AppSelect.vue';
 import AppDragDropUpload from '@/core/components/AppDragDropUpload.vue';
+import { TProject } from '@/types/project';
+import { useAuthStore } from '@/store/auth';
+import { storeToRefs } from 'pinia';
+import ProjectApi from '@/modules/project/api/projectApi';
+
+const authStore = useAuthStore();
+const { userIdSelected } = storeToRefs(authStore);
 
 const emit = defineEmits(['change']);
 
 const initialTodoItem: TodoItem = {
-  projects: ['The First Project' + Math.floor(Math.random() * 10)],
+  projectId: 0,
   todoName: 'The First Issue' + Math.floor(Math.random() * 10),
   title: 'The My Title',
   label: 'The First Label' + Math.floor(Math.random() * 10),
@@ -46,6 +54,7 @@ const initialTodoItem: TodoItem = {
 const todoForm = reactive(initialTodoItem);
 
 const currentFiles = ref<File[]>();
+const isFetchingProjects = ref(false);
 
 const listPriority = [
   { label: Priority.HIGHEST, icon: 'highest' },
@@ -54,20 +63,24 @@ const listPriority = [
   { label: Priority.LOW, icon: 'low' },
 ];
 
-// need get api to get projects...
-const listProjects = [
-  { label: 'Project 1' },
-  { label: 'Project 2' },
-  { label: 'Project 3' },
-  { label: 'Project 4' },
-];
+const listProjects = ref<{ label: string, value: number }[]>([]);
 
-const submit = () => {
-  console.log(todoForm, 'todoForm...');
+const getProjectsByUserId = async () => {
+  isFetchingProjects.value = true;
+  const res = await ProjectApi.getProjectsByUserId(userIdSelected.value);
+  listProjects.value = res.map((project: TProject) => ({
+    label: project.projectName,
+    value: project.id,
+  }));
+  initialTodoItem.projectId = listProjects.value[0].value;
+  isFetchingProjects.value = false;
 };
 
-watch(() => todoForm, () => {
-  emit('change', todoForm);  
+watch(todoForm, () => {
+  emit('change', todoForm);
 }, { immediate: true, deep: true });
 
+onMounted(() => {
+  getProjectsByUserId();
+});
 </script>

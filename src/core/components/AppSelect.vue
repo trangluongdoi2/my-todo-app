@@ -1,7 +1,8 @@
 <template>
   <div class="select-wrapper">
     <div class="select__label" v-if="label">{{ label }}</div>
-    <v-select 
+    <v-select
+      v-bind="$attrs"
       v-model="currentSelect"
       item-title="label" 
       :items="items"

@@ -51,7 +51,7 @@
 import AvatarUrl from '@/assets/avatar.jpeg';
 import AppButton from '@/core/components/AppButton.vue';
 import { TodoItem } from '@/types';
-import { PropType, ref } from 'vue';
+import { onMounted, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const emit = defineEmits<{
@@ -72,19 +72,20 @@ const navigateToDetails = (todoId: string) => {
   router.push({
     name: 'todoDetails',
     params: {
-      id: todoId,
+      todoId,
     }
   });
 };
 
+onMounted(() => {
+  console.log(props.item, 'props.item');
+});
 </script>
-
 <style lang="scss" scoped>
 .todo-card {
   border-radius: 0.25rem;
   background-color: $background-input;
   min-height: 200px;
-  // height: clamp(20rem, 1vw + 200px, 200px);
   &:hover {
     background-color: $background-selected
   }

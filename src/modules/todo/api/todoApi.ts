@@ -5,6 +5,7 @@ import TodoItemDetails from "@/modules/todo/TodoItemDetails.vue";
 const TODO_URL = {
   GET_TODOS: `${API_URL}/api/todo`,
   GET_TODO_BY_ID: `${API_URL}/api/todo`,
+  GET_TODOS_BY_PROJECT_ID: `${API_URL}/api/todo-list`,
   CREATE_TODO: `${API_URL}/api/todo/create`,
   UPDATE_TODO: `${API_URL}/api/todo/update`,
   UPDATE_TODO_BY_FIELD: `${API_URL}/api/todo/update-field`,
@@ -15,6 +16,7 @@ const TODO_URL = {
 
 export class TodoApi extends Api {
   async createTodo(input: any) {
+    console.log(input, 'createTodo...');
     const res = await this.post(TODO_URL.CREATE_TODO, input);
     return res.data;
   }
@@ -24,7 +26,12 @@ export class TodoApi extends Api {
     return res.data;
   }
 
-  async getTodoById(id: string) {
+  async getTodosByProjectId(projectId: number) {
+    const res = await this.get(`${TODO_URL.GET_TODOS_BY_PROJECT_ID}/${projectId}`);
+    return res.data;
+  }
+
+  async getTodoById(id: number) {
     const url = `${TODO_URL.GET_TODO_BY_ID}/${id}`;
     const res = await this.get(url);
     return res.data;

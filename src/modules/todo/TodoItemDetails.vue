@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { computed, PropType, ref } from 'vue';
 import { TodoItemDetails } from '@/types';
-import TodoApi from './api/todo';
+import TodoApi from './api/todoApi';
 import { saveArrayToFile } from '@/common/file';
 import AppUpload, { TempItemUpload } from '@/core/components/AppUpload.vue';
 import TodoAttachmentImage from '@/modules/todo/components/TodoAttachmentImage.vue';

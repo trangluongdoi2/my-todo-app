@@ -7,6 +7,7 @@ import Courses from "@/modules/courses/Courses.vue";
 import TheMain from "@/views/main/TheMain.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
 import Auth from "@/views/auth/Auth.vue";
+import ProjectLayout from "@/views/project/ProjectLayout.vue";
 
 export const routes = [
   {
@@ -41,15 +42,21 @@ export const routes = [
           },
           {
             name: 'todo',
-            path: '/todo',
+            path: '/:projectId/todo',
             component: TodoLayout,
             meta: { mode: 'TodoLayout' },
           },
           {
             name: 'todoDetails',
-            path: '/todo/:id',
+            path: '/:projectId/todo/:todoId',
             component: TodoItemLayout,
             meta: { mode: 'TodoLayout' },
+          },
+          {
+            name: 'project',
+            path: '/:projectId/settings',
+            component: ProjectLayout,
+            meta: { mode: 'ProjectLayout' },
           },
           {
             name: 'settings',

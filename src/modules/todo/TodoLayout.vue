@@ -1,6 +1,35 @@
 <template>
   <div class="dashboard w-full h-full" :class="{'dashboard-list': isListMode}">
-    <h1>Today</h1>
+    <div class="w-full flex justify-between items-center">
+      <h1>Today</h1>
+      <div class="flex gap-x-2">
+        <v-tooltip text="Edit project" location="bottom">
+          <template v-slot:activator="{ props }">
+            <app-button
+              type="text"
+              size="28"
+              v-bind="props"
+              @click="navigateToProjectSettings()"
+            >
+            <v-icon icon="custom:edit" /> 
+            </app-button>
+          </template>
+        </v-tooltip>
+        <v-tooltip text="Project settings" location="bottom">
+          <template v-slot:activator="{ props }">
+            <app-button
+              icon
+              type="text"
+              size="28"
+              v-bind="props"
+              @click="navigateToProjectSettings()"
+            >
+            <v-icon icon="custom:setting" /> 
+            </app-button>
+          </template>
+        </v-tooltip>
+      </div>
+    </div>
     <v-divider></v-divider>
     <TodoDataActions @change-mode="onChangeMode"/>
     <keep-alive>
@@ -30,16 +59,20 @@ import EventBus from '@/core/composables/useEventbus';
 import TodoItemsTable from './components/TodoItemsTable.vue';
 import TodoItemsGrid from './components/TodoItemsGrid.vue';
 import TodoDataActions from './components/TodoDataActions.vue';
-import TodoApi from './api/todo';
+import TodoApi from './api/todoApi';
+import { useGlobalStates } from '@/core/composables/useGlobalStates';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const isListMode = ref<boolean>(true);
 const isFetchingTodosList = ref<boolean>(false);
 const currentItemsList = ref<any>([]);
 const displayMode = ref<DisplayMode>('grid');
+const { projectId } = useGlobalStates();
 
 const getListItems = async () => {
   isFetchingTodosList.value = true;
-  const res = await TodoApi.getTodosList().finally(() => {
+  const res = await TodoApi.getTodosByProjectId(projectId.value || 1).finally(() => {
     setTimeout(() => {
       isFetchingTodosList.value = false;
     }, 100);
@@ -66,6 +99,16 @@ const updateTodoStatus = (newTodo: TodoItem) => {
     currentItemsList.value[index] = { ...newTodo };
   }
   TodoApi.updateTodoByField({ id: newTodo.id, field: 'todoStatus', value: newTodo.todoStatus });
+}
+
+const addNewMember = () => {
+  console.log('add new member');
+}
+
+const navigateToProjectSettings = () => {
+  console.log('navigateToProjectSettings...');
+  router.push({ name: 'project', params: { projectId: projectId.value } });
+  // router.push('/project-settings');
 }
 
 onMounted(() => {

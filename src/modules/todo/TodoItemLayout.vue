@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import TodoApi from './api/todo';
+import TodoApi from './api/todoApi';
 import TodoItemSideBarRight from '@/modules/todo/TodoItemSideBarRight.vue';
 import TodoItemDetails from '@/modules/todo/TodoItemDetails.vue';
 
@@ -17,10 +17,10 @@ const item = ref<any>();
 const isLoadingTodoItem = ref<boolean>(false);
 
 const getDetails = async () => {
-  const { id } = route.params;
-  if (id) {
+  const { todoId } = route.params;
+  if (todoId) {
     isLoadingTodoItem.value = true;
-    item.value = await TodoApi.getTodoById(id as string).finally(() => {
+    item.value = await TodoApi.getTodoById(todoId).finally(() => {
       setTimeout(() => {
         isLoadingTodoItem.value = false;
       }, 500);

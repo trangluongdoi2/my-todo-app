@@ -20,7 +20,7 @@ export type TodoAttachment = {
 export interface TodoItem {
   id?: string;
   title?: string,
-  projects: string[],
+  projectId: number,
   todoName: string,
   label: string,
   description: string,

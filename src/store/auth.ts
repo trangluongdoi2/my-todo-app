@@ -9,6 +9,7 @@ type UserInfo = {
   email: string,
   username: string,
   role: UserRole,
+  id: number | undefined,
 }
 
 type AuthState = {
@@ -21,11 +22,13 @@ export const useAuthStore = defineStore('authStore', {
       email: '',
       username: '',
       role: UserRole.ADMIN,
+      id: undefined,
     }
   }),
   getters: {
     isAdmin: state => state.currentUser.role === UserRole.ADMIN,
     isGuest: state => state.currentUser.role === UserRole.GUEST,
+    userIdSelected: state => state.currentUser.id,
   },
   actions: {
     mounted(data: UserInfo) {

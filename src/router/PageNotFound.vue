@@ -11,6 +11,6 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const goBackHome = () => {
-  router.push({ name: 'todo' });
+  router.push({ name: 'dashboard' });
 };
 </script>
