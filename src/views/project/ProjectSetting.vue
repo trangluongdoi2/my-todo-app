@@ -1,12 +1,13 @@
 <template>
-  <div class="w-full h-[100px]">
-    <h1>Project Settings</h1>
-  </div>
-  <div class="w-full bg-red-500">
-    <!-- <h1>Project Settings</h1> -->
+  <div class="w-full h-full flex">
+    <ProjectSettingsSidebar />
+    <ProjectSettingContent class="flex-1"/>
   </div>
 </template>
 <script setup lang="ts">
+import ProjectSettingsSidebar from './ProjectSettingsSidebar.vue';
+import ProjectSettingContent from './ProjectSettingContent.vue';
+
 </script>
 <style scoped lang="scss">
 </style>

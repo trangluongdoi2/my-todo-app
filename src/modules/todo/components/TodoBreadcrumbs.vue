@@ -1,9 +1,11 @@
 <template>
   <div ref="breadCrumbEl" class="breadcrumbs__content p-[0.25rem]">
-    <p>TodoBreadcrumbs / TodoBreadcrumbs /TodoBreadcrumbs</p>
+    <!-- <p>TodoBreadcrumbs / TodoBreadcrumbs /TodoBreadcrumbs</p> -->
+    <AppBreadcrumbs :items="[]"/>
     <v-divider />
   </div>
 </template>
+<script lang="ts"></script>
 <style lang="scss" scoped>
 .breadcrumbs__content {
   height: 30px;

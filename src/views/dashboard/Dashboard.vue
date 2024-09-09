@@ -1,6 +1,7 @@
 <template>
-  <DashboardAdmin v-if="isAdmin" />
-  <DashboardGuest v-else />
+  <!-- <DashboardAdmin v-if="isAdmin" /> -->
+  <DashboardAdmin />
+  <!-- <DashboardGuest v-else /> -->
 </template>
 
 <script setup lang="ts">
