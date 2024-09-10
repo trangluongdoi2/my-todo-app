@@ -32,9 +32,9 @@
       </v-list-item>
     </v-list>
     <app-button
+      v-if="!isMobileScreen"
       class="button-create"
       :color="'#42B883'"
-      v-if="!isMobileScreen"
       @click="onCreateIssue"
     >
       CREATE
@@ -75,7 +75,7 @@ const tabs: Tab[] = [
       {
         name: 'Go to your work space',
         event: () => {
-          router.push('/todo');
+          router.push('/dashboard');
         },
       }
     ],
@@ -88,20 +88,15 @@ const tabs: Tab[] = [
         name: 'View all projects',
         event: () => {
           router.push('/dashboard');
-          // console.log('Comming soon..');
         },
       },
       {
         name: 'Create new project',
         event: () => {
           emit('create-project');
-          // router.push('/dashboard');
         },
       }
     ],
   },
 ];
 </script>
-
-<style scoped lang="scss">
-</style>
