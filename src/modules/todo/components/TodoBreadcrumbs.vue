@@ -5,7 +5,9 @@
     <v-divider />
   </div>
 </template>
-<script lang="ts"></script>
+<script setup lang="ts">
+import AppBreadcrumbs from '@/core/components/AppBreadcrumbs.vue';
+</script>
 <style lang="scss" scoped>
 .breadcrumbs__content {
   height: 30px;

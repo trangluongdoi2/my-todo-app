@@ -1,37 +1,6 @@
 <template>
-  <div class="h-100 p-10">
-    <h1>Project Settings</h1>
-    <div class="flex flex-col mt-2 gap-y-4">
-      <AppInput 
-        v-model="memberEmail"
-        :rules="[rules.email]"
-        label="Add member"
-        placeHolder="Enter the email"
-      />
-      <app-button
-        class="w-[100px] mt-2"
-        :color="'#42B883'"
-        :disable="!memberEmail" 
-        @click="addMember"
-      >
-        Save
-      </app-button>
-      <h3>Current Members</h3>
-      <v-data-table
-        height="100%"
-        fixed-header
-        :headers="headers"
-        :items="currentMembers"
-        hide-default-footer
-      >
-        <template v-slot:loading>
-          <v-skeleton-loader :type="`table-row@${100}`"></v-skeleton-loader>
-        </template>
-        <template v-slot:item.id="{ value }">
-          <span class="item__id">{{ value }}</span>
-        </template>
-      </v-data-table>
-    </div>
+  <div class="h-100 p-4">
+   Overview
   </div>
 </template>
 

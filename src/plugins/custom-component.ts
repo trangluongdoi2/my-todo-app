@@ -5,6 +5,7 @@ import AppSkeletonItem from '@/core/components/skeleton/AppSkeletonItem.vue';
 import AppSkeletonImage from '@/core/components/skeleton/AppSkeletonImage.vue';
 import AppSkeletonButton from '@/core/components/skeleton/AppSkeletonButton.vue';
 import AppSkeletonTable from "@/core/components/skeleton/AppSkeletonTable.vue";
+import AppToast from "@/core/components/AppToast.vue";
 
 const listCustomComponents: { [key: string]: Component } = {
   'app-icon': AppIcon,
@@ -13,6 +14,7 @@ const listCustomComponents: { [key: string]: Component } = {
   'app-skeleton-image': AppSkeletonImage,
   'app-skeleton-button': AppSkeletonButton,
   'app-skeleton-table': AppSkeletonTable,
+  'app-toast': AppToast,
 };
 
 export default function loadCustomComponent(app: App) {
