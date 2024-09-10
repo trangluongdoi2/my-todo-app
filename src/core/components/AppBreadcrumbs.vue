@@ -25,6 +25,13 @@ defineProps({
 });
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.v-breadcrumbs {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 4px;
+  > li.v-breadcrumbs-divider {
+    padding: 0 4px;
+  }
+}
 </style>

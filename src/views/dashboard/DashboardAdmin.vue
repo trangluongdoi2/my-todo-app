@@ -66,7 +66,7 @@ const projects = ref<any>([]);
 
 const selectProject = (id: number) => {
   router.push({
-    name: 'todo',
+    name: 'projectDetails',
     params: {
       projectId: id,
     },

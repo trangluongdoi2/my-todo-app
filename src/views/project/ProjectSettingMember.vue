@@ -1,5 +1,6 @@
 <template>
-  <div class="h-100 p-4">
+  <div class="h-100 p-4 pt-[2px]">
+    <AppBreadcrumbs :items="breadcrumbItems" />
     <div class="flex flex-col mt-2 gap-y-4">
       <AppInput 
         v-model="memberEmail"
@@ -46,12 +47,15 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import AppInput from '@/core/components/AppInput.vue';
-import ProjectApi from '@/modules/project/api/projectApi';
 import { useAuthStore } from '@/store/auth';
+import ProjectApi from '@/modules/project/api/projectApi';
+import AppInput from '@/core/components/AppInput.vue';
+import AppBreadcrumbs, { BreadcrumbItem } from '@/core/components/AppBreadcrumbs.vue';
+import { useGlobalStates } from '@/core/composables/useGlobalStates';
 
 const authStore = useAuthStore();
 const { currentUser } = storeToRefs(authStore);
+const { projectId } = useGlobalStates();
 const route = useRoute();
 const rules = {
   email(value: string) {
@@ -92,6 +96,24 @@ const isLoadingGetMembers = ref<boolean>(false);
 const isSendingInvitation = ref<boolean>(false);
 const isShowNotification = ref<boolean>(false);
 
+const breadcrumbItems = ref<BreadcrumbItem[]>([
+  {
+    title: 'Projects',
+    disabled: false,
+    href: '/projects',
+  },
+  {
+    title: projectId.value.toString(),
+    disabled: false,
+    href: `/projects/${projectId.value}`,
+  },
+  {
+    title: 'Add member',
+    disabled: true,
+    href: '',
+  }
+]);
+
 const currentProjectId = computed(() => Number(route.params?.projectId));
 
 const sendInvitation = () => {
@@ -121,11 +143,8 @@ const getMembersProject = async () => {
     isLoadingGetMembers.value = false;
   }
 }
+
 onMounted(() => {
   getMembersProject();
 })
 </script>
-
-<style scoped>
-
-</style>

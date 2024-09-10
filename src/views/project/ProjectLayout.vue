@@ -1,7 +1,5 @@
 <template>
-  <!-- <router-view /> -->
-  <ProjectSetting />
+  <router-view />
 </template>
 <script setup lang="ts">
-import ProjectSetting from './ProjectSetting.vue';
 </script>

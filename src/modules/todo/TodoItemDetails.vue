@@ -78,7 +78,7 @@ const uploadFiles = (items: File[]) => {
   position: sticky;
   top: -1.25rem;
   left: 0;
-  height: 2rem;
+  height: 2.25rem;
   z-index: 10;
 }
 

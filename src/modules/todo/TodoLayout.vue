@@ -101,14 +101,8 @@ const updateTodoStatus = (newTodo: TodoItem) => {
   TodoApi.updateTodoByField({ id: newTodo.id, field: 'todoStatus', value: newTodo.todoStatus });
 }
 
-const addNewMember = () => {
-  console.log('add new member');
-}
-
 const navigateToProjectSettings = () => {
-  console.log('navigateToProjectSettings...');
-  router.push({ name: 'project', params: { projectId: projectId.value } });
-  // router.push('/project-settings');
+  router.push({ name: 'projectSettings', params: { projectId: projectId.value } });
 }
 
 onMounted(() => {

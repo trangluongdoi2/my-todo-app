@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 h-100 p-2 flex flex-col gap-y-2 bg-[#161A1D]">
+  <div class="w-100 h-100 p-[1.25rem] flex flex-col gap-y-2 bg-[#161A1D]">
     <div class="flex gap-x-2">
       <template v-for="n of 3" :key="n">
         <app-skeleton-item :height="20" class="w-[100px]" />

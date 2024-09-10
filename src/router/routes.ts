@@ -8,6 +8,8 @@ import TheMain from "@/views/main/TheMain.vue";
 import Dashboard from "@/views/dashboard/Dashboard.vue";
 import Auth from "@/views/auth/Auth.vue";
 import ProjectLayout from "@/views/project/ProjectLayout.vue";
+import ProjectOverview from "@/views/project/ProjectOverview.vue";
+import ProjectSettings from "@/views/project/ProjectSettings.vue";
 
 export const routes = [
   {
@@ -41,22 +43,40 @@ export const routes = [
             meta: { mode: 'Dashboard' }
           },
           {
-            name: 'todo',
-            path: '/:projectId/todo',
-            component: TodoLayout,
-            meta: { mode: 'TodoLayout' },
-          },
-          {
-            name: 'todoDetails',
-            path: '/:projectId/todo/:todoId',
-            component: TodoItemLayout,
-            meta: { mode: 'TodoLayout' },
-          },
-          {
             name: 'project',
-            path: '/:projectId/settings',
+            path: '/projects',
             component: ProjectLayout,
             meta: { mode: 'ProjectLayout' },
+            redirect: () => {
+              return { name: 'dashboard' };
+            },
+            children: [
+              {
+                name: 'projectDetails',
+                path: '/projects/:projectId',
+                component: ProjectOverview,
+                redirect: () => {
+                  return { name: 'todo' };
+                }
+              },
+              {
+                name: 'projectSettings',
+                path: '/projects/:projectId/settings',
+                component: ProjectSettings,
+              },
+              {
+                name: 'todo',
+                path: '/projects/:projectId/todo',
+                component: TodoLayout,
+                meta: { mode: 'TodoLayout' },
+              },
+              {
+                name: 'todoDetails',
+                path: '/projects/:projectId/todo/:todoId',
+                component: TodoItemLayout,
+                meta: { mode: 'TodoLayout' },
+              },
+            ]
           },
           {
             name: 'settings',
