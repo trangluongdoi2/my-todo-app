@@ -6,6 +6,7 @@ import AppSkeletonImage from '@/core/components/skeleton/AppSkeletonImage.vue';
 import AppSkeletonButton from '@/core/components/skeleton/AppSkeletonButton.vue';
 import AppSkeletonTable from "@/core/components/skeleton/AppSkeletonTable.vue";
 import AppToast from "@/core/components/AppToast.vue";
+import AppModal from "@/core/components/AppModal.vue";
 
 const listCustomComponents: { [key: string]: Component } = {
   'app-icon': AppIcon,
@@ -15,6 +16,7 @@ const listCustomComponents: { [key: string]: Component } = {
   'app-skeleton-button': AppSkeletonButton,
   'app-skeleton-table': AppSkeletonTable,
   'app-toast': AppToast,
+  'app-modal': AppModal,
 };
 
 export default function loadCustomComponent(app: App) {

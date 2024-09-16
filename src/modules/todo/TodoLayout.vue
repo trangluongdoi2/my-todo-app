@@ -28,6 +28,19 @@
             </app-button>
           </template>
         </v-tooltip>
+        <v-tooltip text="Delete project" location="bottom">
+          <template v-slot:activator="{ props }">
+            <app-button
+              icon
+              type="text"
+              size="28"
+              v-bind="props"
+              @click="onShowDeleteProjectModal()"
+            >
+            <v-icon color="#FD9891" icon="custom:delete" /> 
+            </app-button>
+          </template>
+        </v-tooltip>
       </div>
     </div>
     <v-divider></v-divider>
@@ -50,22 +63,29 @@
       </div>
     </keep-alive>
   </div>
+  <ProjectDeleteModal
+    v-if="isShowProjectDeleteModal"
+    :projectId="projectId"
+    v-model:visible="isShowProjectDeleteModal"
+  />
 </template>
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { DisplayMode, TodoItem } from '@/types';
 import EventBus from '@/core/composables/useEventbus';
+import TodoApi from './api/todoApi';
+import { useGlobalStates } from '@/core/composables/useGlobalStates';
+import ProjectDeleteModal from '@/modules/project/components/ProjectDeleteModal.vue';
 import TodoItemsTable from './components/TodoItemsTable.vue';
 import TodoItemsGrid from './components/TodoItemsGrid.vue';
 import TodoDataActions from './components/TodoDataActions.vue';
-import TodoApi from './api/todoApi';
-import { useGlobalStates } from '@/core/composables/useGlobalStates';
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const isListMode = ref<boolean>(true);
 const isFetchingTodosList = ref<boolean>(false);
+const isShowProjectDeleteModal = ref<boolean>(false);
 const currentItemsList = ref<any>([]);
 const displayMode = ref<DisplayMode>('grid');
 const { projectId } = useGlobalStates();
@@ -99,6 +119,10 @@ const updateTodoStatus = (newTodo: TodoItem) => {
     currentItemsList.value[index] = { ...newTodo };
   }
   TodoApi.updateTodoByField({ id: newTodo.id, field: 'todoStatus', value: newTodo.todoStatus });
+}
+
+const onShowDeleteProjectModal = () => {
+  isShowProjectDeleteModal.value = true;
 }
 
 const navigateToProjectSettings = () => {

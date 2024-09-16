@@ -9,7 +9,7 @@
       <ProjectCreateNewForm @change="onChange($event)" />
     </template>
     <template v-slot:actions>
-       <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">
+       <div class="flex items-center justify-end gap-x-2">
         <app-button variant="text" @click="handleCancel">
           Cancel
         </app-button>

@@ -4,6 +4,7 @@ import { API_URL } from "@/api/url";
 const PROJECT_URL = {
   GET_ALL: `${API_URL}/api/projects`,
   GET_PROJECTS_BY_USER_ID: `${API_URL}/api/projects-list`,
+  DELETE: `${API_URL}/api/projects`,
   GET_MEMBERS: `${API_URL}/api/projects/members-list`,
   SEND_INVITATION: `${API_URL}/api/projects/send-invite-mail`,
   ADD_MEMBER: `${API_URL}/api/projects/add-member`,
@@ -26,6 +27,13 @@ class ProjectApi extends Api {
   async getProjectById(id: number) {
     const url = `${PROJECT_URL.GET_ALL}/${id}`;
     const res = await this.get(url);
+    return res.data;
+  }
+
+  async deleteProject(id: number) {
+    const url = `${PROJECT_URL.DELETE}/${id}`;
+    const res = await this.delete(url);
+    console.log(res.data, 'deleteProject...');
     return res.data;
   }
 

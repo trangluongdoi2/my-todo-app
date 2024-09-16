@@ -9,20 +9,22 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import { useGlobalStates } from '@/core/composables/useGlobalStates';
 import ProjectApi from '@/modules/project/api/projectApi';
 import ProjectSettingsSidebar from './ProjectSettingsSidebar.vue';
 import ProjectSettingMember from './ProjectSettingMember.vue';
-import ProjectSettingOverview from './ProjectSettingOverview.vue';
+import ProjectSettingGeneral from './ProjectSettingGeneral.vue';
 
-type ProjectSettingsTab = 'Member' | 'Overview';
+type ProjectSettingsTab = 'Member' | 'General';
 
 const dynamicComponent: { [key: ProjectSettingsTab]: any } = {
   'Member': ProjectSettingMember,
-  'Overview': ProjectSettingOverview,
+  'General': ProjectSettingGeneral,
 }
 
 const projectInfos = ref<any>();
 const currentSelectTab = ref<ProjectSettingsTab>('Member');
+const { projectId } = useGlobalStates();
 const currentTabComponent = computed(() => dynamicComponent[currentSelectTab.value]);
 
 const onSelectTab = (tab: ProjectSettingsTab) => {
@@ -33,9 +35,8 @@ const onSelectTab = (tab: ProjectSettingsTab) => {
 }
 
 onMounted(async () => {
-  const projectId = useRoute().params?.projectId;
-  if (projectId) {
-    projectInfos.value = await ProjectApi.getProjectById(projectId as any);
+  if (projectId.value) {
+    projectInfos.value = await ProjectApi.getProjectById(projectId.value);
   }
 })
 </script>

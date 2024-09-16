@@ -9,15 +9,11 @@ export const useGlobalStates = () => {
     'ProjectLayout'
   ];
 
-  const isTodoLayoutTab = computed(() => {
-    const { meta } = route;
-    return meta.mode === 'TodoLayout';
-  });
+  const isTodoLayoutTab = computed(() => route?.meta?.mode === 'TodoLayout');
 
-  const projectId = computed(() => {
-    const { params } = route;
-    return Number(params.projectId);
-  });
+  const projectId = computed(() => Number(route.params?.projectId));
+
+  const todoId = computed(() => Number(route.params?.todoId));
 
   const isHiddenSideLeft = computed(() => {
     const { meta } = route;
@@ -26,6 +22,7 @@ export const useGlobalStates = () => {
   
   return {
     projectId,
+    todoId,
     isTodoLayoutTab,
     isHiddenSideLeft,
   };
