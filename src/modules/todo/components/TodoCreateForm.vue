@@ -41,7 +41,6 @@ const { userIdSelected } = storeToRefs(authStore);
 const emit = defineEmits(['change']);
 
 const initialTodoItem: TodoItem = {
-  projectId: 0,
   todoName: 'The First Issue' + Math.floor(Math.random() * 10),
   title: 'The My Title',
   label: 'The First Label' + Math.floor(Math.random() * 10),

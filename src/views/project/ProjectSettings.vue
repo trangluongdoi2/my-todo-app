@@ -17,7 +17,7 @@ import ProjectSettingGeneral from './ProjectSettingGeneral.vue';
 
 type ProjectSettingsTab = 'Member' | 'General';
 
-const dynamicComponent: { [key: ProjectSettingsTab]: any } = {
+const dynamicComponent: { [key in ProjectSettingsTab]: any } = {
   'Member': ProjectSettingMember,
   'General': ProjectSettingGeneral,
 }

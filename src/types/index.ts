@@ -20,13 +20,13 @@ export type TodoAttachment = {
 export interface TodoItem {
   id?: string;
   title?: string,
-  projectId: number,
   todoName: string,
   label: string,
   description: string,
   priority: Priority,
   assignee?: string[],
   todoStatus: TodoStatus,
+  projectId?: number | string,
 }
 
 export interface TodoItemDetails extends Omit<TodoItem, 'id'> {

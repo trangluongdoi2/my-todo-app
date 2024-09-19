@@ -20,7 +20,7 @@ const getDetails = async () => {
   const { todoId } = route.params;
   if (todoId) {
     isLoadingTodoItem.value = true;
-    item.value = await TodoApi.getTodoById(todoId).finally(() => {
+    item.value = await TodoApi.getTodoById(Number(todoId)).finally(() => {
       setTimeout(() => {
         isLoadingTodoItem.value = false;
       }, 500);

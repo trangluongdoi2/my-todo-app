@@ -7,7 +7,6 @@
   >
     <div class="todo-title flex-1">{{ item.title }}</div>
     <div class="todo-more flex justify-between">
-      <div v-if="item.projects?.length" class="project">{{ item.projects[0] }}</div>
       <div class="avatar">
         <v-avatar size="28" :image="AvatarUrl" />
       </div>
@@ -48,10 +47,10 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, PropType, ref } from 'vue';
 import AvatarUrl from '@/assets/avatar.jpeg';
 import AppButton from '@/core/components/AppButton.vue';
 import { TodoItem } from '@/types';
-import { onMounted, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const emit = defineEmits<{
@@ -76,7 +75,6 @@ const navigateToDetails = (todoId: string) => {
     }
   });
 };
-
 onMounted(() => {
   console.log(props.item, 'props.item');
 });
