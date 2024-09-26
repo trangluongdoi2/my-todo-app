@@ -13,6 +13,7 @@ const PROJECT_URL = {
 };
 
 class ProjectApi extends Api {
+  error;
   async getProjectsList() {
     const res = await this.get(PROJECT_URL.GET_ALL);
     return res.data;
@@ -24,16 +25,26 @@ class ProjectApi extends Api {
     return res.data;
   }
 
-  async getProjectById(id: number) {
-    const url = `${PROJECT_URL.GET_ALL}/${id}`;
-    const res = await this.get(url);
+  async createProject(input: any) {
+    const res = await this.post(PROJECT_URL.CREATE_PROJECT, input);
     return res.data;
+  }
+
+  async getProjectById(id: number) {
+    const newId = 10;
+    try {
+      const url = `${PROJECT_URL.GET_ALL}/${newId}`;
+      const res = await this.get(url);
+      console.log(res, 'res......');
+      return res.data;
+    } catch (error) {
+      this.error = error?.response?.data?.message;
+    }
   }
 
   async deleteProject(id: number) {
     const url = `${PROJECT_URL.DELETE}/${id}`;
     const res = await this.delete(url);
-    console.log(res.data, 'deleteProject...');
     return res.data;
   }
 
@@ -53,11 +64,6 @@ class ProjectApi extends Api {
     const { projectId, fromEmail, destEmail } = input;
     const url = `${PROJECT_URL.SEND_INVITATION}/${projectId}`;
     const res = await this.post(url, { fromEmail, destEmail });
-    return res.data;
-  }
-
-  async createProject(input: any) {
-    const res = await this.post(PROJECT_URL.CREATE_PROJECT, input);
     return res.data;
   }
 }

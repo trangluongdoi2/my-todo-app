@@ -13,7 +13,7 @@
       </div>
       <v-divider />
     </slot>
-    <div class="modal-content p-[24px] pt-[12px]">
+    <div class="modal-content p-[24px] pt-[12px] pb-[12px]">
       <slot />
     </div>
     <v-divider />

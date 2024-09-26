@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import TodoCreateModal from '@/modules/todo/components/TodoCreateModal.vue';
 import AppButton from '@/core/components/AppButton.vue';
@@ -42,6 +42,9 @@ import { storeToRefs } from 'pinia';
 
 const isShowCreateTodoModal = ref<boolean>(false);
 const { isAdmin } = storeToRefs(useAuthStore());
+watch(isAdmin, (newVal) => {
+  console.log('isAdmin', newVal);
+});
 const isShowCreateProjectModal = ref<boolean>(false);
 
 const router = useRouter();

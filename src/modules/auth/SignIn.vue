@@ -1,7 +1,12 @@
 <template>
   <div class="w-full h-full p-8 flex flex-col justify-between">
     <div class="flex flex-1 items-center">
-      <v-form class="w-full" fast-fail @submit.prevent="handleLogin">
+      <v-form
+        ref="formEl"
+        class="w-full"
+        fast-fail
+        @submit.prevent="onHandleLogin"
+      >
         <template class="flex flex-col gap-y-4">
           <AppInput
             v-model="signInForm.username"
@@ -12,6 +17,7 @@
             required
           />
           <AppInput
+            ref="passwordEl"
             v-model="signInForm.password"
             :rules="[rules.password]"
             label="Password"
@@ -19,21 +25,21 @@
             placeHolder="Enter your password"
             required
           />
-          <AppButton
+          <app-button
             class="mt-2"
             color="#42B883"
             :loading="isLoadingSignIn"
             type="submit"
           >
             <span class="text-[#1D2125] font-bold">Continue</span>
-          </AppButton>
+          </app-button>
         </template>
       </v-form>
     </div>
     <div>
       <p class="mt-2 text-[0.75rem] text-center">Or continue with</p>
       <div class="w-full flex flex-col mt-2 gap-y-4">
-        <AppButton
+        <app-button
           variant="outlined"
           v-for="(option, index) in oAuthOptions"
           :key="index"
@@ -43,15 +49,15 @@
             <v-icon size="20" color="#42B883" :icon="option.icon" />
             {{ option.title }}
           </div>
-        </AppButton>
+        </app-button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useAuth } from '@/core/composables/useAuth';
-import AppButton from '@/core/components/AppButton.vue';
 import AppInput from '@/core/components/AppInput.vue';
 
 const {
@@ -61,13 +67,23 @@ const {
   handleLogin,
 } = useAuth();
 
+const formEl = ref<HTMLFormElement | null>(null);
+
+const onHandleLogin = async () => {
+  if (formEl.value) {
+    handleLogin().then(() => {
+      formEl.value?.validate();
+    });
+  }
+}
+
 const rules = {
   name(value: string) {
     if (!value) {
       return 'Name is required!';
     }
     if (value) {
-      return value === 'Incorrect username or password' ? value : true;
+      return errorMessage.value === 'User is not exist!' ? errorMessage.value : true;
     }
   },
   password(value: string) {
@@ -75,7 +91,7 @@ const rules = {
       return 'Password is required!';
     }
     if (value) {
-      return value === 'Incorrect username or password' ? value : true;
+      return errorMessage.value === 'Password is not match!' ? errorMessage.value : true;
     }
   }
 }

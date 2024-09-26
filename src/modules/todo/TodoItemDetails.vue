@@ -60,6 +60,7 @@ const tempAttachUploads = ref<any[]>([]);
 const attachments = computed(() => (props.item?.attachments || []).concat(tempAttachUploads.value));
 
 const onDownloadAttach = async (file: any) => {
+  console.log(file, '==> file...');
   const base64 = await TodoApi.downloadAttachment(file.fileName);
   saveArrayToFile(base64, file.fileName);
 }
@@ -69,6 +70,7 @@ const onAddFilesUpload = (items: TempItemUpload[]) => {
 }
 
 const uploadFiles = (items: File[]) => {
+  console.log(props.item.id, '==> props.item.id');
   TodoApi.uploadAttachs(props.item.id, items);
 }
 

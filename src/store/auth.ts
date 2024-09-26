@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 
 export enum UserRole {
+  SUPER_ADMIN = 'SUPER_ADMIN',
   ADMIN = 'ADMIN',
   GUEST = 'GUEST',
 }
@@ -26,7 +27,7 @@ export const useAuthStore = defineStore('authStore', {
     }
   }),
   getters: {
-    isAdmin: state => state.currentUser.role === UserRole.ADMIN,
+    isAdmin: state => state.currentUser.role === UserRole.ADMIN || state.currentUser.role === UserRole.GUEST,
     isGuest: state => state.currentUser.role === UserRole.GUEST,
     userIdSelected: state => state.currentUser.id,
   },

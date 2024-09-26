@@ -1,11 +1,16 @@
 import customAxios from './axios';
 export default class Api {
+  error: any;
   protected async get(url: string, configs?: Record<string, any>) {
     try {
       const res = await customAxios.get(url, configs);
       return res.data;
-    } catch (error) {
-      return null;
+    } catch ({ response }) {
+      return { 
+        data: null,
+        status: response?.status || 500,
+        message: response?.data?.message,
+      };
     }
   }
 
@@ -18,16 +23,15 @@ export default class Api {
       const { data, status } = await customAxios.post(url, input, configs);
       if (data) {
         return {
-          data: data.data,
-          status
+          data,
+          status,
         };
       }
-    } catch ({ response }) {
-      console.log(response, 'response post api..');
-      return { 
+    } catch (error) {
+      return {
         data: null,
-        status: 404,
-        message: response?.data?.message,
+        status: error.response?.status || 500,
+        message: error.response?.data?.message,
       };
     }
   }
@@ -37,8 +41,16 @@ export default class Api {
     input?: Record<string, unknown>,
     configs?: Record<string, unknown>
   ) {
-    const res = await customAxios.patch(url, input, configs);
-    return res.data;
+    try {
+      const res = await customAxios.patch(url, input, configs);
+      return res.data;
+    } catch ({ response }) {
+      return { 
+        data: null,
+        status: response?.status || 500,
+        message: response?.data?.message,
+      };
+    }
   }
 
   protected async put(
@@ -46,12 +58,28 @@ export default class Api {
     input?: Record<string, unknown>,
     configs?: Record<string, unknown>
   ) {
-    const res = await customAxios.put(url, input, configs);
-    return res.data;
+    try {
+      const res = await customAxios.put(url, input, configs);
+      return res.data;
+    } catch ({ response }) {
+      return { 
+        data: null,
+        status: response?.status || 500,
+        message: response?.data?.message,
+      };
+    }
   }
 
   protected async delete(url: string) {
-    const res = await customAxios.delete(url);
-    return res.data;
+    try {
+      const res = await customAxios.delete(url);
+      return res.data;
+    } catch ({ response }) {
+      return { 
+        data: null,
+        status: response?.status || 500,
+        message: response?.data?.message,
+      };
+    }
   }
 }

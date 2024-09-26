@@ -8,7 +8,6 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
 import ProjectApi from '@/modules/project/api/projectApi';
 import ProjectSettingsSidebar from './ProjectSettingsSidebar.vue';

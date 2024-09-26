@@ -61,7 +61,6 @@ export class TodoApi extends Api {
     const configs = {
       headers: { 'Content-Type': 'multipart/form-data' }
     };
-    // const res = await this.post(url, formData, configs);
     await this.post(url, formData, configs);
     return [];
   }

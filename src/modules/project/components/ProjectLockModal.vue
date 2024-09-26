@@ -1,6 +1,6 @@
 <template>
   <app-modal
-    title="Delete project"
+    title="Lock project"
     v-model:visible="visible"
     max-width="50%"
   >
@@ -27,13 +27,10 @@
 
 <script setup lang="ts">
 import { ref, defineModel, defineProps } from 'vue';
-import { useRouter } from "vue-router";
-import ProjectApi from '@/modules/project/api/projectApi';
 
-const router = useRouter();
 const isLockingProject = ref<boolean>(false);
 const visible = defineModel('visible', { type: Boolean, default: false });
-const props = defineProps({
+defineProps({
   projectId: {
     type: Number,
     required: true,
@@ -43,10 +40,6 @@ const props = defineProps({
 const handleOk = () => {
   visible.value = false;
   isLockingProject.value = true;
-  // ProjectApi.deleteProject(props.projectId).then(() => {
-  //   isLockingProject.value = false;
-  //   router.replace({ name: 'project' });
-  // });
 };
 
 const handleCancel = () => {
@@ -54,7 +47,3 @@ const handleCancel = () => {
 };
 
 </script>
-
-<style scoped lang="scss">
-
-</style>
