@@ -2,7 +2,7 @@
    <AppModal v-model:visible="visible" width="50%">
     <div>Are you sure delete this item?</div>
     <template v-slot:actions>
-       <div class="flex items-center justify-end gap-x-2 p-[24px] pt-0">
+       <div class="flex items-center justify-end gap-x-2">
         <v-btn variant="text" @click="visible = false">
           Cancel
         </v-btn>

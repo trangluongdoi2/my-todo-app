@@ -15,7 +15,7 @@
       <div class="flex gap-x-1">
         <v-tooltip text="Edit" location="top">
           <template v-slot:activator="{ props }">
-            <AppButton
+            <app-button
               class="icon-actions"
               icon
               size="28"
@@ -24,12 +24,12 @@
               v-bind="props"
             >
               <v-icon color="#42B883" icon="custom:edit" />
-            </AppButton>
+            </app-button>
           </template>
         </v-tooltip>
         <v-tooltip text="Delete" location="top">
           <template v-slot:activator="{ props }">
-            <AppButton
+            <app-button
               icon
               class="icon-actions"
               size="28"
@@ -38,7 +38,7 @@
               @click.stop="$emit('delete-item', item)"
             >
               <v-icon color="#FD9891" icon="custom:delete" />
-            </AppButton>
+            </app-button>
           </template>
         </v-tooltip>
       </div>
@@ -49,7 +49,6 @@
 <script setup lang="ts">
 import { onMounted, PropType, ref } from 'vue';
 import AvatarUrl from '@/assets/avatar.jpeg';
-import AppButton from '@/core/components/AppButton.vue';
 import { TodoItem } from '@/types';
 import { useRouter } from 'vue-router';
 

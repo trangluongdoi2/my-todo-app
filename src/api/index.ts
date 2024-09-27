@@ -3,8 +3,11 @@ export default class Api {
   error: any;
   protected async get(url: string, configs?: Record<string, any>) {
     try {
-      const res = await customAxios.get(url, configs);
-      return res.data;
+      const { data, status } = await customAxios.get(url, configs);
+      return {
+        data: data.data,
+        status,
+      };
     } catch ({ response }) {
       return { 
         data: null,
@@ -23,15 +26,15 @@ export default class Api {
       const { data, status } = await customAxios.post(url, input, configs);
       if (data) {
         return {
-          data,
+          data: data.data,
           status,
         };
       }
-    } catch (error) {
+    } catch ({ response }) {
       return {
         data: null,
-        status: error.response?.status || 500,
-        message: error.response?.data?.message,
+        status: response?.status || 500,
+        message: response?.data?.message,
       };
     }
   }

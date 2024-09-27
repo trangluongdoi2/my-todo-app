@@ -83,7 +83,6 @@ const getProjects = async () => {
 
 onMounted(async () => {
   EventBus.on('CREATED_PROJECT', addProjects);
-  // await getProjects();
 });
 
 onUnmounted(() => {

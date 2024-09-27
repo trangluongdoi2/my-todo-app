@@ -50,11 +50,3 @@ const iconColor = computed(() => {
 })
 
 </script>
-
-<style scoped lang="scss">
-.v-snackbar {
-  .v-snackbar__content {
-    background-color: red;
-  }
-}
-</style>

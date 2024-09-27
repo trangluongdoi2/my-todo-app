@@ -13,7 +13,6 @@ const PROJECT_URL = {
 };
 
 class ProjectApi extends Api {
-  error;
   async getProjectsList() {
     const res = await this.get(PROJECT_URL.GET_ALL);
     return res.data;
@@ -31,15 +30,9 @@ class ProjectApi extends Api {
   }
 
   async getProjectById(id: number) {
-    const newId = 10;
-    try {
-      const url = `${PROJECT_URL.GET_ALL}/${newId}`;
-      const res = await this.get(url);
-      console.log(res, 'res......');
-      return res.data;
-    } catch (error) {
-      this.error = error?.response?.data?.message;
-    }
+    const url = `${PROJECT_URL.GET_ALL}/${id}`;
+    const res = await this.get(url);
+    return res.data;
   }
 
   async deleteProject(id: number) {

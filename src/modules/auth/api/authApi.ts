@@ -9,7 +9,7 @@ const URL = {
 class AuthApi extends Api {
   async login(input: any) {
     const res = await this.post(URL.LOGIN, input);
-    return res; 
+    return res;
   }
 
   async register(input: any) {

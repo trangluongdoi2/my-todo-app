@@ -74,9 +74,9 @@ const onEditItem = (item: TodoItem) => {
   router.push({
     name: 'todoDetails',
     params: {
-      id: selectedTodoItem.value.id,
+      todoId: selectedTodoItem.value.id,
     }
-  })
+  });
 }
 
 const onEditItemStatus = async (item: TodoItem) => {

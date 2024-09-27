@@ -38,7 +38,6 @@ const emits = defineEmits(['delete-item', 'edit-item']);
 defineProps({
   item: {
     type: Object as PropType<TodoItem>,
-    // required: true,
     default: () => ({
       title: 'Title 1',
       description: 'Description 1',
@@ -103,7 +102,6 @@ const randomImage = () => {
       color: red;
     }
     .card__description {
-      // font-size: clamp(0.5rem, 1vw + 0.5rem, 1rem);
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
