@@ -6,6 +6,8 @@ export type ErrorHandlingStore = {
   visible: boolean;
 };
 
+const TIMEOUT = 2000;
+
 export const useErrorHandlingStore = defineStore("errorHandling", {
   state: () => ({
     message: '',
@@ -15,13 +17,15 @@ export const useErrorHandlingStore = defineStore("errorHandling", {
     setMessage(message: string) {
       this.message = message;
       this.visible = true;
+      setTimeout(() => {
+        this.reset();
+      }, TIMEOUT);
     },
     setVisible(visible: boolean) {
       this.visible = visible;
     },
     reset() {
-      this.message = '';
-      this.visible = false;
+      this.$reset();
     },
   },
 });

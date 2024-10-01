@@ -1,15 +1,27 @@
 <template>
   <div class="dashboard__container">
     <div class="mt-[24px] mb-[1rem]">
-      <h1 class="title">Your work</h1>
+      <h1 class="title pb-[4px]">Your work</h1>
       <v-divider />
     </div>
     <div class="w-full flex flex-col gap-y-[0.75rem]">
       <div class="flex flex-1 items-center justify-between">
-        <h2>Recent Projects</h2>
-        <h2 class="link">
-          <p class="text-[#42B883] font-bold">View all projects</p>
-        </h2>
+        <h2 class="font-bold">All Projects</h2>
+        <div class="flex items-center gap-x-2">
+          <v-tooltip text="Create New Project" location="top">
+            <template v-slot:activator="{ props }">
+              <app-button 
+                icon
+                size="28"
+                variant="text" 
+                @click="isShowCreateProjectModal = true" 
+                v-bind="props"
+              >
+                <v-icon color="#42B883" icon="mdi-plus" />
+              </app-button>
+            </template>
+          </v-tooltip>
+        </div>
       </div>
       <div class="dashboard__projects w-full">
         <ProjectCard
@@ -42,16 +54,18 @@
       </div>
     </div>
   </div>
+  <ProjectCreateModal v-model:visible="isShowCreateProjectModal" />
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import ProjectCard from '@/modules/dashboard/components/ProjectCard.vue';
 import EventBus from '@/core/composables/useEventbus';
 import { useAuthStore } from '@/store/authStore';
 import ProjectApi from '@/modules/project/api/projectApi';
+import ProjectCard from '@/modules/dashboard/components/ProjectCard.vue';
+import ProjectCreateModal from '@/modules/project/components/ProjectCreateModal.vue';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -63,6 +77,7 @@ const items = [
 ];
 
 const projects = ref<any>([]);
+const isShowCreateProjectModal = ref<boolean>(false);
 
 const selectProject = (id: number) => {
   router.push({
