@@ -19,12 +19,6 @@ const { isAdmin } = storeToRefs(authStore);
   width: 100%;
   height: 100%;
   padding: 0 40px;
-  // .dashboard__projects {
-  //   display: flex;
-  //   flex-wrap: wrap;
-  //   gap: 12px;
-  //   // background-color: red;
-  // }
   h2.link {
     color: $green-base;
     line-height: 1.14286;

@@ -29,11 +29,20 @@ export interface TodoItem {
   projectId?: number | string,
 }
 
+export interface TodoStatusLog {
+  id: string,
+  action: 'create' | 'update',
+  oldValue: any,
+  newValue: any,
+  createdAt: string,
+}
+
 export interface TodoItemDetails extends Omit<TodoItem, 'id'> {
   id: string,
   createdAt: string,
   updateAt: string,
   attachments: TodoAttachment[],
+  statusLogs: TodoStatusLog[],
 }
 
 export type DisplayMode = 'table' | 'grid';

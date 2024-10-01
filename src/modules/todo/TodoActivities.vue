@@ -14,13 +14,14 @@
   </div>
   <div class="activities">
     <keep-alive>
-      <component :is="activitiesComponentName" />
+      <component :is="activitiesComponentName" :history="item.statusLogs"/>
     </keep-alive>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, PropType, ref } from 'vue';
+import { TodoItemDetails } from '@/types';
 import TodoActivityComments from '@/modules/todo/TodoActivityComments.vue';
 import TodoActivityAll from '@/modules/todo/TodoActivityAll.vue';
 import TodoActivityHistory from '@/modules/todo/TodoActivityHistory.vue';
@@ -30,9 +31,16 @@ enum Tab {
   COMMENTS = 'COMMENTS',
   HISTORY = 'HISTORY',
 }
+
+const props = defineProps({
+  item: {
+    type: Object as PropType<TodoItemDetails>,
+    required: true,
+  },
+});
 const selectedTab = ref<Tab>(Tab.COMMENTS);
+
 const onSelectTab = (tab: Tab) => {
-  console.log(tab, 'onSelectTab...');
   selectedTab.value = tab;
 }
 
@@ -43,8 +51,7 @@ const layouts = {
 };
 
 const activitiesComponentName = computed(() => layouts[selectedTab.value]);
+onMounted(() => {
+  console.log(props.item, 'props.item...');
+});
 </script>
-
-<style lang="scss" scoped>
-
-</style>

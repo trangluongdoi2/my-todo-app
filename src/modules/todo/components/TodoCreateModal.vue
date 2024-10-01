@@ -44,6 +44,7 @@ const onChange = (data: any) => {
 
 const handleOk = () => {
   loadingSubmit.value = true;
+  console.log(todoData.value, 'todoData...');
   TodoApi.createTodo(todoData.value)
     .then((data) => {
       EventBus.emit('CREATED_TODO', data);

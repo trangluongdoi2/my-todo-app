@@ -77,9 +77,11 @@ export default class Api {
 
   protected async delete(url: string) {
     try {
+      console.log(url, 'url...');
       const res = await customAxios.delete(url);
       return res.data;
     } catch ({ response }) {
+      console.log(response, 'response...');
       return { 
         data: null,
         status: response?.status || 500,

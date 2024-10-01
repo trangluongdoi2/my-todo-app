@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard w-full h-full" :class="{'dashboard-list': isListMode}">
     <div class="w-full flex justify-between items-center">
-      <h1>Today</h1>
+      <h1>{{ selectedProject?.projectName }}</h1>
       <div class="flex gap-x-2">
         <v-tooltip text="Edit project" location="bottom">
           <template v-slot:activator="{ props }">
@@ -73,22 +73,27 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { DisplayMode, TodoItem } from '@/types';
-import EventBus from '@/core/composables/useEventbus';
 import TodoApi from './api/todoApi';
+import EventBus from '@/core/composables/useEventbus';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
 import ProjectDeleteModal from '@/modules/project/components/ProjectDeleteModal.vue';
 import TodoItemsTable from './components/TodoItemsTable.vue';
 import TodoItemsGrid from './components/TodoItemsGrid.vue';
 import TodoDataActions from './components/TodoDataActions.vue';
+import { useProjectStore } from '@/store/projectStore';
 
 const router = useRouter();
+const projectStore = useProjectStore();
+const { selectedProject } = storeToRefs(projectStore);
+const { projectId } = useGlobalStates();
+
 const isListMode = ref<boolean>(true);
 const isFetchingTodosList = ref<boolean>(false);
 const isShowProjectDeleteModal = ref<boolean>(false);
 const currentItemsList = ref<any>([]);
 const displayMode = ref<DisplayMode>('grid');
-const { projectId } = useGlobalStates();
 
 const getListItems = async () => {
   isFetchingTodosList.value = true;
@@ -132,6 +137,7 @@ const navigateToProjectSettings = () => {
 onMounted(() => {
   EventBus.on('CREATED_TODO', addNewTodoItem);
   getListItems();
+  projectStore.mounted(projectId.value);
 });
 
 onUnmounted(() => {

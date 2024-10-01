@@ -28,7 +28,7 @@
       </div>
       <div>
         <h2>Activities</h2>
-        <TodoActivities />
+        <TodoActivities :item="item"/>
       </div>
     </div>
   </div>
@@ -70,7 +70,6 @@ const onAddFilesUpload = (items: TempItemUpload[]) => {
 }
 
 const uploadFiles = (items: File[]) => {
-  console.log(props.item.id, '==> props.item.id');
   TodoApi.uploadAttachs(props.item.id, items);
 }
 
