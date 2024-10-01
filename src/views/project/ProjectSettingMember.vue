@@ -47,7 +47,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import ProjectApi from '@/modules/project/api/projectApi';
 import AppInput from '@/core/components/AppInput.vue';
 import AppBreadcrumbs, { BreadcrumbItem } from '@/core/components/AppBreadcrumbs.vue';

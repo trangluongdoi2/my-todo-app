@@ -2,7 +2,7 @@
   <div v-if="loading" class="overflow-y-auto">
     <SkeletonTodoDetails />
   </div>
-  <div v-else class="overflow-y-auto p-[1.25rem] text-[16px]">
+  <div v-else class="overflow-y-auto p-[1.25rem] pt-0 text-[16px]">
     <TodoBreadcrumbs class="breadcrumbs"/>
     <div class="flex flex-col gap-y-2 mt-4 text-[14px]">
       <div>
@@ -78,9 +78,9 @@ const uploadFiles = (items: File[]) => {
 <style lang="scss" scoped>
 .breadcrumbs {
   position: sticky;
-  top: -1.25rem;
+  top: 0;
   left: 0;
-  height: 2.25rem;
+  height: 2.5rem;
   z-index: 10;
 }
 

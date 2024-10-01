@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import DashboardAdmin from './DashboardAdmin.vue';
 import DashboardGuest from './DashboardGuest.vue';
 
@@ -19,11 +19,12 @@ const { isAdmin } = storeToRefs(authStore);
   width: 100%;
   height: 100%;
   padding: 0 40px;
-  .dashboard__projects {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
+  // .dashboard__projects {
+  //   display: flex;
+  //   flex-wrap: wrap;
+  //   gap: 12px;
+  //   // background-color: red;
+  // }
   h2.link {
     color: $green-base;
     line-height: 1.14286;

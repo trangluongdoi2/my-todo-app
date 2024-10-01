@@ -31,7 +31,7 @@ import AppInput from '@/core/components/AppInput.vue';
 import AppSelect from '@/core/components/AppSelect.vue';
 import AppDragDropUpload from '@/core/components/AppDragDropUpload.vue';
 import { TProject } from '@/types/project';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import { storeToRefs } from 'pinia';
 import ProjectApi from '@/modules/project/api/projectApi';
 

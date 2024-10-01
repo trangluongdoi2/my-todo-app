@@ -2,7 +2,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import AuthApi from "@/modules/auth/api/authApi";
 import { useLocalStorage } from "@/core/composables/useLocalStorage";
-import { UserRole } from "@/store/auth";
+import { UserRole } from "@/store/authStore";
 
 type AuthMode = 'sign-in' | 'sign-out';
 interface SignInForm {

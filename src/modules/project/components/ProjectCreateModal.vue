@@ -31,10 +31,12 @@ import { ref } from 'vue';
 import AppModal from '@/core/components/AppModal.vue';
 import ProjectCreateNewForm from '@/modules/project/components/ProjectCreateNewForm.vue';
 import ProjectApi from '@/modules/project/api/projectApi';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import { storeToRefs } from 'pinia';
 import EventBus from '@/core/composables/useEventbus';
+import { useErrorHandlingStore } from '@/store/errorHandlingStore';
 
+const errorHandlingStore = useErrorHandlingStore();
 const visible = defineModel('visible', { type: Boolean, default: false });
 const loadingSubmit = ref<boolean>(false);
 const authStore = useAuthStore();
@@ -51,16 +53,15 @@ const onChange = (data: any) => {
 
 const handleOk = async () => {
   loadingSubmit.value = true;
-  console.log(projectData.value, 'handleOk..');
-  ProjectApi.createProject(projectData.value).then((data) => {
-    console.log(data, 'data..');
-    if (data) {
-      EventBus.emit('CREATED_PROJECT', data);
-    }
-  }).finally(() => {
-    loadingSubmit.value = false;
-    visible.value = false;
-  })
+  const data = await ProjectApi.createProject(projectData.value);
+  if (data) {
+    EventBus.emit('CREATED_PROJECT', data);
+  }
+  loadingSubmit.value = false;
+  visible.value = false;
+  if (ProjectApi.error) {
+    errorHandlingStore.setMessage(ProjectApi.error);
+  }
 };
 
 const handleCancel = () => {

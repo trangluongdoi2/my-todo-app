@@ -47,7 +47,7 @@
 import { ref } from 'vue';
 import SignIn from '@/modules/auth/SignIn.vue';
 import SignUp from '@/modules/auth/SignUp.vue';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import { useAuth } from '@/core/composables/useAuth';
 
 const authStore = useAuthStore();

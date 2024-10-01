@@ -45,12 +45,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import ProjectCard from '@/modules/dashboard/components/ProjectCard.vue';
 import EventBus from '@/core/composables/useEventbus';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import ProjectApi from '@/modules/project/api/projectApi';
 
 const router = useRouter();
@@ -95,7 +95,6 @@ watch(userIdSelected, async (newValue, oldValue) => {
   }
 }, { immediate: true });
 </script>
-
 <style scoped lang="scss">
 .dashboard__container {
   width: 100%;

@@ -37,7 +37,7 @@ import AppButton from '@/core/components/AppButton.vue';
 import ProjectCreateModal from '@/modules/project/components/ProjectCreateModal.vue';
 import TheHeaderActionMiddle from './TheHeaderActionMiddle.vue';
 import TheHeaderActions from './TheHeaderActions.vue';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import { storeToRefs } from 'pinia';
 
 const isShowCreateTodoModal = ref<boolean>(false);

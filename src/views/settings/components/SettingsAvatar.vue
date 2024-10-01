@@ -54,7 +54,7 @@ import DarkTheme from '@/assets/dark_theme.png';
 import LightTheme from '@/assets/light_theme.png';
 import BrowerTheme from '@/assets/browser_theme.png';
 import { useAuth } from '@/core/composables/useAuth';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 import { storeToRefs } from 'pinia';
 
 const router = useRouter();

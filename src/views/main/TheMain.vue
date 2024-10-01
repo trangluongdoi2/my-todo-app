@@ -22,7 +22,7 @@ import TheSidebar from './TheSidebar.vue';
 import useTheme from '@/core/composables/useTheme';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
 import { useAuthStorage } from '@/core/composables/useAuthStorage';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store/authStore';
 
 const router = useRouter();
 const { getTheme } = useTheme();

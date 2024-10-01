@@ -31,6 +31,8 @@ export default class Api {
         };
       }
     } catch ({ response }) {
+      console.log(response, 'response...');
+      this.error = response?.data?.message;
       return {
         data: null,
         status: response?.status || 500,

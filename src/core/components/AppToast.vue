@@ -3,18 +3,19 @@
     v-if="visible"
     v-model="visible"
     v-bind="$attrs"
+    :color="iconColor"
   >
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between" :class="classText">
       <slot />
-      <v-icon :icon="iconToast" :color="iconColor" size="40"/>
+      <v-icon :icon="iconToast" color="#FFFFFF" size="40"/>
     </div>
   </v-snackbar>
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
+import { defineModel, defineProps, computed, PropType } from 'vue';
 
-type ToastType = 'success' | 'error' | 'warning'
+type ToastType = 'success' | 'error' | 'warning';
 
 const props = defineProps({
   type: {
@@ -45,8 +46,32 @@ const iconColor = computed(() => {
     return '#FD9891';
   }
   if (props.type === 'warning') {
-    return '#F5CD47'
+    return '#F5CD47';
   }
-})
+});
 
+const classText = computed(() => {
+  if (props.type === 'success') {
+    return 'text-success';
+  }
+  if (props.type === 'error') {
+    return 'text-danger';
+  }
+  if (props.type === 'warning') {
+    return 'text-warning';
+  }
+});
 </script>
+<style scoped lang="scss">
+:deep(.v-snackbar__content) {
+  padding: 6px 12px;
+}
+:deep(.text-success),
+:deep(.text-danger),
+:deep(.text-warning) {
+  p {
+    color: white;
+    font-weight: bold;
+  }
+}
+</style>
