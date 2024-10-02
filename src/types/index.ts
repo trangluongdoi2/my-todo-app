@@ -29,7 +29,7 @@ export interface TodoItem {
   projectId?: number | string,
 }
 
-export interface TodoStatusLog {
+export interface TTodoStatusLog {
   id: string,
   action: 'create' | 'update',
   oldValue: any,

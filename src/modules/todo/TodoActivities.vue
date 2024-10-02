@@ -2,9 +2,27 @@
   <div class="options flex gap-x-2 justify-between items-center mb-2">
     <div class="flex items-center gap-x-2">
       <p>Show:</p>
-      <v-chip label @click="onSelectTab(Tab.ALL)">All</v-chip>
-      <v-chip label @click="onSelectTab(Tab.COMMENTS)">Comments</v-chip>
-      <v-chip label @click="onSelectTab(Tab.HISTORY)">History</v-chip>
+      <v-chip 
+        label
+        :color="isActiveTab(Tab.ALL) ? '#42B883' : ''"
+        @click="onSelectTab(Tab.ALL)"
+      >
+        All
+      </v-chip>
+      <v-chip
+        label
+        :color="isActiveTab(Tab.COMMENTS) ? '#42B883' : ''"
+        @click="onSelectTab(Tab.COMMENTS)"
+      >
+        Comments
+      </v-chip>
+      <v-chip 
+        label
+        :color="isActiveTab(Tab.HISTORY) ? '#42B883' : ''"
+        @click="onSelectTab(Tab.HISTORY)"
+      >
+        History
+      </v-chip>
     </div>
     <div>
       <app-button icon variant="text">
@@ -44,6 +62,10 @@ const onSelectTab = (tab: Tab) => {
   selectedTab.value = tab;
 }
 
+const isActiveTab = (tab: Tab) => {
+  return selectedTab.value === tab;
+}
+
 const layouts = {
   'ALL': TodoActivityAll,
   'COMMENTS': TodoActivityComments,
@@ -51,7 +73,15 @@ const layouts = {
 };
 
 const activitiesComponentName = computed(() => layouts[selectedTab.value]);
+
 onMounted(() => {
-  console.log(props.item, 'props.item...');
+  console.log(props.item, '==> item...');
 });
 </script>
+<style scoped lang="scss">
+.v-chip {
+  height: 24px;
+  padding: 0 6px;
+  font-weight: bold;
+}
+</style>

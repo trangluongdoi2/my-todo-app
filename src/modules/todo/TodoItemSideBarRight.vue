@@ -4,7 +4,7 @@
   </div>
   <div v-else>
     <v-divider vertical></v-divider>
-    <div class="details-container flex flex-col gap-y-4 h-full min-w-[500px] max-w-[500px] p-2 overflow-y-auto">
+    <div class="details-container flex flex-col gap-y-4 h-full min-w-[400px] max-w-[500px] p-2 overflow-y-auto">
       <div class="details-status bg-[#42B883] rounded-[0.25rem] w-fit h-[32px] flex items-center justify-center p-2">
         <span class="font-bold text-[#1D2125]">{{ capitalize(item.todoStatus, false) }}</span>
       </div>
