@@ -42,7 +42,7 @@ export interface TodoItemDetails extends Omit<TodoItem, 'id'> {
   createdAt: string,
   updateAt: string,
   attachments: TodoAttachment[],
-  statusLogs: TodoStatusLog[],
+  statusLogs: TTodoStatusLog[],
 }
 
 export type DisplayMode = 'table' | 'grid';

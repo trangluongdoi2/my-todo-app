@@ -15,12 +15,8 @@
       @blur="onChange"
       @keyup.enter.stop="$event.target.blur()"
       @keydown.delete.stop
-    ></v-text-field>
-    <p
-      v-else
-      class="w-full h-full"
-      :title="(displayValue || modelValue) as string"
-    >
+    />
+    <p v-else class="editable-display w-full h-full" :title="displayValue || 'None'">
       {{ modelValue || 'None' }}
     </p>
   </div>
@@ -66,7 +62,7 @@ const showEditable = () => {
 
 const onChange = () => {
   isEditable.value = false;
-  emit('change');
+  emit('change', modelValue.value);
 }
 
 const onClick = () => {
@@ -85,14 +81,13 @@ const dblClick = () => {
 
 const onClickOutSide = () => {
   isEditable.value = false;
-  emit('change');
+  emit('change', modelValue.value);
 }
 
 </script>
 
 <style lang="scss" scoped>
 .editable-container {
-  // padding: 0.125rem;
   border-radius: 0.25rem;
   height: 30px;
   &:hover {
@@ -103,7 +98,9 @@ const onClickOutSide = () => {
     align-items: center;
     padding: 0 0.5rem;
     font-size: 0.75rem;
-    line-height: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
 :deep(.v-input) {

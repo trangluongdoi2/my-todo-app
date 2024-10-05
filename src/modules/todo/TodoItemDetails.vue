@@ -17,14 +17,14 @@
           <div class="flex-1">
             <h2>Attachments <span><v-chip size="x-small">2</v-chip></span></h2>
           </div>
-          <AppUpload @change="onAddFilesUpload" @update-files="uploadFiles"/>
+          <AppUpload @change="onAddFilesUpload" @update-files="uploadFiles" />
         </div>
         <div v-if="attachments?.length" class="w-full flex flex-wrap gap-2">
           <div class="w-[100px] h-[100px]" v-for="(file, index) in attachments" :key="index">
-            <TodoAttachmentImage :src="file.filePath" :item="file" @download="onDownloadAttach(file)"/>
+            <TodoAttachmentImage :src="file.filePath" :item="file" @download="onDownloadAttach(file)" />
           </div>
         </div>
-        <div v-else class="w-full max-h-[100px]">No Attachments</div>
+        <p v-else class="w-full max-h-[100px]">No Attachments</p>
       </div>
       <div>
         <h2>Activities</h2>

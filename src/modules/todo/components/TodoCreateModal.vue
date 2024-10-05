@@ -6,7 +6,7 @@
     max-width="50%"
   >
     <template v-slot:default>
-      <TodoCreateForm @change="onChange"/>
+      <TodoCreateForm @change="onChange" />
     </template>
     <template v-slot:actions>
        <div class="flex items-center justify-end gap-x-2">
@@ -28,31 +28,36 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import EventBus from '@/core/composables/useEventbus';
 import AppModal from '@/core/components/AppModal.vue';
 import TodoCreateForm from './TodoCreateForm.vue';
 import TodoApi from '../api/todoApi';
-import EventBus from '@/core/composables/useEventbus';
 
 const visible = defineModel('visible', { type: Boolean, default: false });
-const loadingSubmit = ref<boolean>(false);
 
-const todoData = ref();
+const loadingSubmit = ref<boolean>(false);
+const todoData = ref<any>();
 
 const onChange = (data: any) => {
   todoData.value = data;
 };
 
-const handleOk = () => {
+const handleOk = async () => {
   loadingSubmit.value = true;
-  console.log(todoData.value, 'todoData...');
-  TodoApi.createTodo(todoData.value)
-    .then((data) => {
-      EventBus.emit('CREATED_TODO', data);
-    })
-    .finally(() => {
-      loadingSubmit.value = false;
+  const { files, ...inputTodo } = todoData.value;
+  const data = await TodoApi.createTodo(inputTodo);
+  if (files?.length) {
+  TodoApi.uploadAttachs(data.id, files || []).then(() => {
+    EventBus.emit('CREATED_TODO', data);
+    }).finally(() => {
       visible.value = false;
-    });
+      loadingSubmit.value = false;
+    })
+  } else {
+    EventBus.emit('CREATED_TODO', data);
+    visible.value = false;
+    loadingSubmit.value = false;
+  }
 };
 
 const handleCancel = () => {

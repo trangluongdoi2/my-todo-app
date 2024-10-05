@@ -16,7 +16,6 @@ export const useProjectStore = defineStore('project', {
     async mounted(projectId: number) {
       this.projectId = projectId;
       this.selectedProject = await ProjectApi.getProjectById(projectId);
-      console.log(this.selectedProject, 'this.selectedProject..');
     },
   },
 });

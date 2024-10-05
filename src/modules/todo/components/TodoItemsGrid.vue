@@ -3,32 +3,42 @@
     <SkeletonTodoGrid />
   </template>
   <div v-else class="h-full flex flex-col overflow-hidden">
-    <div class="flex w-full mb-4 gap-x-4 h-[3rem]">
-      <div class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
+    <div class="flex w-full gap-x-2 h-[3rem]">
+      <h2 class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
         PENDING {{ itemsPending.length }}
-      </div>
-      <div class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
+      </h2>
+      <h2 class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
         IN PROGRESS {{ itemsInProgress.length }}
-      </div>
-      <div class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
+      </h2>
+      <h2 class="bg-[#161A1D] text-[#8C9BAB] flex flex-1 min-w-[10rem] items-center pl-2 rounded-t-[4px]">
         DONE {{ itemsDone.length }}
-      </div>
+      </h2>
     </div>
     <TodoDraggableGrid
+      v-if="items?.length"
       :items="items"
 
       @delete-item="onDeleteItem"
       @edit-item="onEditItem"
       @update-item-status="onEditItemStatus"
     />
+    <div v-else class="flex flex-col flex-1 gap-y-2 items-center justify-center">
+      There are no todo items in this project
+      <app-button
+        color="#42B883"
+        @click="isShowCreateTodoModal = true"
+      >
+        Create Todo
+      </app-button>
+    </div>
     <TodoDeleteModal
-      v-if="isVisibleTodoDeleteModal"
       :title="'Delete'"
       v-model="isVisibleTodoDeleteModal"
       :loading="isLoadingDelete"
       @cancel="resetCurrentItem"
       @ok="handleDeleteItem"
     />
+    <TodoCreateModal v-model:visible="isShowCreateTodoModal" />
   </div>
 </template>
 
@@ -38,6 +48,7 @@ import router from '@/router';
 import { TodoItem, TodoStatus } from '@/types';
 import TodoDeleteModal from './TodoDeleteModal.vue';
 import TodoDraggableGrid from './TodoDraggableGrid.vue';
+import TodoCreateModal from './TodoCreateModal.vue';
 import SkeletonTodoGrid from '../skeleton/SkeletonTodoGrid.vue';
 
 const props = defineProps({
@@ -63,6 +74,7 @@ const itemsDone = ref<TodoItem[]>([]);
 const selectedTodoItem = ref<TodoItem>();
 const isVisibleTodoDeleteModal = ref<boolean>(false);
 const isLoadingDelete = ref<boolean>(false);
+const isShowCreateTodoModal = ref<boolean>(false);
 
 const onDeleteItem = (item: TodoItem) => {
   selectedTodoItem.value = item;

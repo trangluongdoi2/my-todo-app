@@ -75,7 +75,7 @@ const navigateToDetails = (todoId: string) => {
   });
 };
 onMounted(() => {
-  console.log(props.item, 'props.item');
+  // console.log(props.item, 'props.item');
 });
 </script>
 <style lang="scss" scoped>
@@ -83,8 +83,10 @@ onMounted(() => {
   border-radius: 0.25rem;
   background-color: $background-input;
   min-height: 200px;
+  border: 2px solid transparent;
   &:hover {
-    background-color: $background-selected
+    background-color: $background-selected;
+    border: 2px solid $blue-base;
   }
   .icon-actions {
     &:hover {

@@ -1,0 +1,8 @@
+.v-table {
+  background-color: $surface-suken;
+  .v-table__wrapper {
+    > table > thead > tr > th {
+      background-color: $surface-suken !important;
+    }
+  }
+}

@@ -30,10 +30,10 @@
         <div :style="{ color: getColor(value), fontWeight: 'bold' }">{{ value }}</div>
       </template>
       <template v-slot:item.actions="{ item }">
-        <p class="underline cursor-pointer" @click.stop="navigateToDetails((item as any).id)">See Details</p>
+        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">See Details</p>
       </template>
     </v-data-table>
-  <!-- <v-data-table-server
+    <v-data-table-server
       v-model:items-per-page="itemsPerPage"
       :headers="headers"
       :items="items"
@@ -41,7 +41,7 @@
       :loading="loading"
       :search="search"
       item-value="name"
-      @update:options="loadItems"
+      @update:options="test"
     >
     <template v-slot:loading>
         <v-skeleton-loader :type="`table-row@${100}`"></v-skeleton-loader>
@@ -56,7 +56,7 @@
       <template v-slot:item.status="{ item }">
         <div :style="{ color: getColor(item.status), fontWeight: 'bold' }">{{ item.status }}</div>
       </template>
-    </v-data-table-server> -->
+    </v-data-table-server>
   </v-layout>
 </template>
 
@@ -115,16 +115,22 @@ const headers = [
     title: 'Actions', value: 'actions',
   }
 ];
+
 const iconPriorityMap = {
   'HIGHEST': 'highest',
   'HIGH': 'high',
   'MEDIUM': 'medium',
   'LOW': 'low',
 }
+
+const router = useRouter();
+
 const itemsPerPage = ref<number>(10);
 const search = ref<string>('');
 
-const router = useRouter();
+const test = (options: any) => {
+  console.log(options, 'options...');
+}
 
 const getColor = (status: string) => {
   return colorMap[status] || 'error';
@@ -135,11 +141,10 @@ const getPriority = (priority: Priority) => {
 }
 
 const navigateToDetails = (todoId: string) => {
-  console.log(todoId, 'todoId..');
   router.push({
     name: 'todoDetails',
     params: {
-      id: todoId,
+      todoId,
     }
   });
 }

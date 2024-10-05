@@ -28,7 +28,7 @@ export class TodoApi extends Api {
 
   async getTodosByProjectId(projectId: number) {
     const res = await this.get(`${TODO_URL.GET_TODOS_BY_PROJECT_ID}/${projectId}`);
-    return res.data;
+    return res.data || [];
   }
 
   async getTodoById(id: number) {
