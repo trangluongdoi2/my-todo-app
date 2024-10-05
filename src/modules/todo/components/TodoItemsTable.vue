@@ -30,7 +30,7 @@
         <div :style="{ color: getColor(value), fontWeight: 'bold' }">{{ value }}</div>
       </template>
       <template v-slot:item.actions="{ item }">
-        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item.id)">See Details</p>
+        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item?.id)">See Details</p>
       </template>
     </v-data-table>
     <v-data-table-server
@@ -54,7 +54,7 @@
         <span v-bind="props" class="pl-1 text-xs">{{ value }}</span>
       </template>
       <template v-slot:item.status="{ item }">
-        <div :style="{ color: getColor(item.status), fontWeight: 'bold' }">{{ item.status }}</div>
+        <div :style="{ color: getColor(item.todoStatus), fontWeight: 'bold' }">{{ item.todoStatus }}</div>
       </template>
     </v-data-table-server>
   </v-layout>
@@ -63,12 +63,12 @@
 <script setup lang="ts">
 import { onMounted, defineProps, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Priority } from '@/types';
+import { Priority, TodoItem } from '@/types';
 import { formatDateToDDMMYYY } from '@/common/date';
 
 const props = defineProps({
   items: {
-    type: Array as PropType<any>,
+    type: Array as PropType<TodoItem[]>,
     default: () => ([])
   },
   loading: {
