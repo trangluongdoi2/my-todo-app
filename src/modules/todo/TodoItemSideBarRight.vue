@@ -3,22 +3,21 @@
     <SkeletonTodoSideBarRight />
   </div>
   <div v-else>
-    <v-divider vertical></v-divider>
+    <v-divider vertical />
     <div class="details-container flex flex-col gap-y-4 h-full min-w-[400px] max-w-[500px] p-2 overflow-y-auto">
       <div class="details-status bg-[#42B883] rounded-[0.25rem] w-fit h-[32px] flex items-center justify-center p-2">
         <span class="font-bold text-[#1D2125]">{{ capitalize(item.todoStatus, false) }}</span>
       </div>
       <div class="flex flex-row justify-between items-center gap-y-4">
         <h2 class="title max-w-[170px]">Assignee</h2>
-        <div class="content w-[60%] h-full flex items-center gap-x-2">
-          <v-avatar size="28" :image="AvatarUrl" />
-          <span>Nguyen Tan Vinh</span>
+        <div class="content w-[60%] h-full">
+          <app-select-editable v-model="currentAssignee" :options="listPriority" />
         </div>
       </div>
       <div class="flex flex-row justify-between items-center gap-x-4">
         <h2 class="title max-w-[170px]">Priority</h2>
         <div class="content w-[60%] h-full">
-          <AppSelectEditable v-model="currentSelect" :options="listPriority"></AppSelectEditable>
+          <app-select-editable v-model="currentSelect" :options="listPriority" />
         </div>
       </div>
       <div class="flex flex-row justify-between items-center gap-x-4">
@@ -40,15 +39,15 @@
 
 <script setup lang="ts">
 import { computed, PropType, reactive, ref } from 'vue';
-import { Priority } from '@/types';
-import AvatarUrl from '@/assets/avatar.jpeg';
 import { capitalize } from '@/common/string-utils';
+import { Priority, TodoItemDetails } from '@/types/todo-item';
+import AvatarUrl from '@/assets/avatar.jpeg';
 import AppEditable from '@/core/components/AppEditable.vue';
 import AppSelectEditable from '@/core/components/AppSelectEditable.vue';
 import AppTimeTracking from '@/core/components/AppTimeTracking.vue';
 import SkeletonTodoSideBarRight from './skeleton/SkeletonTodoSideBarRight.vue';
 
-const props = defineProps({
+defineProps({
   item: {
     type: Object as PropType<any>,
     required: true,
@@ -68,9 +67,10 @@ const percentTimeTracking = computed(() => {
   return 50;
 });
 
-const todoDetails = ref<any>();
+const todoDetails = ref<TodoItemDetails>();
 const originalEstimate = ref<string>('');
 const currentSelect = ref<Priority>();
+const currentAssignee = ref<string>('');
 
 const listPriority = [
   { label: Priority.HIGHEST, icon: 'highest' },
@@ -81,7 +81,6 @@ const listPriority = [
 
 const rules = {
   required: (value: string) => {
-    console.log(value, 'value...');
     const timeFormats = ['w', 'd', 'h', 'm'];
     const ruleFormat = 'Your estimate must be in the format 2h 4d 6w';
     const time = value[value.length - 1] ?? '';

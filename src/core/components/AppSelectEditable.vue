@@ -13,12 +13,15 @@
       :items="options"
       @change="onChange"
     />
-    <span
+    <p v-else class="editable-display w-full h-full">
+      {{ modelValue || 'None' }}
+    </p>
+    <!-- <span
       v-else
       class="w-full"
     >
       {{ modelValue || 'None' }}
-    </span>
+    </span> -->
   </div>
 </template>
 
@@ -82,13 +85,15 @@ const onClickOutSide = () => {
   &:hover {
     background-color: $background-input-pressed;
   }
-  span {
+  p {
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
     font-size: 0.75rem;
-    // padding: 0 0.5rem;
-    height: 30px;
-    margin-left: 0.25rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
-
 }
 .app-select--editable {
   :deep(.v-input__control) {

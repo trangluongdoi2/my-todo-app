@@ -14,12 +14,11 @@
 
 <script setup lang="ts">
 import { defineModel, defineProps, computed, PropType } from 'vue';
-
-type ToastType = 'success' | 'error' | 'warning';
+import { NotificationType } from '@/types';
 
 const props = defineProps({
   type: {
-    type: String as PropType<ToastType>,
+    type: String as PropType<NotificationType>,
     default: 'success',
   }
 });

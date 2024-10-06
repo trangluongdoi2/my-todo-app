@@ -1,4 +1,5 @@
-import { TableStorage } from "@/types";
+export type TableStorage = | 
+  'auth';
 
 export const useLocalStorage = (): { storage: any } => {
   const storage = {

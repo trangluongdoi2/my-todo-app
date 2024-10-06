@@ -27,8 +27,8 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
-import { TodoItem, Priority, TodoStatus } from '@/types';
 import { TProject } from '@/types/project';
+import { Priority, TodoInput, TodoStatus } from '@/types/todo-item';
 import { useAuthStore } from '@/store/authStore';
 import ProjectApi from '@/modules/project/api/projectApi';
 import AppDragDropUpload from '@/core/components/AppDragDropUpload.vue';
@@ -38,12 +38,11 @@ const { userIdSelected } = storeToRefs(authStore);
 
 const emit = defineEmits(['change']);
 
-const initialTodoItem: TodoItem & { files: File[] } = {
-  todoName: 'The First Issue' + Math.floor(Math.random() * 10),
-  title: 'The My Title',
-  label: 'The First Label' + Math.floor(Math.random() * 10),
-  assignee: ['User 1'],
-  description: 'This is the first description',
+const initialTodoItem: TodoInput = {
+  todoName: '',
+  title: '',
+  label: '',
+  description: '',
   priority: Priority.MEDIUM,
   todoStatus: TodoStatus.PENDING,
   files: [],

@@ -2,13 +2,6 @@
   <div class="options flex gap-x-2 justify-between items-center mb-2">
     <div class="flex items-center gap-x-2">
       <p>Show:</p>
-      <v-chip 
-        label
-        :color="isActiveTab(Tab.ALL) ? '#42B883' : ''"
-        @click="onSelectTab(Tab.ALL)"
-      >
-        All
-      </v-chip>
       <v-chip
         label
         :color="isActiveTab(Tab.COMMENTS) ? '#42B883' : ''"
@@ -32,14 +25,14 @@
   </div>
   <div class="activities">
     <keep-alive>
-      <component :is="activitiesComponentName" :history="item.statusLogs"/>
+      <component :is="activitiesComponentName" :todo-id="item.id" :item="item" :history="item.statusLogs"/>
     </keep-alive>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, PropType, ref } from 'vue';
-import { TodoItemDetails } from '@/types';
+import { TodoItemDetails } from '@/types/todo-item';
 import TodoActivityComments from '@/modules/todo/TodoActivityComments.vue';
 import TodoActivityAll from '@/modules/todo/TodoActivityAll.vue';
 import TodoActivityHistory from '@/modules/todo/TodoActivityHistory.vue';

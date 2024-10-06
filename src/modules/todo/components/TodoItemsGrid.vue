@@ -45,10 +45,10 @@
 <script setup lang="ts">
 import { PropType, ref, watch } from 'vue';
 import router from '@/router';
-import { TodoItem, TodoStatus } from '@/types';
-import TodoDeleteModal from './TodoDeleteModal.vue';
+import { TodoItem, TodoStatus } from '@/types/todo-item';
+import TodoDeleteModal from './modal/TodoDeleteModal.vue';
 import TodoDraggableGrid from './TodoDraggableGrid.vue';
-import TodoCreateModal from './TodoCreateModal.vue';
+import TodoCreateModal from './modal/TodoCreateModal.vue';
 import SkeletonTodoGrid from '../skeleton/SkeletonTodoGrid.vue';
 
 const props = defineProps({

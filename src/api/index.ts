@@ -1,4 +1,5 @@
 import customAxios from './axios';
+
 export default class Api {
   error: any;
   protected async get(url: string, configs?: Record<string, any>) {
@@ -75,13 +76,11 @@ export default class Api {
     }
   }
 
-  protected async delete(url: string) {
+  protected async delete(url: string, input?: Record<string, unknown>) {
     try {
-      console.log(url, 'url...');
-      const res = await customAxios.delete(url);
+      const res = await customAxios.delete(url, input);
       return res.data;
     } catch ({ response }) {
-      console.log(response, 'response...');
       return { 
         data: null,
         status: response?.status || 500,

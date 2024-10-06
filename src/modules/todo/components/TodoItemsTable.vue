@@ -3,7 +3,7 @@
     <app-skeleton-table />
   </div>
   <v-layout v-else class="overflow-hidden">
-    <v-data-table
+    <!-- <v-data-table
       class="todo-table"
       :headers="headers"
       :items="items"
@@ -32,7 +32,7 @@
       <template v-slot:item.actions="{ item }">
         <p class="underline cursor-pointer" @click.stop="navigateToDetails(item?.id)">See Details</p>
       </template>
-    </v-data-table>
+    </v-data-table> -->
     <v-data-table-server
       v-model:items-per-page="itemsPerPage"
       :headers="headers"
@@ -55,6 +55,9 @@
       </template>
       <template v-slot:item.status="{ item }">
         <div :style="{ color: getColor(item.status), fontWeight: 'bold' }">{{ item.status }}</div>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <p class="underline cursor-pointer" @click.stop="navigateToDetails(item?.id)">See Details</p>
       </template>
     </v-data-table-server>
   </v-layout>

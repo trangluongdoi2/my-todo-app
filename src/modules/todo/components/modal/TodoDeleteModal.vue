@@ -1,5 +1,5 @@
 <template>
-   <AppModal v-model:visible="visible" width="50%">
+   <app-modal v-model:visible="visible" width="50%">
     <div>Are you sure delete this item?</div>
     <template v-slot:actions>
        <div class="flex items-center justify-end gap-x-2">
@@ -11,7 +11,7 @@
         </app-button>
       </div>
     </template>
-   </AppModal>
+   </app-modal>
 </template>
 
 <script setup lang="ts">

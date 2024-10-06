@@ -11,6 +11,8 @@ import AppInput from "@/core/components/AppInput.vue";
 import AppTextArea from "@/core/components/AppTextArea.vue";
 import AppSelect from "@/core/components/AppSelect.vue";
 import AppBreadcrumbs from "@/core/components/AppBreadcrumbs.vue";
+import AppEditable from "@/core/components/AppEditable.vue";
+import AppSelectEditable from "@/core/components/AppSelectEditable.vue";
 
 const listCustomComponents: { [key: string]: Component } = {
   'app-icon': AppIcon,
@@ -25,6 +27,8 @@ const listCustomComponents: { [key: string]: Component } = {
   'app-toast': AppToast,
   'app-modal': AppModal,
   'app-breadcrumbs': AppBreadcrumbs,
+  'app-editable': AppEditable,
+  'app-select-editable': AppSelectEditable,
 };
 
 export default function loadCustomComponent(app: App) {

@@ -93,7 +93,8 @@ const isListMode = ref<boolean>(true);
 const isFetchingTodosList = ref<boolean>(false);
 const isShowProjectDeleteModal = ref<boolean>(false);
 const currentItemsList = ref<any>([]);
-const displayMode = ref<DisplayMode>('grid');
+// const displayMode = ref<DisplayMode>('grid');
+const displayMode = ref<DisplayMode>('table');
 
 const getListItems = async () => {
   isFetchingTodosList.value = true;

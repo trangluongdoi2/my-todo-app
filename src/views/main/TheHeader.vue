@@ -32,19 +32,16 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-import TodoCreateModal from '@/modules/todo/components/TodoCreateModal.vue';
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '@/store/authStore';
 import AppButton from '@/core/components/AppButton.vue';
 import ProjectCreateModal from '@/modules/project/components/ProjectCreateModal.vue';
 import TheHeaderActionMiddle from './TheHeaderActionMiddle.vue';
 import TheHeaderActions from './TheHeaderActions.vue';
-import { useAuthStore } from '@/store/authStore';
-import { storeToRefs } from 'pinia';
+import TodoCreateModal from '@/modules/todo/components/modal/TodoCreateModal.vue';
 
 const isShowCreateTodoModal = ref<boolean>(false);
 const { isAdmin } = storeToRefs(useAuthStore());
-watch(isAdmin, (newVal) => {
-  console.log('isAdmin', newVal);
-});
 const isShowCreateProjectModal = ref<boolean>(false);
 
 const router = useRouter();
@@ -52,6 +49,10 @@ const router = useRouter();
 const backToDashboard = () => {
   router.push({ name: 'dashboard' });
 };
+
+watch(isAdmin, (newVal) => {
+  console.log('isAdmin', newVal);
+});
 
 </script>
 <style lang="scss" scoped>

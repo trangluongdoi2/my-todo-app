@@ -1,78 +1,143 @@
 <template>
-  <div class="flex gap-x-2">
-    <div class="avatar">
-      <v-avatar size="28" :image="AvatarUrl" />
+  <div>
+    <div class="flex gap-x-2">
+      <div class="avatar">
+        <v-avatar size="32" :image="AvatarUrl" />
+      </div>
+      <div class="w-full flex gap-y-2 justify-between">
+        <template v-if="!isShowInput">
+          <div class="w-full">
+            <span class="status-content">
+              <strong>{{ currentUser.username }}</strong>
+            </span>
+            <div class="comment-content">
+              <p>{{ comment.content }}</p>
+            </div>
+          </div>
+          <h2 class="min-w-fit history-time">{{ time }}</h2>
+        </template>
+        <app-text-area class="w-full mb-1" v-else v-model="currentComment" />
+      </div>
     </div>
-    <div class="comment-content flex flex-col gap-y-[0.25rem]">
-      <div class="content__overview flex gap-x-1">
-        <span>Nguyen Tan Vinh</span>
-        <span class="text-[#8C9BAB]">June 27, 2024 at 13:01 PM</span>
-      </div>
-      <div class="content__details">
-        <p>
-          Hi We believe there is confusion with this feature.
-          The name of the layer item can only be changed when the text element is added to the canvas for the first time.
-          When we change the name directly at the layer the name stays the same regardless of the text changes; it only changes when you rename it directly.
-          You can check it out with the video below. If you have any more issues or want to update, please feedback to me. Thank you so much!
-        </p>
-      </div>
+    <template v-if="!isShowInput">
       <div class="content__actions flex items-center gap-x-2">
         <app-button
-          variant="text"
-          density="compact"
           class="action__edit"
+          variant="text"
           @click="onEdit"
         >
           Edit
         </app-button>
         <app-button
-          variant="text"
-          density="compact"
           class="action__delete"
-           @click="onDelete"
+          :textColor="'#FD9891'"
+          variant="text"
+          @click="onDelete"
         >
           Delete
         </app-button>
-        <div v-if="listEmoji?.length > 0">
-          <div>Emoji 1</div>
-          <div>Emoji 2</div>
-          <div>Emoji 3</div>
-        </div>
-        <span>Emoji Picker...</span>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <div class="content__actions flex items-center gap-x-2">
+        <app-button
+          class="action__edit"
+          :color="'#42B883'"
+          :textColor="'#1D2125'"
+          @click="onUpdateComment"
+        >
+          Save
+        </app-button>
+        <app-button
+          class="action__edit"
+          @click="onCancelUpdateComment"
+        >
+          Cancel
+        </app-button>
+      </div>
+    </template>
+    <TodoCommentDeleteModal
+      title="Delete Comment"
+      v-model="isShowDeleteCommentModal"
+      @ok="emit('delete-comment', comment)"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, onMounted, PropType, ref } from 'vue';
+import { TTodoComment } from '@/types/todo-item';
+import { formatDateToDDMMYYWithDayjs } from '@/common/date';
 import AvatarUrl from '@/assets/avatar.jpeg';
-import { ref } from 'vue';
+import TodoCommentDeleteModal from '@/modules/todo/components/modal/TodoCommentDeleteModal.vue';
 
+const props = defineProps({
+  comment: {
+    type: Object as PropType<TTodoComment>,
+    required: true,
+  },
+  todoId: {
+    type: [Number, String],
+    required: true,
+  },
+});
+
+const emit = defineEmits(['update-comment', 'delete-comment']);
+
+const currentComment = ref<string>(props.comment.content);
 const listEmoji = ref<any>([]);
+const isShowInput = ref<boolean>(false);
+const isShowDeleteCommentModal = ref<boolean>(false);
+
+const time = computed(() => formatDateToDDMMYYWithDayjs(props.comment.updatedAt));
+const currentUser = computed(() => props.comment.user);
+
 const onEdit = () => {
   console.log('onEdit...');
+  isShowInput.value = true;
 };
+
+const onCancel = () => {
+  isShowInput.value = false;
+}
 
 const onDelete = () => {
   console.log('onDelete...');
+  isShowDeleteCommentModal.value = true;
 }
-</script>
 
+const onUpdateComment = () => {
+  const data = {
+    ...props.comment,
+    todoId: props.todoId,
+    content: currentComment.value,
+  }
+  // console.log(data, '===> onUpdateComment...');
+  emit('update-comment', data);
+  isShowInput.value = false;
+}
+
+const onCancelUpdateComment = () => {
+  isShowInput.value = false;
+  currentComment.value = props.comment.content;
+}
+onMounted(() => {
+  console.log(props.comment, '===> onMounted...');
+  // currentComment.value = props.comment.content;
+})
+</script>
 <style lang="scss" scoped>
-.comment-content {
-  font-size: 0.875rem;
-  .content {
-    &__actions {
-      .action__edit, .action__delete {
-        :deep(.v-btn__content) {
-          font-weight: bold;
-          color: $text;
-          width: fit-content;
-          height: fit-content;
-        }
-        &:hover {
-          text-decoration: underline;
-        }
+.content {
+  &__actions {
+    margin-left: 40px;
+    :deep(.v-btn) {
+      padding: 0;
+      height: 24px;
+    }
+    .action__edit, .action__delete {
+      :deep(.v-btn__content) {
+        font-weight: bold;
+        padding: 0;
       }
     }
   }

@@ -11,9 +11,10 @@ import { useRoute } from 'vue-router';
 import TodoApi from './api/todoApi';
 import TodoItemSideBarRight from '@/modules/todo/TodoItemSideBarRight.vue';
 import TodoItemDetails from '@/modules/todo/TodoItemDetails.vue';
+import { TTodoItemDetails } from '@/types/todo-item';
 
 const route = useRoute();
-const item = ref<any>();
+const item = ref<TTodoItemDetails>();
 const isLoadingTodoItem = ref<boolean>(false);
 
 const getDetails = async () => {
@@ -32,7 +33,6 @@ onBeforeMount(() => {
   getDetails();
 })
 </script>
-
 <style lang="scss" scoped>
 .breadcrumbs {
   position: sticky;

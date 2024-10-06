@@ -34,9 +34,9 @@ import ProjectApi from '@/modules/project/api/projectApi';
 import { useAuthStore } from '@/store/authStore';
 import { storeToRefs } from 'pinia';
 import EventBus from '@/core/composables/useEventbus';
-import { useErrorHandlingStore } from '@/store/errorHandlingStore';
+import { useNotificationStore } from '@/store/notificationStore';
 
-const errorHandlingStore = useErrorHandlingStore();
+const errorHandlingStore = useNotificationStore();
 const visible = defineModel('visible', { type: Boolean, default: false });
 const loadingSubmit = ref<boolean>(false);
 const authStore = useAuthStore();

@@ -1,5 +1,5 @@
 <template>
-  <AppModal
+  <app-modal
     v-model:visible="visible"
     titleOk="Create Todo"
     title="Create"
@@ -23,15 +23,14 @@
         </app-button>
       </div>
     </template>
-  </AppModal>
+  </app-modal>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import EventBus from '@/core/composables/useEventbus';
-import AppModal from '@/core/components/AppModal.vue';
-import TodoCreateForm from './TodoCreateForm.vue';
-import TodoApi from '../api/todoApi';
+import TodoApi from '@/modules/todo/api/todoApi';
+import TodoCreateForm from '@/modules/todo/components/TodoCreateForm.vue';
 
 const visible = defineModel('visible', { type: Boolean, default: false });
 

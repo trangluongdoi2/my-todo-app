@@ -3,16 +3,16 @@
   <app-toast
     v-model="visible"
     :timeout="2000"
+    :type="status"
     location="top center"
-    type="error"
   >
     <p>{{ message }}</p>
   </app-toast>
 </template>
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { useErrorHandlingStore } from './store/errorHandlingStore';
+import { useNotificationStore } from './store/notificationStore';
 
-const errorHandlingStore = useErrorHandlingStore();
-const { visible, message } = storeToRefs(errorHandlingStore);
+const errorHandlingStore = useNotificationStore();
+const { visible, message, status } = storeToRefs(errorHandlingStore);
 </script>

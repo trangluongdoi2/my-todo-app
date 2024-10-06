@@ -20,7 +20,7 @@ import { defineEmits, defineProps, defineModel } from 'vue';
 defineProps({
   label: {
     type: String,
-    required: true,
+    default: '',
   },
   required: {
     type: Boolean,

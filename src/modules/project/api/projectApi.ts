@@ -4,7 +4,7 @@ import { API_URL } from "@/api/url";
 const PROJECT_URL = {
   GET_ALL: `${API_URL}/api/projects`,
   GET_PROJECTS_BY_USER_ID: `${API_URL}/api/projects-list`,
-  DELETE: `${API_URL}/api/projects`,
+  DELETE: `${API_URL}/api/projects/delete`,
   GET_MEMBERS: `${API_URL}/api/projects/members-list`,
   SEND_INVITATION: `${API_URL}/api/projects/send-invite-mail`,
   ADD_MEMBER: `${API_URL}/api/projects/add-member`,
