@@ -2,9 +2,9 @@ import Api from "@/api";
 import { API_URL } from "@/api/url";
 
 const PROJECT_URL = {
-  GET_ALL: `${API_URL}/api/projects`,
+  GET_PROJECTS: `${API_URL}/api/projects`,
   GET_PROJECTS_BY_USER_ID: `${API_URL}/api/projects-list`,
-  DELETE: `${API_URL}/api/projects`,
+  DELETE: `${API_URL}/api/projects/delete`,
   GET_MEMBERS: `${API_URL}/api/projects/members-list`,
   SEND_INVITATION: `${API_URL}/api/projects/send-invite-mail`,
   ADD_MEMBER: `${API_URL}/api/projects/add-member`,
@@ -13,8 +13,8 @@ const PROJECT_URL = {
 };
 
 class ProjectApi extends Api {
-  async getProjectsList() {
-    const res = await this.get(PROJECT_URL.GET_ALL);
+  async queryProjects() {
+    const res = await this.get(PROJECT_URL.GET_PROJECTS);
     return res.data;
   }
 
@@ -30,7 +30,7 @@ class ProjectApi extends Api {
   }
 
   async getProjectById(id: number) {
-    const url = `${PROJECT_URL.GET_ALL}/${id}`;
+    const url = `${PROJECT_URL.GET_PROJECTS}/${id}`;
     const res = await this.get(url);
     return res.data;
   }

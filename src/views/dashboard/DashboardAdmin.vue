@@ -23,13 +23,12 @@
           </v-tooltip>
         </div>
       </div>
-      <div class="dashboard__projects w-full">
-        <ProjectCard
-          v-for="(project, index) in projects" :key="index" 
-          @click="selectProject(project.id)"
-          :project="project"
-        />
-      </div>
+      <ProjectsList 
+        :projects="projects" 
+        :loading="isLoading"
+        @select-project="selectProject"
+        @create-project="isShowCreateProjectModal = true"
+      />
     </div>
     <div class="w-full mt-[0.75rem]">
       <v-tabs v-model="tab">
@@ -61,11 +60,12 @@
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import EventBus from '@/core/composables/useEventbus';
+import { TProject } from '@/types/project';
 import { useAuthStore } from '@/store/authStore';
+import EventBus from '@/core/composables/useEventbus';
 import ProjectApi from '@/modules/project/api/projectApi';
-import ProjectCard from '@/modules/dashboard/components/ProjectCard.vue';
 import ProjectCreateModal from '@/modules/project/components/ProjectCreateModal.vue';
+import ProjectsList from '@/views/project/ProjectsList.vue';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -76,7 +76,8 @@ const items = [
   'Viewed',
 ];
 
-const projects = ref<any>([]);
+const projects = ref<TProject[]>([]);
+const isLoading = ref<boolean>(false);
 const isShowCreateProjectModal = ref<boolean>(false);
 
 const selectProject = (id: number) => {
@@ -93,7 +94,9 @@ const addProjects = (newProject: any) => {
 }
 
 const getProjects = async () => {
+  isLoading.value = true;
   projects.value = await ProjectApi.getProjectsByUserId(userIdSelected.value) || [];
+  isLoading.value = false;
 }
 
 onMounted(async () => {
