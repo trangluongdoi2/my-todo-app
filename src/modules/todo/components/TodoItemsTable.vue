@@ -54,7 +54,7 @@
         <span v-bind="props" class="pl-1 text-xs">{{ value }}</span>
       </template>
       <template v-slot:item.status="{ item }">
-        <div :style="{ color: getColor(item.status), fontWeight: 'bold' }">{{ item.status }}</div>
+        <div :style="{ color: getColor(item.todoStatus), fontWeight: 'bold' }">{{ item.todoStatus }}</div>
       </template>
       <template v-slot:item.actions="{ item }">
         <p class="underline cursor-pointer" @click.stop="navigateToDetails(item?.id)">See Details</p>
