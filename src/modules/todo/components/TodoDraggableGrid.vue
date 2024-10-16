@@ -175,14 +175,6 @@ const dragOptions = computed(() => {
   }
 });
 
-const onDrag = (event: any) => {
-  // console.log('onDrag', event.item);
-}
-
-// const checkMove = (event: any) => {
-//   console.log(event['moved'], '=> event...');
-// }
-
 watch(() => props.items, () => {
   itemsInProgress.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.IN_PRORGESS);
   itemsDone.value = props.items.filter((item: TodoItem) => item.todoStatus === TodoStatus.DONE);
@@ -200,6 +192,6 @@ watch(() => props.items, () => {
 }
 .drop-to {
   border-radius: 0.25rem;
-  border: 1px dashed $green-base;
+  border: 1px dashed $blue-base;;
 }
 </style>

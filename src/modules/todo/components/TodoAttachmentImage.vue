@@ -10,16 +10,26 @@
       v-if="loading"
       :loading="loading"
     />
-    <AppImage :src="src" cover />
-    <app-button
+    <AppImage ref="imageEl" :src="src" cover />
+    <div
       v-if="isHovering"
-      class="icon"
-      type="text"
-      size="24"
-      @click.stop="$emit('download')"
+      class="flex gap-x-1 items-center justify-end absolute top-[1px] right-[2px]"
     >
-      <v-icon icon="custom:download" />
-    </app-button>
+      <app-button
+        type="text"
+        size="24"
+        @click.stop="onPreview"
+      >
+        <v-icon icon="custom:eye" />
+      </app-button>
+      <app-button
+        type="text"
+        size="24"
+        @click.stop="$emit('download')"
+      >
+        <v-icon icon="custom:download" />
+      </app-button>
+    </div>
   </div>
 </template>
 
@@ -40,11 +50,17 @@ defineProps({
   },
 });
 
-defineEmits(['download']);
+defineEmits(['download', 'preview']);
 
+const imageEl = ref<HTMLImageElement>();
 const isHovering = ref<boolean>(false);
-</script>
+const isPreview = ref<boolean>(false);
 
+const onPreview = () => {
+  isPreview.value = true;
+}
+
+</script>
 <style scoped lang="scss">
 .hover {
   opacity: 0.6;

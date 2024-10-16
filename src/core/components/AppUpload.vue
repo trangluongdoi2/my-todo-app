@@ -1,5 +1,5 @@
 <template>
-  <div class="relative flex items-center justify-end">
+  <div class="upload-wrapper relative flex items-center justify-end">
     <app-button icon size="20">
       <v-icon icon="mdi-plus" />
     </app-button>
@@ -7,7 +7,7 @@
       class="hidden-input" 
       type="file"
       :multiple="multiple"
-      :accept="accepts['GRAPHIC']"
+      :accept="accepts['GENERAL']"
 
       @change="onAddFiles($event)"
     >
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { uuid } from '@/common/string-utils';
-import { TodoAttachment } from '@/types';
+import { TodoAttachment } from '@/types/todo-item';
 
 export interface TempItemUpload extends TodoAttachment {
   name: string,
@@ -25,6 +25,8 @@ export interface TempItemUpload extends TodoAttachment {
 const accepts: Record<string, string> = {
   FONT: '.woff, .woff2, .ttf, .zip, .otf',
   GRAPHIC: 'image/jpeg, image/jpg, image/png, image/gif, .zip, .heic, .heif, .svg',
+  VIDEO: 'video/mp4, video/quicktime',
+  GENERAL: 'image/jpeg, image/jpg, image/png, image/gif, .zip, .heic, .heif, .svg, video/*',
 };
 
 const emit = defineEmits<{
@@ -59,7 +61,6 @@ const onAddFiles = (e: Event) => {
   emit('update-files', inputFiles);
 }
 </script>
-
 <style scoped lang="scss">
 .hidden-input {
   position: absolute;

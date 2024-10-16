@@ -11,7 +11,7 @@ import { reactive, watch } from 'vue';
 import AppInput from '@/core/components/AppInput.vue';
 
 const initialProject: any = {
-  projectName: 'The First Issue' + Math.floor(Math.random() * 10),
+  projectName: '',
   members: [],
 }
 

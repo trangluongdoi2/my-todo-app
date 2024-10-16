@@ -74,7 +74,8 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import { DisplayMode, TodoItem } from '@/types';
+import { DisplayMode } from '@/types';
+import { TodoItem } from '@/types/todo-item';
 import TodoApi from './api/todoApi';
 import EventBus from '@/core/composables/useEventbus';
 import { useGlobalStates } from '@/core/composables/useGlobalStates';
@@ -92,9 +93,8 @@ const { projectId } = useGlobalStates();
 const isListMode = ref<boolean>(true);
 const isFetchingTodosList = ref<boolean>(false);
 const isShowProjectDeleteModal = ref<boolean>(false);
-const currentItemsList = ref<any>([]);
-// const displayMode = ref<DisplayMode>('grid');
-const displayMode = ref<DisplayMode>('table');
+const currentItemsList = ref<TodoItem[]>([]);
+const displayMode = ref<DisplayMode>('grid');
 
 const getListItems = async () => {
   isFetchingTodosList.value = true;

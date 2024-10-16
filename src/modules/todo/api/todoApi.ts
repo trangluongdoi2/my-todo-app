@@ -1,5 +1,7 @@
 import Api from "@/api";
 import { API_URL } from "@/api/url";
+import { isVideoFile } from "@/common/file";
+import { TTodoDownloadAttach, TTodoUploadAttach } from "@/types/todo-item";
 
 const PREFIX_URL = `${API_URL}/api/todo`;
 
@@ -60,28 +62,41 @@ export class TodoApi extends Api {
     return res.data;
   }
 
-
-  async uploadAttachs(id: string, files: File[]) {
-    const url = `${TODO_URL.UPLOAD_ATTACH}/${id}`;
+  async uploadAttachs(input: TTodoUploadAttach) {
+    const { todoId, projectId, files } = input;
+    const url = `${TODO_URL.UPLOAD_ATTACH}/${todoId}`;
     const formData = new FormData();
+    const fileNamesMap = files.reduce((map, item) => {
+      map[(item as any).originalName] = item.name;
+      return map;
+    }, {});
+    formData.append('id', todoId.toString());
+    formData.append('projectId', projectId.toString());
+    formData.append('fileNamesMap', JSON.stringify(fileNamesMap));
     files.forEach((item: File) => {
-      formData.append('images', item);
+      if (isVideoFile(item)) {
+        formData.append('videos', item);
+      } else {
+        formData.append('images', item);
+      }
     });
-    formData.append('id', id);
     const configs = {
       headers: { 'Content-Type': 'multipart/form-data' }
     };
     await this.post(url, formData, configs);
     return [];
   }
+
   async getHistoryLogs(id: string) {
     const res = await this.get(`${TODO_URL.GET_HISTORY_LOGS}/${id}`);
     return res.data;
   }
 
 
-  async downloadAttachment(key: string) {
-    const res = await this.get(`${TODO_URL.DOWNLOAD_ATTACH}/${key}`);
+  async downloadAttachment(input: TTodoDownloadAttach) {
+    const { key, projectId } = input;
+    const url = `${TODO_URL.DOWNLOAD_ATTACH}/${key}?projectId=${projectId}`;
+    const res = await this.get(url);
     return res.data;
   }
 

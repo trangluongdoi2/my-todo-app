@@ -11,7 +11,7 @@
       <app-input v-model="todoForm.title" label="Title" />
       <app-input v-model="todoForm.label" :required="true" label="Label" />
       <app-text-area v-model="todoForm.description" :required="true" label="Description" />
-      <AppDragDropUpload label="Attachments" v-model:files="currentFiles" />
+      <AppDragDropUpload label="Attachments" v-model:files="todoForm.files" />
       <app-select
         label="Piority"
         v-model:currentSelect="todoForm.priority"
@@ -50,8 +50,7 @@ const initialTodoItem: TodoInput = {
 
 const todoForm = reactive(initialTodoItem);
 
-const currentFiles = ref<File[]>();
-const isFetchingProjects = ref(false);
+const isFetchingProjects = ref<boolean>(false);
 
 const listPriority = [
   { label: Priority.HIGHEST, icon: 'highest' },
@@ -76,16 +75,8 @@ const getProjectsByUserId = async () => {
   isFetchingProjects.value = false;
 };
 
-watch(currentFiles, () => {
-  todoForm.files = currentFiles.value;
-}, { immediate: true, deep: true });
-
 watch(todoForm, () => {
-  const newTodoForm = {
-    ...todoForm,
-    files: currentFiles.value,
-  }
-  emit('change', newTodoForm);
+  emit('change', todoForm);
 }, { immediate: true, deep: true });
 
 onMounted(() => {

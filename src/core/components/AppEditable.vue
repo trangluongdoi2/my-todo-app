@@ -9,9 +9,9 @@
       v-if="isEditable && !disabled"
       ref="inputElement"
       class="input__content"
+      v-bind="$attrs"
       variant="solo"
       v-model="modelValue"
-      v-bind="$attrs"
       @blur="onChange"
       @keyup.enter.stop="$event.target.blur()"
       @keydown.delete.stop
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { PropType, ref } from 'vue';
 import type { VTextField } from 'vuetify/components';
+
 type UnwrapReadonlyArray<A> = A extends Readonly<Array<infer I>> ? I : A;
 type ValidationRule = UnwrapReadonlyArray<VTextField['rules']>
 

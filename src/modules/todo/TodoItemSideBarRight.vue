@@ -23,7 +23,7 @@
       <div class="flex flex-row justify-between items-center gap-x-4">
         <h2 class="title max-w-[170px]">Orignal Estimate</h2>
         <div class="content w-[60%] h-full">
-          <AppEditable v-model="originalEstimate"/>
+          <app-editable v-model="originalEstimate"/>
         </div>
       </div>
       <div class="flex flex-row justify-between items-start gap-x-4">
@@ -41,9 +41,6 @@
 import { computed, PropType, reactive, ref } from 'vue';
 import { capitalize } from '@/common/string-utils';
 import { Priority, TodoItemDetails } from '@/types/todo-item';
-import AvatarUrl from '@/assets/avatar.jpeg';
-import AppEditable from '@/core/components/AppEditable.vue';
-import AppSelectEditable from '@/core/components/AppSelectEditable.vue';
 import AppTimeTracking from '@/core/components/AppTimeTracking.vue';
 import SkeletonTodoSideBarRight from './skeleton/SkeletonTodoSideBarRight.vue';
 

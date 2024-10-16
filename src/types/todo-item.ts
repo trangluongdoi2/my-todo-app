@@ -68,7 +68,6 @@ export interface TodoItemDetails extends Omit<TodoItem, 'id'> {
   comments?: TTodoComment[],
 }
 
-
 export type TTodoCommentInput = {
   content: string;
   userId: string | number;
@@ -84,4 +83,15 @@ export type TTodoComment = {
   emoji?: string | string[];
   createdAt: string,
   updatedAt: string,
+}
+
+export type TTodoUploadAttach = {
+  todoId: string | number,
+  projectId: string | number,
+  files: File[],
+}
+
+export type TTodoDownloadAttach = {
+  key: string,
+  projectId: string | number,
 }

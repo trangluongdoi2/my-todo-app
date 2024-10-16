@@ -16,18 +16,18 @@
       ref="inputEl"
       type="file"
       :multiple="multiple"
-      :accept="accepts['GRAPHIC']"
+      :accept="accepts['GENERAL']"
       @change="onAddFiles"
     />
     </div>
-    <div class="upload__preview flex flex-col gap-y-4" v-if="currentUploadItems?.length">
-      <div class="w-full" v-for="item in currentUploadItems" :key="item.id">
+    <div class="upload__preview flex flex-col gap-y-4" v-if="listItems?.length">
+      <div class="w-full" v-for="item in listItems" :key="item.id">
         <div class="flex w-full items-center gap-x-2">
           <div class="w-[50px] h-[50px]">
             <AppImage class="w-full h-full" :src="item.filePath"/>
           </div>
           <div class="min-w-[calc(100%-100px)] w-[calc(100%-100px)]">
-            <AppEditable @change="onChangeFileName(item, $event)" v-model="item.name" :displayName="item.fileName"/>
+            <AppEditable @change="onChangeFileName(item.id, $event)" v-model="item.name" :displayValue="item.fileName" />
           </div>
           <div class="w-[50px]">
             <app-button class="w-full" icon variant="text" @click="removeFile(item.id)">
@@ -41,11 +41,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import {
+  getExtensionFile,
+  getFileNameWithoutExtension,
+  getVideoThumbnail,
+  isVideoFile,
+} from '@/common/file';
 import AppImage from './AppImage.vue';
 import AppEditable from './AppEditable.vue';
 import { kebaCase, uuid } from '@/common/string-utils';
-import { getExtensionFile } from '@/common/file';
 
 export type TempItemUpload = {
   fileName: string,
@@ -68,10 +73,13 @@ defineProps({
 const accepts: Record<string, string> = {
   FONT: '.woff, .woff2, .ttf, .zip, .otf',
   GRAPHIC: 'image/jpeg, image/jpg, image/png, image/gif, .zip, .heic, .heif, .svg',
+  GENERAL: 'image/jpeg, image/jpg, image/png, image/gif, .zip, .heic, .heif, .svg, video/*, *',
 };
 
-const currentUploadItems = defineModel('uploadItems', { type: Array<any> });
-const currentUploadFiles = defineModel('files', { type: Array<File> });
+const uploadedItemsList = defineModel('uploadItems', { type: Array<any>, default: () => [] });
+const uploadedFilesList = defineModel('files', { type: Array<File> });
+const uploadedItemsMap = ref<Map<string, TempItemUpload>>(new Map());
+const uploadedFilesMap = ref<Map<string, File>>(new Map());
 
 const emit = defineEmits<{
   (e: 'change', items: TempItemUpload[]),
@@ -80,49 +88,61 @@ const emit = defineEmits<{
 
 const inputEl = ref<HTMLInputElement>();
 
-const onAddFiles = (e: Event) => {
+const onAddFiles = async (e: Event) => {
   const target = e?.target as HTMLInputElement;
   if (!target.files) {
     return;
   }
   const inputFiles = Array.from(target.files);
-  const items = inputFiles.map((file: File) => {
-    const [nameWithoutExtension] = file.name.split(/(?=\.[^.]+$)/);
+  for (const file of inputFiles) {
+    const nameWithoutExtensionLowerCase = getFileNameWithoutExtension(file.name);
+    let filePath = URL.createObjectURL(file);
+    if (isVideoFile(file)) {
+      filePath = await getVideoThumbnail(file) as string;
+    }
     const newTempUploadItem = {
       id: uuid(),
-      name: kebaCase(nameWithoutExtension),
+      name: kebaCase(nameWithoutExtensionLowerCase),
       fileName: file.name,
-      filePath: URL.createObjectURL(file),
+      filePath,
     }
-    return newTempUploadItem;
-  });
-  currentUploadItems.value = items;
-  currentUploadFiles.value = inputFiles;
-  emit('change', items);
-  emit('update-files', inputFiles);
+    uploadedItemsMap.value.set(newTempUploadItem.id, newTempUploadItem);
+    uploadedFilesMap.value.set(newTempUploadItem.id, file);
+  }
 };
 
-const onChangeFileName = (item: TempItemUpload, value: string) => {
-  console.log('onChangeFileName', item, value);
-  const extension = getExtensionFile(item.fileName);
-  const newFileName = `${value}.${extension}`;
-  console.log(newFileName, 'newFileName...');
-  const currentFile = currentUploadFiles.value.find((file: File) => file.name === item.fileName);
-  if (currentFile) {
-    Object.defineProperty(currentFile, 'name', {
-      writable: true,
-      value: newFileName,
-    });
+const listItems = computed(() => {
+  return Array.from(uploadedItemsMap.value.values());
+});
+
+const listFiles = computed(() => {
+  return Array.from(uploadedFilesMap.value.values());
+});
+
+const onChangeFileName = (itemId: string, newValue: string) => {
+  const item = uploadedItemsMap.value.get(itemId);
+  if (item) {
+    const extension = getExtensionFile(item.fileName);
+    const newFileName = `${newValue}.${extension}`;
+    uploadedItemsMap.value.set(itemId, item);
+    const file = uploadedFilesMap.value.get(itemId);
+    if (file) {
+      Object.defineProperty(file, 'name', {
+        writable: true,
+        value: newFileName,
+      });
+      Object.defineProperty(file, 'originalName', {
+        writable: true,
+        value: item.fileName,
+      });
+      uploadedFilesMap.value.set(itemId, file);
+    }
   }
-  console.log(currentUploadFiles.value, 'currentUploadFiles.value...');
 }
 
 const removeFile = (id: string) => {
-  const removeItem = currentUploadItems.value.find((item: any) => item.id === id);
-  if (removeItem) {
-    currentUploadItems.value = currentUploadItems.value.filter((item: File) => item.name !== removeItem.fileName);
-  }
-  currentUploadItems.value = currentUploadItems.value.filter((item: any) => item.id !== id);
+  uploadedItemsMap.value.delete(id);
+  uploadedFilesMap.value.delete(id);
 }
 
 const openInputUpload = async () => {
@@ -130,6 +150,14 @@ const openInputUpload = async () => {
     inputEl.value.focus();
   }
 };
+
+watch(listItems, () => {
+  uploadedItemsList.value = Array.from(uploadedItemsMap.value.values());
+}, { deep: true });
+
+watch(listFiles, () => {
+  uploadedFilesList.value = Array.from(uploadedFilesMap.value.values());
+}, { deep: true });
 
 </script>
 <style scoped lang="scss">

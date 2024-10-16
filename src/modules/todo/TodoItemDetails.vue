@@ -16,9 +16,13 @@
         <div class="flex flex-col gap-y-1">
           <div class="flex w-full justify-between items-center">
             <div class="flex-1">
-              <h2>Attachments <span><v-chip size="x-small">2</v-chip></span></h2>
+              <h2>Attachments <span><v-chip size="x-small">{{ attachments?.length }}</v-chip></span></h2>
             </div>
-            <AppUpload @change="onAddFilesUpload" @update-files="uploadFiles" />
+            <v-tooltip text="Upload" location="top">
+              <template v-slot:activator="{ props }">
+                <AppUpload @change="onAddFilesUpload" @update-files="uploadFiles" v-bind="props" />
+              </template>
+            </v-tooltip>
           </div>
           <div v-if="attachments?.length" class="w-full flex flex-wrap gap-2">
             <div class="w-[100px] h-[100px]" v-for="(file, index) in attachments" :key="index">
@@ -30,7 +34,7 @@
       </div>
       <div class="h-[500px] overflow-y-auto">
         <h2>Activities</h2>
-        <TodoActivities :item="item"/>
+        <TodoActivities :item="item" />
       </div>
     </div>
   </div>
@@ -38,9 +42,11 @@
 
 <script setup lang="ts">
 import { computed, PropType, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import { TTodoItemDetails } from '@/types/todo-item';
 import TodoApi from './api/todoApi';
 import { saveArrayToFile } from '@/common/file';
+import { useProjectStore } from '@/store/projectStore';
 import AppUpload, { TempItemUpload } from '@/core/components/AppUpload.vue';
 import TodoAttachmentImage from '@/modules/todo/components/TodoAttachmentImage.vue';
 import TodoBreadcrumbs from '@/modules/todo/components/TodoBreadcrumbs.vue';
@@ -58,12 +64,17 @@ const props = defineProps({
   }
 });
 
+const projectStore = useProjectStore();
+const { selectedProjectId } = storeToRefs(projectStore);
+
 const tempAttachUploads = ref<any[]>([]);
 const attachments = computed(() => (props.item?.attachments || []).concat(tempAttachUploads.value));
 
 const onDownloadAttach = async (file: any) => {
-  console.log(file, '==> file...');
-  const base64 = await TodoApi.downloadAttachment(file.fileName);
+  const base64 = await TodoApi.downloadAttachment({
+    key: file.fileName,
+    projectId: selectedProjectId.value,
+  });
   saveArrayToFile(base64, file.fileName);
 }
 
@@ -72,7 +83,11 @@ const onAddFilesUpload = (items: TempItemUpload[]) => {
 }
 
 const uploadFiles = (items: File[]) => {
-  TodoApi.uploadAttachs(props.item.id, items);
+  TodoApi.uploadAttachs({
+    todoId: props.item.id,
+    projectId: selectedProjectId.value,
+    files: items,
+  });
 }
 
 </script>

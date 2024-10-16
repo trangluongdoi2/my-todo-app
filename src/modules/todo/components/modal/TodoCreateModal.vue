@@ -46,12 +46,16 @@ const handleOk = async () => {
   const { files, ...inputTodo } = todoData.value;
   const data = await TodoApi.createTodo(inputTodo);
   if (files?.length) {
-  TodoApi.uploadAttachs(data.id, files || []).then(() => {
-    EventBus.emit('CREATED_TODO', data);
-    }).finally(() => {
-      visible.value = false;
-      loadingSubmit.value = false;
-    })
+    TodoApi.uploadAttachs({
+      todoId: data.id,
+      projectId: data.projectId,
+      files: files || [],
+    }).then(() => {
+      EventBus.emit('CREATED_TODO', data);
+      }).finally(() => {
+        visible.value = false;
+        loadingSubmit.value = false;
+      })
   } else {
     EventBus.emit('CREATED_TODO', data);
     visible.value = false;
