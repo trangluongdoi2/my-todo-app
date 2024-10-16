@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import { onMounted, defineProps, PropType, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Priority, TodoItem } from '@/types';
+import { Priority, TodoItem } from '@/types/todo-item';
 import { formatDateToDDMMYYY } from '@/common/date';
 
 const props = defineProps({

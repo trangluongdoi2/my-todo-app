@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue';
-import { TodoItem } from '@/types';
+import { TodoItem } from '@/types/todo-item';
 import AppCustomImage from './AppCustomImage.vue';
 
 const emits = defineEmits(['delete-item', 'edit-item']);

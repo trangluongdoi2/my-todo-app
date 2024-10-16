@@ -47,17 +47,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, PropType, ref } from 'vue';
+import { PropType, ref } from 'vue';
+import { TodoItem } from '@/types/todo-item';
 import AvatarUrl from '@/assets/avatar.jpeg';
-import { TodoItem } from '@/types';
 import { useRouter } from 'vue-router';
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'edit-item', item: TodoItem): void,
   (e: 'delete-item', item: TodoItem): void
 }>()
 
-const props = defineProps({
+defineProps({
   item: {
     type: Object as PropType<TodoItem>,
     required: true,
@@ -74,9 +74,6 @@ const navigateToDetails = (todoId: string) => {
     }
   });
 };
-onMounted(() => {
-  // console.log(props.item, 'props.item');
-});
 </script>
 <style lang="scss" scoped>
 .todo-card {
