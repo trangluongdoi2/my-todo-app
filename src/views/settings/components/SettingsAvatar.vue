@@ -72,6 +72,7 @@ const settingOptions = [
   {
     name: 'Profile',
     event: () => {
+      console.log('re-direct to profile');
       router.push({ name: 'profile' });
     }
   },

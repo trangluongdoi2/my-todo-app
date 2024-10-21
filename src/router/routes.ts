@@ -10,6 +10,7 @@ import Auth from "@/views/auth/Auth.vue";
 import ProjectLayout from "@/views/project/ProjectLayout.vue";
 import ProjectOverview from "@/views/project/ProjectOverview.vue";
 import ProjectSettings from "@/views/project/ProjectSettings.vue";
+import SettingProfile from "@/modules/settings/views/SettingProfile.vue";
 
 export const routes = [
   {
@@ -86,12 +87,8 @@ export const routes = [
           {
             name: 'profile',
             path: '/profile',
-            component: EmptyRouterView,
-          },
-          {
-            name: 'profile',
-            path: '/courses',
-            component: Courses,
+            component: SettingProfile,
+            meta: { mode: 'SettingLayout' },
           },
           {
             name: 'demo',

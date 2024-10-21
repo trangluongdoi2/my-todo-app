@@ -11,9 +11,9 @@
         <div v-if="item?.children">
           <v-menu>
             <template v-slot:activator="{ props }">
-              <div v-bind="props">
+              <p v-bind="props" class="font-semibold">
                 {{ item.name }}
-              </div>
+              </p>
             </template>
             <v-list>
               <v-list-item
@@ -22,13 +22,13 @@
                 @click="childOption.event && childOption.event()"
               >
                 <div class="w-full flex items-center gap-4">
-                  <span>{{ childOption.name }}</span>
+                  <span class="font-medium">{{ childOption.name }}</span>
                 </div>
               </v-list-item>
             </v-list>
           </v-menu>
         </div>
-        <div v-else>{{ item.name }}</div>
+        <div v-else class="font-semibold">{{ item.name }}</div>
       </v-list-item>
     </v-list>
     <app-button
@@ -37,7 +37,7 @@
       :color="'#42B883'"
       @click="onCreateIssue"
     >
-      CREATE
+      <span class="text-[#ffffff] font-semibold">CREATE</span>
     </app-button>
     <app-button
       v-else

@@ -26,7 +26,6 @@ import { useAuthStore } from '@/store/authStore';
 
 const router = useRouter();
 const { getTheme } = useTheme();
-const { getCurrentUser } = useAuthStorage();
 const authStore = useAuthStore();
 const { isHiddenSideLeft } = useGlobalStates();
 
@@ -47,8 +46,7 @@ const styleMain = computed(() => {
 onMounted(async () => {
   getTheme();
   try {
-    const user = await getCurrentUser();
-    authStore.mounted({ ...user });
+    const user = authStore.mounted();
     if (!user) {
       router.push({ name: 'auth' });
     }

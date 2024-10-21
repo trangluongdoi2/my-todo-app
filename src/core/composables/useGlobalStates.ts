@@ -6,7 +6,8 @@ export const useGlobalStates = () => {
   const listMetaHiddenLayout = [
     'Dashboard',
     'TodoLayout',
-    'ProjectLayout'
+    'ProjectLayout',
+    'SettingLayout',
   ];
 
   const isTodoLayoutTab = computed(() => route?.meta?.mode === 'TodoLayout');

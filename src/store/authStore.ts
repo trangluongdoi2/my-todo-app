@@ -1,3 +1,4 @@
+import { useAuthStorage } from "@/core/composables/useAuthStorage";
 import { defineStore } from "pinia";
 
 export enum UserRole {
@@ -14,7 +15,8 @@ type UserInfo = {
 }
 
 type AuthState = {
-  currentUser: UserInfo
+  currentUser: UserInfo,
+  authLocalStorage: any,
 }
 
 export const useAuthStore = defineStore('authStore', {
@@ -24,7 +26,8 @@ export const useAuthStore = defineStore('authStore', {
       username: '',
       role: UserRole.ADMIN,
       id: undefined,
-    }
+    },
+    authLocalStorage: useAuthStorage(),
   }),
   getters: {
     isAdmin: state => state.currentUser.role === UserRole.ADMIN || state.currentUser.role === UserRole.GUEST,
@@ -32,8 +35,9 @@ export const useAuthStore = defineStore('authStore', {
     userIdSelected: state => state.currentUser.id,
   },
   actions: {
-    mounted(data: UserInfo) {
-      this.currentUser = { ...data };
+    async mounted() {
+      this.currentUser = await this.authLocalStorage.getCurrentUser();
+      return this.currentUser;
     }
   }
 });

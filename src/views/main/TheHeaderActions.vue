@@ -3,7 +3,7 @@
     <div v-for="item in headerActionIcons" :key="item.name">
       <v-tooltip :text="item.label" location="bottom">
         <template v-slot:activator="{ props }">
-          <AppButton
+          <app-button
             icon
             class="icon-actions"
             variant="text"
@@ -12,7 +12,7 @@
             v-bind="props"
           >
             <v-icon color="#42B883" :icon="`custom:${item.name}`" size="small" />
-          </AppButton>
+          </app-button>
         </template>
       </v-tooltip>
     </div>
@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import AppButton from '@/core/components/AppButton.vue';
 import SettingsAvatar from '@/views/settings/components/SettingsAvatar.vue';
 
 const router = useRouter();
