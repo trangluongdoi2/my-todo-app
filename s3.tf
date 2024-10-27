@@ -24,12 +24,16 @@ resource "aws_s3_bucket_policy" "my_todo_frontend_bucket_policy" {
       }
     ]
   })
-  provisioner "local-exec" {
-    command = "echo ${self.arn} >> s3_arn.txt"
-  }
-
 }
 
-provider "aws" {
-  region = var.default_aws_region
+resource "aws_s3_bucket_website_configuration" "frontend_bucket_website" {
+  bucket = aws_s3_bucket.my_todo_frontend_bucket.id
+
+  index_document {
+    suffix = "index.html"
+  }
+
+  error_document {
+    key = "index.html"
+  }
 }

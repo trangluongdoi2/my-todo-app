@@ -12,3 +12,8 @@ variable "acm_cert_arn" {
   type    = string
   default = ""
 }
+
+variable "aws_profile" {
+  type    = string
+  default = "default"
+}

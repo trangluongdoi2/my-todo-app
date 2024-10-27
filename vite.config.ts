@@ -47,9 +47,9 @@ export default defineConfig({
     minify: true,
     rollupOptions: {
       output: {
-        chunkFileNames: 'en/app/js/[name].js',
-        entryFileNames: 'en/app/js/[name].js',
-        assetFileNames: 'en/app/[ext]/[name].[ext]',
+        chunkFileNames: 'js/[name]-[hash].js',
+        entryFileNames: 'js/[name]-[hash].js',
+        assetFileNames: '[ext]/[name].[ext]',
       },
     },
   },
