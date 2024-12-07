@@ -10,7 +10,7 @@ export const useAuthStorage = () => {
   const clearToken = async () => {
     await Promise.all([
       storage.removeItem('auth', 'accessToken'),
-      storage.removeItem('auth', 'accessToken'),
+      storage.removeItem('auth', 'refreshToken'),
     ]);
   };
 
